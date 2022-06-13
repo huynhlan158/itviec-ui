@@ -1,5 +1,6 @@
 const routes = {
   home: '/',
+  signIn: '/sign-in',
   jobs: '/it-jobs',
   jobsBySkill: '/jobs-skill-index',
   jobsByTitle: '/jobs-title-index',
@@ -10,7 +11,7 @@ const routes = {
   bestCompanies2019: '/vietnam-best-it-companies-2019',
   reviewCompany: '/review-company',
   blog: '/blog',
-  employer: '/post_jobs',
+  employer: '/post-jobs',
 };
 
 export default routes;

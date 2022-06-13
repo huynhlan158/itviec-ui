@@ -3,6 +3,7 @@ import config from '~/config';
 // pages
 import {
   Home,
+  SignIn,
   Jobs,
   JobsBySkill,
   JobsByTitle,
@@ -16,11 +17,10 @@ import {
   Employer,
 } from '~/pages';
 
-// import ItJobs from '~/pages/ItJobs/ItJobs';
-
 // public routes
 const publicRoutes = [
   { path: config.routes.home, component: Home },
+  { path: config.routes.signIn, component: SignIn },
   { path: config.routes.jobs, component: Jobs },
   { path: config.routes.jobsBySkill, component: JobsBySkill },
   { path: config.routes.jobsByTitle, component: JobsByTitle },
@@ -30,7 +30,7 @@ const publicRoutes = [
   { path: config.routes.bestCompanies2020, component: BestCompanies2020 },
   { path: config.routes.bestCompanies2019, component: BestCompanies2019 },
   { path: config.routes.reviewCompany, component: ReviewCompany },
-  { path: config.routes.blog, component: Blog },
+  { path: config.routes.blog, component: Blog, layout: null },
   { path: config.routes.employer, component: Employer },
 ];
 
