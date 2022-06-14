@@ -10,7 +10,7 @@ const cx = classNames.bind(styles);
 function MainLayout({ children }) {
   return (
     <div className={cx('wrapper')}>
-      <Header />
+      <Header search />
       <div className={cx('container')}>{children}</div>
       <Footer />
     </div>

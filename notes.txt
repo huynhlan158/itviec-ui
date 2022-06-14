@@ -1,0 +1,5 @@
+HEADER:
+- menu items: 
+    - grid?
+    - "View all job by..."
+- input search: the text color is light

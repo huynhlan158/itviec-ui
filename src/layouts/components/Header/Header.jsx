@@ -2,21 +2,18 @@ import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './Header.module.scss';
 import config from '~/config';
 import { images } from '~/assess';
+import { JOBS, IT_COMPANIES } from '~/assess/constants';
 import NavLink from './components/NavLink';
 import Menu from '~/components/Popper/Menu';
-import { JOBS, IT_COMPANIES } from '~/assess/constants';
+import Search from './components/Search';
 
 const cx = classNames.bind(styles);
-
-const navLinks = [
-  { title: 'All Jobs', to: config.routes.jobs, multilevel: true, data: JOBS },
-  { title: 'IT Companies', multilevel: true },
-  { title: 'Blog', to: config.routes.blog },
-];
 
 const actionLinks = [
   { title: 'For Employers', to: config.routes.employer },
@@ -46,9 +43,11 @@ function Header({ search = false }) {
             <Menu items={IT_COMPANIES}>
               <NavLink multilevel>IT Companies</NavLink>
             </Menu>
-            {/* Blog  */}
 
-            {search && <div className={cx('search')}></div>}
+            {/* Blog  */}
+            <NavLink to={config.routes.blog}>Blog</NavLink>
+
+            {search && <Search />}
           </div>
 
           <div className={cx('actions')}>
@@ -57,6 +56,7 @@ function Header({ search = false }) {
                 {link.title}
               </NavLink>
             ))}
+
             <div className={cx('language')}>
               <button>EN</button>
               <span className={cx('slash')}></span>
@@ -64,6 +64,18 @@ function Header({ search = false }) {
             </div>
           </div>
         </div>
+
+        <Tippy
+          render={(attrs) => <div className={cx('mobile-menu')} tabIndex="-1" {...attrs}></div>}
+          interactive
+          placement="bottom"
+          appendTo={document.body}
+          trigger="click"
+        >
+          <div className={cx('hambuger-btn')}>
+            <FontAwesomeIcon className={cx('hambuger-icon')} icon={faBars} />
+          </div>
+        </Tippy>
       </div>
     </nav>
   );

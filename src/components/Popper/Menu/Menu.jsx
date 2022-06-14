@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
 
 import styles from './Menu.module.scss';
-import Tippy from '@tippyjs/react/headless';
 import PopperWrapper from '../PopperWrapper';
 import MenuItem from './MenuItem';
 import MenuSubItem from './MenuSubItem';
@@ -31,34 +31,35 @@ function Menu({ children, items = [] }) {
               ))}
             </div>
 
-            <div
-              className={cx(
-                'sub-menu',
-                Math.ceil(subMenu.data.length / 8) === 2
-                  ? 'twoColumn'
-                  : Math.ceil(subMenu.data.length / 8) === 3
-                  ? 'threeColumn'
-                  : Math.ceil(subMenu.data.length / 8) === 4
-                  ? 'fourColumn'
-                  : 'oneColumn',
-              )}
-            >
-              {subMenu.data &&
-                subMenu.data.map((subItem, index) => {
+            {subMenu.data && (
+              <div
+                className={cx(
+                  'sub-menu',
+                  Math.ceil(subMenu.data.length / 8) === 2
+                    ? 'twoColumn'
+                    : Math.ceil(subMenu.data.length / 8) === 3
+                    ? 'threeColumn'
+                    : Math.ceil(subMenu.data.length / 8) === 4
+                    ? 'fourColumn'
+                    : 'oneColumn',
+                )}
+              >
+                {subMenu.data.map((subItem, index) => {
                   return <MenuSubItem key={index}>{subItem}</MenuSubItem>;
                 })}
 
-              {subMenu.link && (
-                <MenuSubItem>
-                  <Link className={cx('view-all')} to={subMenu.link}>
-                    {`View all Jobs by 
-                  ${subMenu.title.includes('Skill') ? 'skill' : ''}
-                  ${subMenu.title.includes('Title') ? 'title' : ''}
-                  ${subMenu.title.includes('Company') ? 'company' : ''}`}
-                  </Link>
-                </MenuSubItem>
-              )}
-            </div>
+                {subMenu.link && subMenu.data && (
+                  <MenuSubItem className={cx('view-all')}>
+                    <Link to={subMenu.link}>
+                      {`View all Jobs by 
+                        ${subMenu.title.includes('Skill') ? 'skill' : ''}
+                        ${subMenu.title.includes('Title') ? 'title' : ''}
+                        ${subMenu.title.includes('Company') ? 'company' : ''}`}
+                    </Link>
+                  </MenuSubItem>
+                )}
+              </div>
+            )}
           </PopperWrapper>
         </div>
       )}

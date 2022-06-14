@@ -1,5 +1,7 @@
 import config from '~/config';
 
+const CITIES = ['Ho Chi Minh', 'Ha Noi', 'Da Nang', 'Others'];
+
 const JOBS = [
   {
     title: 'Jobs by Skill',
@@ -93,7 +95,7 @@ const JOBS = [
   },
   {
     title: 'Jobs by City',
-    data: ['Ho Chi Minh', 'Ha Noi', 'Da Nang', 'Others'],
+    data: CITIES,
   },
 ];
 
@@ -106,4 +108,4 @@ const IT_COMPANIES = [
   { title: 'Company Reviews', link: config.routes.reviewCompany },
 ];
 
-export { JOBS, IT_COMPANIES };
+export { CITIES, JOBS, IT_COMPANIES };

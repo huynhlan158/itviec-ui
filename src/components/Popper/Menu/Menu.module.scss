@@ -14,7 +14,7 @@
 }
 
 .sub-menu {
-  min-width: 400px;
+  min-width: 230px;
   padding: 0 20px;
   display: grid;
   column-gap: 20px;
@@ -79,11 +79,12 @@
 }
 
 .view-all {
-  color: var(--white);
-  text-decoration: underline;
+  a {
+    color: var(--white);
+    text-decoration: underline;
+  }
 
   &:hover {
-    color: var(--white);
-    background-color: transparent;
+    background-color: var(--light-dark);
   }
 }

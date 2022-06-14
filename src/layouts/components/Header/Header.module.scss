@@ -39,6 +39,11 @@
   height: 100%;
 }
 
+.links {
+  flex: 1;
+  display: flex;
+}
+
 .language {
   display: inline-flex;
   align-items: center;
@@ -64,4 +69,48 @@
   width: 1px;
   height: 1.6rem;
   background-color: var(--text-overlay-header);
+}
+
+// mobile navbar
+.hambuger-btn {
+  padding: 4px 12px;
+  font-size: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: 1px solid var(--text-overlay-header);
+  border-radius: 2.5px;
+}
+
+.hambuger-icon {
+  width: 30px;
+  height: 30px;
+  color: var(--text-overlay-header);
+}
+
+// responsive
+@media screen and (max-width: 992px) {
+  .wrapper {
+    height: 42px;
+  }
+
+  .container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .logo {
+    a {
+      height: 42px;
+    }
+  }
+}
+
+@media screen and (max-width: 450px) {
 }
