@@ -12,3 +12,5 @@ export { default as BestCompanies2019 } from './BestCompanies2019';
 export { default as ReviewCompany } from './ReviewCompany';
 export { default as Blog } from './Blog';
 export { default as Employer } from './Employer';
+export { default as TextOnly } from './TextOnly';
+export { default as Pending } from './Pending';

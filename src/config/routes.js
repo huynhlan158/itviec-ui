@@ -13,6 +13,8 @@ const routes = {
   reviewCompany: '/review-company',
   blog: '/blog',
   employer: '/post-jobs',
+  textOnly: '/text-only',
+  pending: '/pending',
 };
 
 export default routes;
