@@ -1,6 +1,7 @@
 const routes = {
   home: '/',
   signIn: '/sign-in',
+  profile: '/profile',
   jobs: '/it-jobs',
   jobsBySkill: '/jobs-skill-index',
   jobsByTitle: '/jobs-title-index',

@@ -1,9 +1,18 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars } from '@fortawesome/free-solid-svg-icons';
+import {
+  faArrowRightFromBracket,
+  faBars,
+  faCheckToSlot,
+  faHeart,
+  faRobot,
+  faSortDown,
+} from '@fortawesome/free-solid-svg-icons';
+import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './Header.module.scss';
 import config from '~/config';
@@ -20,11 +29,54 @@ const actionLinks = [
   { title: 'Sign in', to: config.routes.signIn },
 ];
 
+const userLinks = [
+  {
+    icon: <FontAwesomeIcon icon={faUser} />,
+    title: 'My Account',
+    to: config.routes.profile,
+  },
+  {
+    icon: <FontAwesomeIcon icon={faRobot} />,
+    title: 'My Jobs Robot',
+    to: config.routes.profile,
+  },
+  {
+    icon: <FontAwesomeIcon icon={faHeart} />,
+    title: 'Saved Jobs',
+    to: config.routes.profile,
+  },
+  {
+    icon: <FontAwesomeIcon icon={faCheckToSlot} />,
+    title: 'Applied Jobs',
+    to: config.routes.profile,
+  },
+  {
+    icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
+    title: 'Sign Out',
+    to: config.routes.profile,
+  },
+];
+
 function Header({ search = false }) {
+  const user = true;
+  const [isShrink, setShrink] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0 && !search) {
+        setShrink(true);
+      } else {
+        setShrink(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+  }, [isShrink]);
+
   return (
-    <nav className={cx('wrapper')}>
+    <nav className={cx('wrapper', { shrink: isShrink })}>
       <div className={cx('container')}>
-        <div className={cx('logo')}>
+        <div className={cx('logo', { shrink: isShrink })}>
           <Link to={config.routes.home}>
             <img src={images.logo} alt="logo_img" />
           </Link>
@@ -51,11 +103,27 @@ function Header({ search = false }) {
           </div>
 
           <div className={cx('actions')}>
-            {actionLinks.map((link, index) => (
-              <NavLink key={index} to={link.to} multilevel={link.multilevel}>
-                {link.title}
-              </NavLink>
-            ))}
+            {user ? (
+              <Menu items={userLinks} smallItem>
+                <NavLink>
+                  <div className={cx('user')}>
+                    <div className={cx('user-name')}>
+                      <span>A Nguyen Van</span>
+                      <i>
+                        <FontAwesomeIcon icon={faSortDown} />
+                      </i>
+                    </div>
+                    <div className={cx('avatar', { shrink: isShrink })}>A</div>
+                  </div>
+                </NavLink>
+              </Menu>
+            ) : (
+              actionLinks.map((link, index) => (
+                <NavLink key={index} to={link.to} multilevel={link.multilevel}>
+                  {link.title}
+                </NavLink>
+              ))
+            )}
 
             <div className={cx('language')}>
               <button>EN</button>
@@ -72,9 +140,9 @@ function Header({ search = false }) {
           appendTo={document.body}
           trigger="click"
         >
-          <div className={cx('hambuger-btn')}>
+          <button className={cx('hambuger-btn')}>
             <FontAwesomeIcon className={cx('hambuger-icon')} icon={faBars} />
-          </div>
+          </button>
         </Tippy>
       </div>
     </nav>

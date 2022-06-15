@@ -25,7 +25,13 @@ function Menu({ children, items = [] }) {
           <PopperWrapper className={cx('menu-popper')} fixed>
             <div className={cx('title')}>
               {items.map((item, index) => (
-                <MenuItem key={index} nextIcon={item.data && true} onMouseEnter={() => handleMenuHover(item)}>
+                <MenuItem
+                  key={index}
+                  leftIcon={item.icon}
+                  nextIcon={item.data && true}
+                  to={item.to}
+                  onMouseEnter={() => handleMenuHover(item)}
+                >
                   {item.title}
                 </MenuItem>
               ))}
@@ -48,14 +54,9 @@ function Menu({ children, items = [] }) {
                   return <MenuSubItem key={index}>{subItem}</MenuSubItem>;
                 })}
 
-                {subMenu.link && subMenu.data && (
+                {subMenu.viewAll && (
                   <MenuSubItem className={cx('view-all')}>
-                    <Link to={subMenu.link}>
-                      {`View all Jobs by 
-                        ${subMenu.title.includes('Skill') ? 'skill' : ''}
-                        ${subMenu.title.includes('Title') ? 'title' : ''}
-                        ${subMenu.title.includes('Company') ? 'company' : ''}`}
-                    </Link>
+                    <Link to={subMenu.link}>{`View all Jobs by ${subMenu.viewAll}`}</Link>
                   </MenuSubItem>
                 )}
               </div>
@@ -76,6 +77,7 @@ Menu.propTypes = {
   children: PropTypes.node.isRequired,
   title: PropTypes.string,
   items: PropTypes.array,
+  leftIcon: PropTypes.bool,
 };
 
 export default Menu;

@@ -19,6 +19,7 @@
 
   // layouts
   --header-height: 60px;
+  --header-height-onsroll-down: 40px;
 }
 
 * {
@@ -37,6 +38,7 @@ body {
   font-size: 1.6rem;
   line-height: 1.5;
   text-rendering: optimizeSpeed;
+  min-height: 2000px;
 }
 
 input,

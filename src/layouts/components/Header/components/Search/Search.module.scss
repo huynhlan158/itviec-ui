@@ -30,6 +30,10 @@
     height: 100%;
   }
 
+  ::placeholder {
+    opacity: 1;
+  }
+
   &.active {
     z-index: 11;
     border-color: var(--primary);

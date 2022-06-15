@@ -40,6 +40,7 @@ const JOBS = [
       'Embedded',
       'J2EE',
     ],
+    viewAll: 'skill',
   },
   {
     title: 'Job by Title',
@@ -70,6 +71,7 @@ const JOBS = [
       'Product Owner',
       'Bridge Engineer',
     ],
+    viewAll: 'title',
   },
   {
     title: 'Jobs by Company',
@@ -92,6 +94,7 @@ const JOBS = [
       'ShopBack',
       'Saigon Technology',
     ],
+    viewAll: 'company',
   },
   {
     title: 'Jobs by City',

@@ -2,4 +2,4 @@ HEADER:
 - menu items: 
     - grid?
     - "View all job by..."
-- input search: the text color is light
+- input search: the text color of placeholder is not right => OK (set opacity = 1 for ::placeholder)
