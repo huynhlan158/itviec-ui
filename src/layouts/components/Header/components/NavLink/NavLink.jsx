@@ -25,6 +25,7 @@ NavLink.propTypes = {
   children: PropTypes.node.isRequired,
   multilevel: PropTypes.bool,
   to: PropTypes.string,
+  className: PropTypes.string,
 };
 
 export default NavLink;

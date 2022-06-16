@@ -1,7 +1,16 @@
 .search {
   --input-height: 34px;
+  --spacing: 4px;
+  --city-width: 138px;
+
   flex: 1;
   cursor: default;
+
+  &.big {
+    --input-height: 45px;
+    --spacing: 10px;
+    --city-width: 183px;
+  }
 }
 
 .container {
@@ -15,6 +24,8 @@
 
 // search input
 .search-input {
+  display: flex;
+  align-items: center;
   width: 100%;
   height: var(--input-height);
   background-color: var(--white);
@@ -40,6 +51,11 @@
   }
 }
 
+.search-icon {
+  color: var(--dark);
+  margin-left: 15px;
+}
+
 // city options
 .city {
   display: flex;
@@ -47,12 +63,12 @@
   justify-content: space-between;
   align-items: center;
   height: var(--input-height);
-  width: 138px;
+  width: var(--city-width);
   font-size: 1.5rem;
   color: var(--dark);
   background-color: var(--white);
   padding: 6px 12px;
-  margin-left: 4px;
+  margin-left: var(--spacing);
   border-radius: 4px;
   border: 1px solid transparent;
   cursor: pointer;
@@ -61,6 +77,10 @@
     z-index: 11;
     border-color: var(--primary);
   }
+}
+
+.city-icon {
+  margin-right: 10px;
 }
 
 .city-container {
@@ -99,11 +119,17 @@
   padding: 0 15px;
   font-size: 1.6rem;
   border-radius: 4px;
-  margin-left: 4px;
+  margin-left: var(--spacing);
   cursor: pointer;
 
   &:hover {
     background-color: #d82727;
+  }
+
+  span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    padding: 0 22.5px;
   }
 }
 
@@ -114,7 +140,6 @@
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   width: 100vw;
   height: 100vh;
   background-color: var(--dark);

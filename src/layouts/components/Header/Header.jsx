@@ -16,7 +16,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './Header.module.scss';
 import config from '~/config';
-import { images } from '~/assess';
+import images from '~/assess/images';
 import { JOBS, IT_COMPANIES } from '~/assess/constants';
 import NavLink from './components/NavLink';
 import Menu from '~/components/Popper/Menu';
@@ -87,7 +87,7 @@ function Header({ search = false }) {
             {/* Jobs  */}
             <Menu items={JOBS}>
               <NavLink to={config.routes.jobs} multilevel>
-                All jobs
+                All Jobs
               </NavLink>
             </Menu>
 

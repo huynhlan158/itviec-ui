@@ -1,16 +1,18 @@
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 import styles from './Home.module.scss';
+import HeadSearch from './HeadSearch';
+import JobResult from '~/components/JobResult';
 
 const cx = classNames.bind(styles);
 
-function Home({ children }) {
-  return <h1>Home</h1>;
+function Home() {
+  return (
+    <div className={cx('wrapper')}>
+      <HeadSearch />
+      <JobResult />
+    </div>
+  );
 }
-
-Home.propTypes = {
-  children: PropTypes.node,
-};
 
 export default Home;

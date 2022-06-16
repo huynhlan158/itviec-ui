@@ -1,3 +1,6 @@
-import logo from './logo.png';
+const images = {
+  logo: require('~/assess/images/logo.png'),
+  noImage: require('~/assess/images/no_image.jpg'),
+};
 
-export { logo };
+export default images;
