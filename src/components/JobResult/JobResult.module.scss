@@ -3,10 +3,19 @@
   flex-direction: row;
   background-color: var(--white);
   width: var(--default-width);
-  margin: 30px auto;
+  margin: 30px auto 0;
 }
 
 .detail {
-  padding: 0 30px;
   flex: 1;
+}
+
+.job {
+  padding: 0 30px;
+  width: 100%;
+}
+
+.company {
+  padding: 15px;
+  width: 100%;
 }

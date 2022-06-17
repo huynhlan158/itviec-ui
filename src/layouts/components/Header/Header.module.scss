@@ -136,14 +136,14 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  border: 1px solid var(--grey-on-dark);
+  border: 1px solid var(--grey);
   outline: 2px solid transparent;
   border-radius: 6px;
 
   display: none;
 
   &:focus {
-    outline-color: var(--grey-on-dark);
+    outline-color: var(--grey);
   }
 }
 

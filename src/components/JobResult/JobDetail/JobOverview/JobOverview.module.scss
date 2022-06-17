@@ -4,26 +4,35 @@
   display: grid;
   grid-template-columns: 1fr;
   grid-gap: 10px;
-  font-size: 1.4rem;
-  color: var(--dark);
+  color: var(--dark-grey);
 }
 
 .salary {
   color: var(--green);
-
-  i {
-    font-size: 1rem;
-    border: 1px solid var(--green);
-    padding: 1px 5px;
-    border-radius: 50%;
-  }
-
-  span {
-    margin-left: 10px;
-  }
 }
 
-i {
-  width: 30px;
-  height: 30px;
+.address,
+.type,
+.date-posted {
+  display: flex;
+  align-items: center;
+}
+
+.newPost {
+  color: var(--blue);
+}
+
+.map-link {
+  position: relative;
+  top: -2px;
+  margin-left: 12px;
+
+  color: gray;
+  font-size: 1.3rem;
+  line-height: 1.09;
+  border-bottom: 1px dashed;
+
+  &:hover {
+    color: var(--blue);
+  }
 }

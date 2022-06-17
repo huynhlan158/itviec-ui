@@ -1,12 +1,17 @@
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
-import styles from './Sidebar.module.scss';
+import styles from './JobList.module.scss';
 import JobItem from '~/components/JobItem';
+import Pagination from '~/components/Pagination';
 
 const cx = classNames.bind(styles);
 
-function Sidebar({ jobList }) {
+function JobList({ jobList }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <aside className={cx('wrapper')}>
       <h1 className={cx('title')}>300 Jobs Recommended for A Nguyen Van</h1>
@@ -15,12 +20,13 @@ function Sidebar({ jobList }) {
           <JobItem key={index} {...job} />
         ))}
       </div>
+      <Pagination currentPage={currentPage} lastPage={10} paginate={paginate} />
     </aside>
   );
 }
 
-Sidebar.propTypes = {
+JobList.propTypes = {
   jobList: PropTypes.array,
 };
 
-export default Sidebar;
+export default JobList;

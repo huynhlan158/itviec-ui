@@ -103,11 +103,11 @@
   cursor: pointer;
 
   &:hover {
-    background-color: var(--grey-background);
+    background-color: var(--light-grey);
   }
 
   &.active {
-    background-color: var(--grey-background);
+    background-color: var(--light-grey);
   }
 }
 

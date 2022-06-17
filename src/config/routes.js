@@ -12,6 +12,7 @@ const routes = {
   bestCompanies2019: '/vietnam-best-it-companies-2019',
   reviewCompany: '/review-company',
   blog: '/blog',
+  companyProfile: '/company-profile',
   employer: '/post-jobs',
   textOnly: '/text-only',
   pending: '/pending',

@@ -17,6 +17,7 @@ import {
   ReviewCompany,
   Blog,
   Employer,
+  CompanyProfile,
   TextOnly,
   Pending,
 } from '~/pages';
@@ -37,6 +38,7 @@ const publicRoutes = [
   { path: config.routes.reviewCompany, component: ReviewCompany },
   { path: config.routes.blog, component: Blog, layout: null },
   { path: config.routes.employer, component: Employer },
+  { path: config.routes.companyProfile, component: CompanyProfile },
   { path: config.routes.textOnly, component: TextOnly },
   { path: config.routes.pending, component: Pending },
 ];

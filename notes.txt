@@ -2,4 +2,13 @@ HEADER:
 - menu items: 
     - grid?
     - "View all job by..."
-- input search: the text color of placeholder is not right => OK (set opacity = 1 for ::placeholder)
+- input search: the text color of placeholder is not right =======================> OK (set opacity = 1 for ::placeholder)
+
+COMPANY OVERVIEW (1/ bottom of job overview, 2/ top of company profile, 3/ right side of job page):
+- reuse?
+
+CHARACTERISTICITEM:
+- get icons from official website?
+
+JOBITEM:
+- job-title: margin-bottom does not work

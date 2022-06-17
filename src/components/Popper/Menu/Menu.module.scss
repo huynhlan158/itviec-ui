@@ -51,8 +51,8 @@
 
   &:hover {
     color: var(--dark);
-    background-color: var(--grey-background);
-    border-color: var(--grey-background);
+    background-color: var(--light-grey);
+    border-color: var(--light-grey);
   }
 
   &.active {
@@ -89,7 +89,7 @@
 
   &:hover {
     color: var(--dark);
-    background-color: var(--grey-background);
+    background-color: var(--light-grey);
   }
 }
 
