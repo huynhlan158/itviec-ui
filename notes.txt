@@ -12,3 +12,6 @@ CHARACTERISTICITEM:
 
 JOBITEM:
 - job-title: margin-bottom does not work
+
+PAGINATION:
+- optimize logic?
