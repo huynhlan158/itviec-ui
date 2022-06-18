@@ -12,13 +12,18 @@ import CharacteristicItem from '~/components/CharacteristicItem';
 
 const cx = classNames.bind(styles);
 
-function JobItem({ logo, title, salary, skills, location, postedTime, hotJob, seen, special, active }) {
+function JobItem({ data, jobSelected, selectJob }) {
+  const { logo, title, salary, highlightBenefits, skills, location, postedTime, hotJob, seen, id } = data;
+
   const jobPostedDay = Math.floor(postedTime / 1000 / 60 / 60 / 24);
   const jobPostedHour = Math.ceil((postedTime / 1000 / 60 / 60) % 24);
   const timeUnit = jobPostedDay > 0 ? 'd' : 'h';
 
   return (
-    <div className={cx('wrapper', { special, active })}>
+    <div
+      className={cx('wrapper', { special: !!highlightBenefits, selected: jobSelected === id })}
+      onClick={() => selectJob(id)}
+    >
       <CompanyImage className={cx('logo-image')} to={config.routes.companyProfile} src={logo} alt="company_img" />
 
       <div className={cx('info')}>
@@ -30,9 +35,19 @@ function JobItem({ logo, title, salary, skills, location, postedTime, hotJob, se
           {salary}
         </CharacteristicItem>
 
+        {highlightBenefits && (
+          <ul className={cx('benefits')}>
+            {highlightBenefits.map((benefit, index) => (
+              <li key={index} className={cx('benefit-item')}>
+                {benefit}
+              </li>
+            ))}
+          </ul>
+        )}
+
         <div className={cx('skills')}>
           {skills.map((skill, index) => (
-            <Button className={cx('', { active })} key={index} basic>
+            <Button className={cx('', { active: jobSelected === id })} key={index} basic>
               {skill}
             </Button>
           ))}
@@ -52,16 +67,9 @@ function JobItem({ logo, title, salary, skills, location, postedTime, hotJob, se
 }
 
 JobItem.propTypes = {
-  logo: PropTypes.node,
-  title: PropTypes.string,
-  salary: PropTypes.string,
-  skills: PropTypes.array,
-  location: PropTypes.string,
-  postedDate: PropTypes.string,
-  hotTag: PropTypes.bool,
-  newTag: PropTypes.bool,
-  special: PropTypes.bool,
-  active: PropTypes.bool,
+  data: PropTypes.object.isRequired,
+  jobSelected: PropTypes.string,
+  selectJob: PropTypes.func,
 };
 
 export default JobItem;

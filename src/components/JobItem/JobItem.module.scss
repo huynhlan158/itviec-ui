@@ -13,8 +13,13 @@
     border-bottom: 1px solid #e7e7e7;
   }
 
-  &.active {
-    border-color: var(--primary);
+  &.special {
+    background-color: var(--special);
+    border-top: 2px solid rgba(255, 192, 121, 0.5);
+  }
+
+  &.selected {
+    border: 1px solid var(--primary);
 
     &::before {
       background-color: var(--primary);
@@ -41,10 +46,6 @@
       color: var(--primary);
     }
   }
-
-  &.special {
-    background-color: var(--special);
-  }
 }
 
 .logo-image {
@@ -70,6 +71,18 @@
   span {
     font-size: 1.3rem;
   }
+}
+
+.benefits {
+  margin: 10px 0;
+  padding-left: 19px;
+}
+
+.benefit-item {
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--dark);
+  padding-bottom: 3px;
 }
 
 .skills {

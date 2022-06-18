@@ -10,6 +10,10 @@ COMPANY OVERVIEW (1/ bottom of job overview, 2/ top of company profile, 3/ right
 CHARACTERISTICITEM:
 - get icons from official website?
 
+JOBLIST:
+- scroll behavior to bottom
+- 1st click to jobItem (effectted by a callback which is setState in useEffect): component re-render 2 times?
+
 JOBITEM:
 - job-title: margin-bottom does not work
 

@@ -17,11 +17,18 @@ const jobList = [
     title: 'Front-end Dev (Angular/ReactJS/VueJS)',
     salary: '1,300 - 2,000 USD',
     skills: ['Angular', 'ReactJS', 'VueJS'],
-    location: 'Ha Noi',
+    location: 'Ho Chi Minh',
+    address: '19th Floor, 81-85 Ham Nghi Street, Nguyen Thai Binh Ward, District 1, Ho Chi Minh',
+    mapLink: '#',
     postedTime: 600000000,
+    type: 'On-site',
     hotJob: false,
-    special: false,
     seen: false,
+    highlightBenefits: [
+      'Attractive Salary Up to $2,000',
+      'Excellent Bonus & Compensation',
+      'Fintech CRM Projects (Crypto, FX)',
+    ],
   },
   {
     id: '2',
@@ -32,7 +39,6 @@ const jobList = [
     location: 'Ha Noi',
     postedTime: 60000,
     hotJob: true,
-    active: true,
     seen: true,
   },
   {
@@ -43,7 +49,11 @@ const jobList = [
     skills: ['Angular', 'ReactJS', 'VueJS'],
     location: 'Ha Noi',
     postedTime: 30000,
-    special: true,
+    highlightBenefits: [
+      'Attractive Salary Up to $2,000',
+      'Excellent Bonus & Compensation',
+      'Fintech CRM Projects (Crypto, FX)',
+    ],
     hotJob: true,
     seen: true,
   },
@@ -87,6 +97,11 @@ const jobList = [
     location: 'Ha Noi',
     seen: true,
     postedTime: 600000000,
+    highlightBenefits: [
+      'Attractive Salary Up to $2,000',
+      'Excellent Bonus & Compensation',
+      'Fintech CRM Projects (Crypto, FX)',
+    ],
   },
   {
     id: '8',

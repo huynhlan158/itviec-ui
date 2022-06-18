@@ -1,7 +1,4 @@
 // menu
-.container {
-}
-
 .menu-popper {
   display: flex;
   flex-direction: row;
@@ -51,8 +48,8 @@
 
   &:hover {
     color: var(--dark);
-    background-color: var(--light-grey);
-    border-color: var(--light-grey);
+    background-color: var(--lighter-grey);
+    border-color: var(--lighter-grey);
   }
 
   &.active {
@@ -89,7 +86,7 @@
 
   &:hover {
     color: var(--dark);
-    background-color: var(--light-grey);
+    background-color: var(--lighter-grey);
   }
 }
 

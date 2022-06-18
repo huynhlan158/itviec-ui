@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -20,12 +20,18 @@ function JobList({ jobList }) {
 
   const currentJobList = jobList.slice(indexOfFirstJob, indexOfLastJob);
 
+  const [jobSelected, setJobSelected] = useState(jobList[0].id);
+
+  useEffect(() => {
+    setJobSelected(currentJobList[0].id);
+  }, [currentPage]);
+
   return (
     <aside className={cx('wrapper')}>
       <h1 className={cx('title')}>{jobList.length} Jobs Recommended for A Nguyen Van</h1>
       <div className={cx('job-list')}>
         {currentJobList.map((job, index) => (
-          <JobItem key={index} {...job} />
+          <JobItem key={index} data={job} jobSelected={jobSelected} selectJob={(id) => setJobSelected(id)} />
         ))}
       </div>
       <Pagination

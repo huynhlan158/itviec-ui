@@ -2,8 +2,8 @@
   width: 600px;
   height: 100vh;
   max-height: 1200px;
-  padding: 20px 0;
-  overflow-y: scroll;
+  padding: 20px 10px 0;
+  overflow: scroll;
   position: sticky;
 
   // will add value using context hook

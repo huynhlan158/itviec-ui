@@ -11,7 +11,7 @@ import MenuSubItem from './MenuSubItem';
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, items = [] }) {
+function Menu({ children, className, items = [] }) {
   const [subMenu, setSubMenu] = useState(items[0]);
 
   const handleMenuHover = (item) => {
@@ -21,7 +21,7 @@ function Menu({ children, items = [] }) {
   return (
     <Tippy
       render={(attrs) => (
-        <div className={cx('container')} tabIndex="-1" {...attrs}>
+        <div className={cx(className)} tabIndex="-1" {...attrs}>
           <PopperWrapper className={cx('menu-popper')} fixed>
             <div className={cx('title')}>
               {items.map((item, index) => (
@@ -75,9 +75,8 @@ function Menu({ children, items = [] }) {
 
 Menu.propTypes = {
   children: PropTypes.node.isRequired,
-  title: PropTypes.string,
+  className: PropTypes.string,
   items: PropTypes.array,
-  leftIcon: PropTypes.bool,
 };
 
 export default Menu;
