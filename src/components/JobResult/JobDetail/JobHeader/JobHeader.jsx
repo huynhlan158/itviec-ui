@@ -6,13 +6,13 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './JobHeader.module.scss';
 import Button from '~/components/Button';
-// import { useStore } from '~/components/JobResult/store/useStore';
+import { useStore } from '~/components/JobResult/store/useStore';
 
 const cx = classNames.bind(styles);
 
 function JobHeader() {
-  // const [state] = useStore();
-  // const { selectedJob, dispatch } = state;
+  const [state] = useStore();
+  const { selectedJob, dispatch } = state;
 
   console.log('Header: ', selectedJob);
 

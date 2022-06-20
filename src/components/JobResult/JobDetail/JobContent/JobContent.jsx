@@ -6,8 +6,8 @@ import { useStore } from '~/components/JobResult/store/useStore';
 const cx = classNames.bind(styles);
 
 function JobContent() {
-  // const [state] = useStore();
-  // const { selectedJob } = state;
+  const [state] = useStore();
+  const { selectedJob } = state;
 
   console.log('Content: ', selectedJob);
 

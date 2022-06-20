@@ -102,7 +102,7 @@ const jobListHardCode = [
 ];
 
 function JobResult() {
-  const [dispatch] = useStore();
+  const [state, dispatch] = useStore();
 
   useEffect(() => {
     dispatch(actions.setJobList(jobListHardCode));
