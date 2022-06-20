@@ -5,9 +5,9 @@ import styles from './Pagination.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Pagination({ className, jobsPerPage = 10, showNavigate = 5, totalJob, currentPage, paginate }) {
+function Pagination({ className, jobsPerPage = 10, showNavigateButtons = 5, totalJob, currentPage, paginate }) {
   // jobsPerPage: user to set, default value is 10
-  // showNavigate: user to set, default value is 5
+  // showNavigateButtons: user to set, default value is 5
   // totalJob: jobList.length
   // currentPage: page number of current post, using useState hook
   // paginate: function to set current page when click on page number
@@ -42,7 +42,7 @@ function Pagination({ className, jobsPerPage = 10, showNavigate = 5, totalJob, c
     <nav>
       <ul className={cx('wrapper', className)}>
         {/* back button */}
-        {lastPage > showNavigate && currentPage > 1 && (
+        {lastPage > showNavigateButtons && currentPage > 1 && (
           <li className={cx('page-number')} onClick={() => paginate(currentPage - 1)}>
             {'<'}
           </li>
@@ -70,7 +70,7 @@ function Pagination({ className, jobsPerPage = 10, showNavigate = 5, totalJob, c
         })}
 
         {/* next button */}
-        {lastPage > showNavigate && currentPage < lastPage && (
+        {lastPage > showNavigateButtons && currentPage < lastPage && (
           <li className={cx('page-number')} onClick={() => paginate(currentPage + 1)}>
             {'>'}
           </li>
@@ -85,7 +85,7 @@ Pagination.propTypes = {
   currentPage: PropTypes.number.isRequired,
   totalJob: PropTypes.number.isRequired,
   jobsPerPage: PropTypes.number.isRequired,
-  showNavigate: PropTypes.number.isRequired,
+  showNavigateButtons: PropTypes.number.isRequired,
   paginate: PropTypes.func.isRequired,
 };
 

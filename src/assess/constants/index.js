@@ -1,5 +1,6 @@
 import config from '~/config';
 
+// header
 const CITIES = ['Ho Chi Minh', 'Ha Noi', 'Da Nang', 'Others'];
 
 const JOBS = [
@@ -110,5 +111,7 @@ const IT_COMPANIES = [
   },
   { title: 'Company Reviews', link: config.routes.reviewCompany },
 ];
+
+// store provider
 
 export { CITIES, JOBS, IT_COMPANIES };

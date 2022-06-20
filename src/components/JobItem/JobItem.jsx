@@ -9,10 +9,14 @@ import CompanyImage from '~/components/CompanyImage';
 import Button from '../Button';
 import config from '~/config';
 import CharacteristicItem from '~/components/CharacteristicItem';
+import { useStore } from '~/components/JobResult/store/useStore';
 
 const cx = classNames.bind(styles);
 
-function JobItem({ data, jobSelected, selectJob }) {
+function JobItem({ data, selectJob }) {
+  const [state] = useStore();
+  const { selectedJob } = state;
+
   const { logo, title, salary, highlightBenefits, skills, location, postedTime, hotJob, seen, id } = data;
 
   const jobPostedDay = Math.floor(postedTime / 1000 / 60 / 60 / 24);
@@ -21,8 +25,8 @@ function JobItem({ data, jobSelected, selectJob }) {
 
   return (
     <div
-      className={cx('wrapper', { special: !!highlightBenefits, selected: jobSelected === id })}
-      onClick={() => selectJob(id)}
+      className={cx('wrapper', { special: !!highlightBenefits, selected: selectedJob.id === id })}
+      onClick={() => selectJob(data)}
     >
       <CompanyImage className={cx('logo-image')} to={config.routes.companyProfile} src={logo} alt="company_img" />
 
@@ -47,7 +51,7 @@ function JobItem({ data, jobSelected, selectJob }) {
 
         <div className={cx('skills')}>
           {skills.map((skill, index) => (
-            <Button className={cx('', { active: jobSelected === id })} key={index} basic>
+            <Button className={cx({ active: selectedJob.id === id })} key={index} basic>
               {skill}
             </Button>
           ))}
@@ -68,7 +72,7 @@ function JobItem({ data, jobSelected, selectJob }) {
 
 JobItem.propTypes = {
   data: PropTypes.object.isRequired,
-  jobSelected: PropTypes.string,
+  selectedJob: PropTypes.object,
   selectJob: PropTypes.func,
 };
 

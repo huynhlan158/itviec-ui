@@ -12,7 +12,7 @@ CHARACTERISTICITEM:
 
 JOBLIST:
 - scroll behavior to bottom
-- 1st click to jobItem (effectted by a callback which is setState in useEffect): component re-render 2 times?
+- 1st click to jobItem (affected by a callback which is setState in useEffect, ): component re-render 2 times?
 
 JOBITEM:
 - job-title: margin-bottom does not work

@@ -1,18 +1,20 @@
-import { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './JobList.module.scss';
 import JobItem from '~/components/JobItem';
 import Pagination from '~/components/Pagination';
 import config from '~/config';
+import { useStore } from '~/components/JobResult/store/useStore';
+import * as actions from '~/components/JobResult/state/actions';
 
 const cx = classNames.bind(styles);
 
-function JobList({ jobList }) {
-  const [currentPage, setCurrentPage] = useState(1);
+function JobList({}) {
+  const [state, dispatch] = useStore();
+  const { currentPage, jobList } = state;
 
-  const showNavigate = config.pagination.showNavigate;
+  const showNavigateButtons = config.pagination.showNavigateButtons;
   const jobsPerPage = config.pagination.jobsPerPage;
   const totalJob = jobList.length;
   const indexOfLastJob = currentPage * jobsPerPage;
@@ -20,10 +22,10 @@ function JobList({ jobList }) {
 
   const currentJobList = jobList.slice(indexOfFirstJob, indexOfLastJob);
 
-  const [jobSelected, setJobSelected] = useState(jobList[0].id);
-
   useEffect(() => {
-    setJobSelected(currentJobList[0].id);
+    if (jobList.length > 0) {
+      dispatch(actions.setJobSelected(currentJobList[0]));
+    }
   }, [currentPage]);
 
   return (
@@ -31,22 +33,19 @@ function JobList({ jobList }) {
       <h1 className={cx('title')}>{jobList.length} Jobs Recommended for A Nguyen Van</h1>
       <div className={cx('job-list')}>
         {currentJobList.map((job, index) => (
-          <JobItem key={index} data={job} jobSelected={jobSelected} selectJob={(id) => setJobSelected(id)} />
+          <JobItem key={index} data={job} selectJob={(job) => dispatch(actions.setJobSelected(job))} />
         ))}
       </div>
+
       <Pagination
         currentPage={currentPage}
         totalJob={totalJob}
         jobsPerPage={jobsPerPage}
-        showNavigate={showNavigate}
-        paginate={(pageNumber) => setCurrentPage(pageNumber)}
+        showNavigateButtons={showNavigateButtons}
+        paginate={(pageNumber) => dispatch(actions.setCurrentPage(pageNumber))}
       />
     </aside>
   );
 }
-
-JobList.propTypes = {
-  jobList: PropTypes.array,
-};
 
 export default JobList;

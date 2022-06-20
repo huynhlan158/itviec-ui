@@ -1,6 +1,6 @@
 const pagination = {
   jobsPerPage: 10,
-  showNavigate: 5,
+  showNavigateButtons: 5,
 };
 
 export default pagination;
