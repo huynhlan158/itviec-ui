@@ -7,12 +7,14 @@ import Pagination from '~/components/Pagination';
 import config from '~/config';
 import { useStore } from '~/components/JobResult/store/useStore';
 import * as actions from '~/components/JobResult/state/actions';
+import { useGlobalStore } from '~/globalStore/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
 function JobList({}) {
   const [state, dispatch] = useStore();
   const { currentPage, jobList, companyList } = state;
+  const [headerShrink] = useGlobalStore();
 
   const showNavigateButtons = config.pagination.showNavigateButtons;
   const jobsPerPage = config.pagination.jobsPerPage;
@@ -29,7 +31,7 @@ function JobList({}) {
   }, [currentPage]);
 
   return (
-    <aside className={cx('wrapper')}>
+    <aside className={cx('wrapper', { shrink: headerShrink })}>
       <h1 className={cx('title')}>{jobList.length} Jobs Recommended for A Nguyen Van</h1>
       <div className={cx('job-list')}>
         {currentJobList.map((job, index) => (

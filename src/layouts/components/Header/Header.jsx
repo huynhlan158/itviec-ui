@@ -21,6 +21,7 @@ import { JOBS, IT_COMPANIES } from '~/assess/constants';
 import NavLink from './components/NavLink';
 import Menu from '~/components/Popper/Menu';
 import Search from './components/Search';
+import { useGlobalStore } from '~/globalStore/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
@@ -59,24 +60,24 @@ const userLinks = [
 
 function Header({ search = false }) {
   const user = true;
-  const [isShrink, setShrink] = useState(false);
+  const [headerShrink, setHeaderShrink] = useGlobalStore();
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0 && !search) {
-        setShrink(true);
+        setHeaderShrink(true);
       } else {
-        setShrink(false);
+        setHeaderShrink(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-  }, [isShrink]);
+  }, [headerShrink]);
 
   return (
-    <nav className={cx('wrapper', { shrink: isShrink })}>
+    <nav className={cx('wrapper', { shrink: headerShrink })}>
       <div className={cx('container')}>
-        <div className={cx('logo', { shrink: isShrink })}>
+        <div className={cx('logo', { shrink: headerShrink })}>
           <Link to={config.routes.home}>
             <img src={images.logo} alt="logo_img" />
           </Link>
@@ -113,7 +114,7 @@ function Header({ search = false }) {
                         <FontAwesomeIcon icon={faSortDown} />
                       </i>
                     </div>
-                    <div className={cx('avatar', { shrink: isShrink })}>A</div>
+                    <div className={cx('avatar', { shrink: headerShrink })}>A</div>
                   </div>
                 </NavLink>
               </Menu>

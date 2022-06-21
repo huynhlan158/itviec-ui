@@ -4,11 +4,16 @@ import classNames from 'classnames/bind';
 
 import styles from './TopCompany.module.scss';
 import Image from '~/components/Image';
+import { useStore } from '~/components/JobResult/store/useStore';
 
 const cx = classNames.bind(styles);
 
 function TopCompany({ data }) {
-  const { companyName, profileLink, logo, location, jobOpening } = data;
+  const [state] = useStore();
+  const { jobList } = state;
+
+  const { id, name, profileLink, logo, location } = data;
+  const numberOfJobOpening = jobList.filter((job) => job.companyId === id).length;
 
   return (
     <Link className={cx('wrapper')} to={profileLink}>
@@ -16,13 +21,13 @@ function TopCompany({ data }) {
         <Image src={logo} alt="company_logo" />
       </div>
 
-      <h3 className={cx('name')}>{companyName}</h3>
+      <h3 className={cx('name')}>{name}</h3>
 
       <div className={cx('info')}>
-        {jobOpening > 0 && (
+        {numberOfJobOpening > 0 && (
           <>
             <span className={cx('job-number')}>
-              <span>{jobOpening > 1 ? `${jobOpening} Jobs` : `${jobOpening} Job`}</span>
+              <span>{numberOfJobOpening > 1 ? `${numberOfJobOpening} Jobs` : `${numberOfJobOpening} Job`}</span>
               <span>-</span>
             </span>
 

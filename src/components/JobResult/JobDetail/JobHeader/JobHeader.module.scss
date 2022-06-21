@@ -4,9 +4,11 @@
   background-color: var(--white);
   position: sticky;
   z-index: 5;
+  top: var(--header-height);
 
-  // will add value using context hook
-  top: 40px;
+  &.shrink {
+    top: var(--header-height-onsroll-down);
+  }
 }
 
 .title {
