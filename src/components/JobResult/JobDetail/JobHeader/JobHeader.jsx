@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -12,14 +11,16 @@ const cx = classNames.bind(styles);
 
 function JobHeader() {
   const [state] = useStore();
-  const { selectedJob, dispatch } = state;
-
-  console.log('Header: ', selectedJob);
+  const { selectedJob, selectedCompany } = state;
 
   return (
     <header className={cx('wrapper')}>
-      <h1 className={cx('title')}>{selectedJob.jobTitle}</h1>
-      <span className={cx('sub-title')}>{selectedJob.companyName}</span>
+      <h1 className={cx('title')}>
+        {selectedJob.id} {selectedJob.title}
+      </h1>
+      <span className={cx('sub-title')}>
+        {selectedCompany.id} {selectedCompany.name}
+      </span>
       <div className={cx('apply')}>
         <Button primary xl>
           Apply Now

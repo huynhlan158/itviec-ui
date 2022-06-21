@@ -1,16 +1,26 @@
-import { SET_JOB_LIST, SET_JOB_SELECTED, SET_CURRENT_PAGE } from './constants';
+import { SET_JOB_LIST, SET_SELECTED_JOB, SET_CURRENT_PAGE, SET_COMPANY_LIST, SET_SELECTED_COMPANY } from './constants';
 
 export const setJobList = (payload) => ({
   type: SET_JOB_LIST,
   payload,
 });
 
-export const setJobSelected = (payload) => ({
-  type: SET_JOB_SELECTED,
+export const setSelectedJob = (payload) => ({
+  type: SET_SELECTED_JOB,
   payload,
 });
 
 export const setCurrentPage = (payload) => ({
   type: SET_CURRENT_PAGE,
+  payload,
+});
+
+export const setCompanyList = (payload) => ({
+  type: SET_COMPANY_LIST,
+  payload,
+});
+
+export const setSelectedCompany = (payload) => ({
+  type: SET_SELECTED_COMPANY,
   payload,
 });

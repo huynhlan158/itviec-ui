@@ -12,7 +12,7 @@ const cx = classNames.bind(styles);
 
 function JobList({}) {
   const [state, dispatch] = useStore();
-  const { currentPage, jobList } = state;
+  const { currentPage, jobList, companyList } = state;
 
   const showNavigateButtons = config.pagination.showNavigateButtons;
   const jobsPerPage = config.pagination.jobsPerPage;
@@ -24,7 +24,7 @@ function JobList({}) {
 
   useEffect(() => {
     if (jobList.length > 0) {
-      dispatch(actions.setJobSelected(currentJobList[0]));
+      dispatch(actions.setSelectedJob(currentJobList[0]));
     }
   }, [currentPage]);
 
@@ -33,7 +33,15 @@ function JobList({}) {
       <h1 className={cx('title')}>{jobList.length} Jobs Recommended for A Nguyen Van</h1>
       <div className={cx('job-list')}>
         {currentJobList.map((job, index) => (
-          <JobItem key={index} data={job} selectJob={(job) => dispatch(actions.setJobSelected(job))} />
+          <JobItem
+            key={index}
+            data={job}
+            selectJob={(job) => {
+              dispatch(actions.setSelectedJob(job));
+              const selectedCompany = companyList.find((company) => company.id === job.companyId);
+              dispatch(actions.setSelectedCompany(selectedCompany));
+            }}
+          />
         ))}
       </div>
 

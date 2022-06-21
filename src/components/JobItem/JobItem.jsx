@@ -35,9 +35,11 @@ function JobItem({ data, selectJob }) {
           {title}
         </NavLink>
 
-        <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
-          {salary}
-        </CharacteristicItem>
+        {salary && (
+          <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
+            {salary}
+          </CharacteristicItem>
+        )}
 
         {highlightBenefits && (
           <ul className={cx('benefits')}>

@@ -1,9 +1,11 @@
-import { SET_JOB_LIST, SET_JOB_SELECTED, SET_CURRENT_PAGE } from './constants';
+import { SET_JOB_LIST, SET_SELECTED_JOB, SET_CURRENT_PAGE, SET_COMPANY_LIST, SET_SELECTED_COMPANY } from './constants';
 
 const initState = {
-  selectedJob: {},
   currentPage: 1,
+  selectedJob: {},
   jobList: [],
+  selectedCompany: {},
+  companyList: [],
 };
 
 function reducer(state, action) {
@@ -13,7 +15,7 @@ function reducer(state, action) {
         ...state,
         jobList: action.payload,
       };
-    case SET_JOB_SELECTED:
+    case SET_SELECTED_JOB:
       return {
         ...state,
         selectedJob: action.payload,
@@ -22,6 +24,16 @@ function reducer(state, action) {
       return {
         ...state,
         currentPage: action.payload,
+      };
+    case SET_COMPANY_LIST:
+      return {
+        ...state,
+        companyList: action.payload,
+      };
+    case SET_SELECTED_COMPANY:
+      return {
+        ...state,
+        selectedCompany: action.payload,
       };
     default:
       console.error('Invalid');

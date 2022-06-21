@@ -12,8 +12,10 @@ import * as actions from '~/components/JobResult/state/actions';
 
 const cx = classNames.bind(styles);
 
+// will replace by calling api
 const job = {
-  id: '1',
+  id: 'JOB_01',
+  companyId: 'COM_01',
   logo: 'https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNWpkRHc9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--03b3d677c23e7cca369bfe42c0698c7946968f44/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RTNKbGMybDZaVjloYm1SZmNHRmtXd2RwUm1sRyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f9f/nal-vi-t-nam-nal-global-career-logo.png',
   title: 'Front-end Dev (Angular/ReactJS/VueJS)',
   salary: '1,300 - 2,000 USD',
@@ -80,25 +82,48 @@ const job = {
   ],
 };
 
-// will replace by calling api
 const jobListHardCode = [
   job,
-  { ...job, id: 2 },
-  { ...job, id: 3 },
-  { ...job, id: 4 },
-  { ...job, id: 5 },
-  { ...job, id: 6 },
-  { ...job, id: 7 },
-  { ...job, id: 8 },
-  { ...job, id: 9 },
-  { ...job, id: 10 },
-  { ...job, id: 11 },
-  { ...job, id: 12 },
-  { ...job, id: 13 },
-  { ...job, id: 14 },
-  { ...job, id: 15 },
-  { ...job, id: 16 },
-  { ...job, id: 17 },
+  { ...job, id: 'JOB_02', companyId: 'COM_01' },
+  { ...job, id: 'JOB_03', companyId: 'COM_02' },
+  { ...job, id: 'JOB_04', companyId: 'COM_03' },
+  { ...job, id: 'JOB_05', companyId: 'COM_04' },
+  { ...job, id: 'JOB_06', companyId: 'COM_05' },
+  { ...job, id: 'JOB_07', companyId: 'COM_01' },
+  { ...job, id: 'JOB_08', companyId: 'COM_02' },
+  { ...job, id: 'JOB_09', companyId: 'COM_03' },
+  { ...job, id: 'JOB_10', companyId: 'COM_04' },
+  { ...job, id: 'JOB_11', companyId: 'COM_05' },
+  { ...job, id: 'JOB_12', companyId: 'COM_01' },
+  { ...job, id: 'JOB_13', companyId: 'COM_02' },
+  { ...job, id: 'JOB_14', companyId: 'COM_03' },
+  { ...job, id: 'JOB_15', companyId: 'COM_04' },
+  { ...job, id: 'JOB_16', companyId: 'COM_05' },
+  { ...job, id: 'JOB_17', companyId: 'COM_05' },
+];
+
+const company = {
+  id: 'COM_01',
+  name: 'Hanwha Financial Technology',
+  slogan: 'Hire great people and give them freedom to be awesome.',
+  logo: 'https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNWpkRHc9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--03b3d677c23e7cca369bfe42c0698c7946968f44/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RTNKbGMybDZaVjloYm1SZmNHRmtXd2RwUm1sRyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f9f/nal-vi-t-nam-nal-global-career-logo.png',
+  profileLink: '#',
+  type: 'Product',
+  size: '1000+',
+  workingDays: 'Monday - Friday',
+  location: 'Ho Chi Minh',
+  country: 'Germany',
+  countryCode: 'DE',
+  overtime: false,
+  jobOpening: 6,
+};
+
+const companyListHardCode = [
+  company,
+  { ...company, id: 'COM_02' },
+  { ...company, id: 'COM_03' },
+  { ...company, id: 'COM_04' },
+  { ...company, id: 'COM_05' },
 ];
 
 function JobResult() {
@@ -106,7 +131,11 @@ function JobResult() {
 
   useEffect(() => {
     dispatch(actions.setJobList(jobListHardCode));
-    dispatch(actions.setJobSelected(jobListHardCode[0]));
+    dispatch(actions.setSelectedJob(jobListHardCode[0]));
+    dispatch(actions.setCompanyList(companyListHardCode));
+
+    const selectedCompany = companyListHardCode.find((company) => company.id === jobListHardCode[0].companyId);
+    dispatch(actions.setSelectedCompany(selectedCompany));
   }, []);
 
   return (

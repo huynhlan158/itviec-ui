@@ -18,38 +18,38 @@ function JobOverview() {
   const jobPostedHour = Math.ceil((selectedJob.postedTime / 1000 / 60 / 60) % 24);
   const hourUnit = jobPostedHour > 1 ? 'hours' : 'hour';
 
-  return (
-    <h1>Overview</h1>
+  if (selectedJob.id) {
+    return (
+      <div className={cx('wrapper')}>
+        <div className={cx('skills')}>
+          {selectedJob.skills?.map((skill, index) => (
+            <Button key={index} basic md>
+              {skill}
+            </Button>
+          ))}
+        </div>
 
-    // <div className={cx('wrapper')}>
-    //   <div className={cx('skills')}>
-    //     {selectedJob.skills.map((skill, index) => (
-    //       <Button key={index} basic md>
-    //         {skill}
-    //       </Button>
-    //     ))}
-    //   </div>
+        <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
+          {selectedJob.id} {selectedJob.salary}
+        </CharacteristicItem>
 
-    //   <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
-    //     {selectedJob.id} {selectedJob.salary}
-    //   </CharacteristicItem>
+        <CharacteristicItem icon={<FontAwesomeIcon icon={faLocationDot} />}>
+          <>
+            <span>{selectedJob.address}</span>
+            <a href={selectedJob.mapLink} className={cx('map-link')}>
+              See map
+            </a>
+          </>
+        </CharacteristicItem>
 
-    //   <CharacteristicItem icon={<FontAwesomeIcon icon={faLocationDot} />}>
-    //     <>
-    //       <span>{selectedJob.address}</span>
-    //       <a href={selectedJob.mapLink} className={cx('map-link')}>
-    //         See map
-    //       </a>
-    //     </>
-    //   </CharacteristicItem>
+        <CharacteristicItem icon={<FontAwesomeIcon icon={faDisplay} />}>{selectedJob.type}</CharacteristicItem>
 
-    //   <CharacteristicItem icon={<FontAwesomeIcon icon={faDisplay} />}>{selectedJob.type}</CharacteristicItem>
-
-    //   <CharacteristicItem className={cx({ newPost: !jobPostedDay })} icon={<FontAwesomeIcon icon={faCalendarDays} />}>
-    //     {jobPostedDay > 0 ? `${jobPostedDay} ${dayUnit} ago` : `${jobPostedHour} ${hourUnit} ago`}
-    //   </CharacteristicItem>
-    // </div>
-  );
+        <CharacteristicItem className={cx({ newPost: !jobPostedDay })} icon={<FontAwesomeIcon icon={faCalendarDays} />}>
+          {jobPostedDay > 0 ? `${jobPostedDay} ${dayUnit} ago` : `${jobPostedHour} ${hourUnit} ago`}
+        </CharacteristicItem>
+      </div>
+    );
+  }
 }
 
 export default JobOverview;
