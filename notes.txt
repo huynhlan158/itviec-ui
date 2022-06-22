@@ -19,3 +19,11 @@ JOBITEM:
 
 PAGINATION:
 - optimize logic?
+
+GLOBALSTORE:
+- headerShrink state causes components re-render many times
+- structure for multiple state?
+
+COMON: 
+- data structure's rules?
+- check the existence before processing data

@@ -1,20 +1,23 @@
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
+import axios from 'axios';
 import classNames from 'classnames/bind';
 
 import styles from './JobList.module.scss';
 import JobItem from '~/components/JobItem';
 import Pagination from '~/components/Pagination';
 import config from '~/config';
-import { useStore } from '~/components/JobResult/store/useStore';
-import * as actions from '~/components/JobResult/state/actions';
-import { useGlobalStore } from '~/globalStore/useGlobalStore';
+import * as actions from '~/state/actions';
+import { useGlobalStore } from '~/store/useGlobalStore';
+import { setupServer } from '~/fakeApis';
 
 const cx = classNames.bind(styles);
 
-function JobList({}) {
-  const [state, dispatch] = useStore();
+setupServer();
+
+function JobList() {
+  const [state, dispatch] = useGlobalStore();
   const { currentPage, jobList, companyList } = state;
-  const [headerShrink] = useGlobalStore();
+  const jobListRef = useRef();
 
   const showNavigateButtons = config.pagination.showNavigateButtons;
   const jobsPerPage = config.pagination.jobsPerPage;
@@ -25,13 +28,27 @@ function JobList({}) {
   const currentJobList = jobList.slice(indexOfFirstJob, indexOfLastJob);
 
   useEffect(() => {
+    axios.get('/api/it-jobs').then((data) => {
+      const jobList = data.data.jobs;
+      const companyList = data.data.companies;
+
+      dispatch(actions.setJobList(jobList));
+      dispatch(actions.setSelectedJob(jobList[0]));
+      dispatch(actions.setCompanyList(companyList));
+
+      const selectedCompany = companyList.find((company) => company.id === jobList[0].companyId);
+      dispatch(actions.setSelectedCompany(selectedCompany));
+    });
+  }, []);
+
+  useEffect(() => {
     if (jobList.length > 0) {
       dispatch(actions.setSelectedJob(currentJobList[0]));
     }
   }, [currentPage]);
 
   return (
-    <aside className={cx('wrapper', { shrink: headerShrink })}>
+    <aside className={cx('wrapper')} ref={jobListRef}>
       <h1 className={cx('title')}>{jobList.length} Jobs Recommended for A Nguyen Van</h1>
       <div className={cx('job-list')}>
         {currentJobList.map((job, index) => (
@@ -52,7 +69,10 @@ function JobList({}) {
         totalJob={totalJob}
         jobsPerPage={jobsPerPage}
         showNavigateButtons={showNavigateButtons}
-        paginate={(pageNumber) => dispatch(actions.setCurrentPage(pageNumber))}
+        paginate={(pageNumber) => {
+          dispatch(actions.setCurrentPage(pageNumber));
+          jobListRef.current.scrollTo(0, 0);
+        }}
       />
     </aside>
   );

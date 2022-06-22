@@ -5,11 +5,7 @@
   padding: 20px 10px 0;
   overflow: scroll;
   position: sticky;
-  top: var(--header-height);
-
-  &.shrink {
-    top: var(--header-height-onsroll-down);
-  }
+  top: 0;
 }
 
 .title {

@@ -1,4 +1,11 @@
-import { SET_JOB_LIST, SET_SELECTED_JOB, SET_CURRENT_PAGE, SET_COMPANY_LIST, SET_SELECTED_COMPANY } from './constants';
+import {
+  SET_JOB_LIST,
+  SET_SELECTED_JOB,
+  SET_CURRENT_PAGE,
+  SET_COMPANY_LIST,
+  SET_SELECTED_COMPANY,
+  SET_HEADER_SHRINK,
+} from './constants';
 
 const initState = {
   currentPage: 1,
@@ -6,6 +13,7 @@ const initState = {
   jobList: [],
   selectedCompany: {},
   companyList: [],
+  headerShrink: false,
 };
 
 function reducer(state, action) {
@@ -34,6 +42,11 @@ function reducer(state, action) {
       return {
         ...state,
         selectedCompany: action.payload,
+      };
+    case SET_HEADER_SHRINK:
+      return {
+        ...state,
+        headerShrink: action.payload,
       };
     default:
       console.error('Invalid');

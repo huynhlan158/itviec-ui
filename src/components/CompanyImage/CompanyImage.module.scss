@@ -7,4 +7,6 @@
   align-items: center;
   justify-content: center;
   background-color: var(--white);
+  overflow: hidden;
+  object-fit: content;
 }

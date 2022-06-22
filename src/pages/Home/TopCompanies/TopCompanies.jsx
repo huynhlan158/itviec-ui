@@ -1,41 +1,46 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import classNames from 'classnames/bind';
 
 import styles from './TopCompanies.module.scss';
 import TopCompany from './TopCompany';
-import config from '~/config';
 
 const cx = classNames.bind(styles);
 
-// will replace by calling api
-const company = {
-  id: 'COM_01',
-  name: 'Hanwha Financial Technology',
-  slogan: 'Hire great people and give them freedom to be awesome.',
-  logo: 'https://itviec.com/rails/active_storage/representations/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBNWpkRHc9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--03b3d677c23e7cca369bfe42c0698c7946968f44/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaDdCem9MWm05eWJXRjBTU0lJY0c1bkJqb0dSVlE2RTNKbGMybDZaVjloYm1SZmNHRmtXd2RwUm1sRyIsImV4cCI6bnVsbCwicHVyIjoidmFyaWF0aW9uIn19--d55b6722f71e82d147ad94b8445be27797820f9f/nal-vi-t-nam-nal-global-career-logo.png',
-  profileLink: '#',
-  type: 'Product',
-  size: '1000+',
-  workingDays: 'Monday - Friday',
-  location: 'Ho Chi Minh',
-  country: 'Germany',
-  countryCode: 'DE',
-  overtime: false,
-};
-
-const topCompanyList = [
-  company,
-  { ...company, id: 'COM_02' },
-  { ...company, id: 'COM_03' },
-  { ...company, id: 'COM_04' },
-  { ...company, id: 'COM_05' },
-];
-
 function TopCompanies() {
+  const [topCompanyList, setTopCompanyList] = useState([]);
+
+  useEffect(() => {
+    axios.get('/api/top-companies').then((res) => {
+      setTopCompanyList(res.data.topCompanies);
+    });
+  }, []);
+
+  // shuffle the list to have new order everytime the page re-load
+  const shuffle = (array) => {
+    let currentIndex = array.length,
+      randomIndex;
+
+    while (currentIndex != 0) {
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  };
+
+  shuffle(topCompanyList);
+
+  // then get the first 8 companies only
+  const top8 = topCompanyList.slice(0, 8);
+
   return (
     <div className={cx('wrapper')}>
       <h1 className={cx('title')}>Top Employers</h1>
       <div className={cx('content')}>
-        {topCompanyList.map((company) => (
+        {top8.map((company) => (
           <TopCompany key={company.id} data={company} />
         ))}
       </div>

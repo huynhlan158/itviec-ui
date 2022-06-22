@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -21,7 +21,8 @@ import { JOBS, IT_COMPANIES } from '~/assess/constants';
 import NavLink from './components/NavLink';
 import Menu from '~/components/Popper/Menu';
 import Search from './components/Search';
-import { useGlobalStore } from '~/globalStore/useGlobalStore';
+import { useGlobalStore } from '~/store/useGlobalStore';
+import * as actions from '~/state/actions';
 
 const cx = classNames.bind(styles);
 
@@ -59,15 +60,18 @@ const userLinks = [
 ];
 
 function Header({ search = false }) {
+  // will call api
   const user = true;
-  const [headerShrink, setHeaderShrink] = useGlobalStore();
+
+  const [state, dispatch] = useGlobalStore();
+  const { headerShrink } = state;
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0 && !search) {
-        setHeaderShrink(true);
+        dispatch(actions.setHeaderShrink(true));
       } else {
-        setHeaderShrink(false);
+        dispatch(actions.setHeaderShrink(false));
       }
     };
 

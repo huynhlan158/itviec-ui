@@ -9,19 +9,20 @@ import CompanyImage from '~/components/CompanyImage';
 import Button from '../Button';
 import config from '~/config';
 import CharacteristicItem from '~/components/CharacteristicItem';
-import { useStore } from '~/components/JobResult/store/useStore';
+import { useGlobalStore } from '~/store/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
 function JobItem({ data, selectJob }) {
-  const [state] = useStore();
+  const [state] = useGlobalStore();
   const { selectedJob } = state;
 
   const { logo, title, salary, highlightBenefits, skills, location, postedTime, hotJob, seen, id } = data;
 
   const jobPostedDay = Math.floor(postedTime / 1000 / 60 / 60 / 24);
-  const jobPostedHour = Math.ceil((postedTime / 1000 / 60 / 60) % 24);
-  const timeUnit = jobPostedDay > 0 ? 'd' : 'h';
+  const jobPostedHour = Math.floor((postedTime / 1000 / 60 / 60) % 24);
+  const jobPostedMinute = Math.ceil((postedTime / 1000 / 60) % 60);
+  const timeUnit = jobPostedDay > 0 ? 'd' : jobPostedHour > 0 ? 'h' : 'm';
 
   return (
     <div
@@ -35,11 +36,9 @@ function JobItem({ data, selectJob }) {
           {title}
         </NavLink>
 
-        {salary && (
-          <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
-            {salary}
-          </CharacteristicItem>
-        )}
+        <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
+          {salary}
+        </CharacteristicItem>
 
         {highlightBenefits && (
           <ul className={cx('benefits')}>
@@ -65,7 +64,11 @@ function JobItem({ data, selectJob }) {
         {!seen ? <span className={cx('new-tag')}>New For You</span> : ''}
         <span>{location}</span>
         <span className={cx({ newPost: !jobPostedDay })}>
-          {jobPostedDay > 0 ? `${jobPostedDay} ${timeUnit}` : `${jobPostedHour} ${timeUnit}`}
+          {jobPostedDay > 0
+            ? `${jobPostedDay} ${timeUnit}`
+            : jobPostedHour > 0
+            ? `${jobPostedHour} ${timeUnit}`
+            : `${jobPostedMinute} ${timeUnit}`}
         </span>
       </div>
     </div>
@@ -74,7 +77,6 @@ function JobItem({ data, selectJob }) {
 
 JobItem.propTypes = {
   data: PropTypes.object.isRequired,
-  selectedJob: PropTypes.object,
   selectJob: PropTypes.func,
 };
 

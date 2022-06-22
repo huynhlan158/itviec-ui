@@ -9,12 +9,12 @@ import Button from '~/components/Button';
 import config from '~/config';
 import CharacteristicItem from '~/components/CharacteristicItem';
 import { faCalendarDays, faClock, faFlag } from '@fortawesome/free-regular-svg-icons';
-import { useStore } from '~/components/JobResult/store/useStore';
+import { useGlobalStore } from '~/store/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
 function CompanyOverview() {
-  const [state] = useStore();
+  const [state] = useGlobalStore();
   const { selectedCompany } = state;
 
   if (selectedCompany.id) {
@@ -24,15 +24,14 @@ function CompanyOverview() {
           <CompanyImage to={config.routes.companyProfile} src={selectedCompany.logo} />
 
           <div className={cx('name')}>
-            <h3 className={cx('title')}>
-              {selectedCompany.id} {selectedCompany.name}
-            </h3>
+            <h3 className={cx('title')}>{selectedCompany.name}</h3>
             <span className={cx('sub-title')}>{selectedCompany.slogan}</span>
           </div>
         </div>
 
         <div className={cx('content')}>
           <div className={cx('characteristics')}>
+            <CharacteristicItem icon={<FontAwesomeIcon icon={faGear} />}>{selectedCompany.type}</CharacteristicItem>
             <CharacteristicItem icon={<FontAwesomeIcon icon={faUserGroup} />}>
               {selectedCompany.size}
             </CharacteristicItem>

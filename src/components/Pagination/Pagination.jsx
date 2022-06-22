@@ -16,7 +16,7 @@ function Pagination({ className, jobsPerPage = 10, showNavigateButtons = 5, tota
 
   let pageNumbers = [];
 
-  if (lastPage <= 10) {
+  if (lastPage <= 5) {
     for (let i = 1; i <= lastPage; i++) {
       pageNumbers.push(i);
     }

@@ -21,7 +21,14 @@
   color: var(--dark-grey);
   font-size: 1.6rem;
   line-height: 2.6rem;
-  padding-left: 32px;
+
+  p {
+    margin: 10px 0;
+  }
+
+  li {
+    margin-left: 32px;
+  }
 }
 
 .hightlight {

@@ -4,15 +4,15 @@ import classNames from 'classnames/bind';
 
 import styles from './TopCompany.module.scss';
 import Image from '~/components/Image';
-import { useStore } from '~/components/JobResult/store/useStore';
+import { useGlobalStore } from '~/store/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
 function TopCompany({ data }) {
-  const [state] = useStore();
+  const [state] = useGlobalStore();
   const { jobList } = state;
 
-  const { id, name, profileLink, logo, location } = data;
+  const { id, name, profileLink, logo, province } = data;
   const numberOfJobOpening = jobList.filter((job) => job.companyId === id).length;
 
   return (
@@ -31,7 +31,7 @@ function TopCompany({ data }) {
               <span>-</span>
             </span>
 
-            <span>{location}</span>
+            <span>{province}</span>
           </>
         )}
       </div>

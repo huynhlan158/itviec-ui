@@ -1,4 +1,11 @@
-import { SET_JOB_LIST, SET_SELECTED_JOB, SET_CURRENT_PAGE, SET_COMPANY_LIST, SET_SELECTED_COMPANY } from './constants';
+import {
+  SET_JOB_LIST,
+  SET_SELECTED_JOB,
+  SET_CURRENT_PAGE,
+  SET_COMPANY_LIST,
+  SET_SELECTED_COMPANY,
+  SET_HEADER_SHRINK,
+} from './constants';
 
 export const setJobList = (payload) => ({
   type: SET_JOB_LIST,
@@ -22,5 +29,10 @@ export const setCompanyList = (payload) => ({
 
 export const setSelectedCompany = (payload) => ({
   type: SET_SELECTED_COMPANY,
+  payload,
+});
+
+export const setHeaderShrink = (payload) => ({
+  type: SET_HEADER_SHRINK,
   payload,
 });
