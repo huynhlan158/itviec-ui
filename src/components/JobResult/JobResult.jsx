@@ -1,4 +1,5 @@
 import classNames from 'classnames/bind';
+import PropTypes from 'prop-types';
 
 import styles from './JobResult.module.scss';
 import JobList from './JobList';
@@ -9,10 +10,10 @@ import CompanyOverview from './CompanyOverview';
 
 const cx = classNames.bind(styles);
 
-function JobResult() {
+function JobResult({ jobList }) {
   return (
     <div className={cx('wrapper')}>
-      <JobList />
+      <JobList jobList={jobList} />
 
       <div className={cx('detail')}>
         <div className={cx('job')}>
@@ -27,5 +28,9 @@ function JobResult() {
     </div>
   );
 }
+
+JobResult.propTypes = {
+  jobList: PropTypes.array.isRequired,
+};
 
 export default JobResult;

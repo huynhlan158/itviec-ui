@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -17,7 +17,7 @@ function JobItem({ data, selectJob }) {
   const [state] = useGlobalStore();
   const { selectedJob } = state;
 
-  const { logo, title, salary, highlightBenefits, skills, location, postedTime, hotJob, seen, id } = data;
+  const { logo, title, salaryMin, salaryMax, highlightBenefits, skills, location, postedTime, hotJob, seen, id } = data;
 
   const jobPostedDay = Math.floor(postedTime / 1000 / 60 / 60 / 24);
   const jobPostedHour = Math.floor((postedTime / 1000 / 60 / 60) % 24);
@@ -32,12 +32,16 @@ function JobItem({ data, selectJob }) {
       <CompanyImage className={cx('logo-image')} to={config.routes.companyProfile} src={logo} alt="company_img" />
 
       <div className={cx('info')}>
-        <NavLink to={config.routes.pending} className={cx('job-title')}>
+        <Link to={config.routes.pending} className={cx('job-title')}>
           {title}
-        </NavLink>
+        </Link>
 
         <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
-          {salary}
+          {salaryMin && typeof salaryMin === 'number'
+            ? `${salaryMin.toLocaleString('en-US')} - ${salaryMax.toLocaleString('en-US')} USD`
+            : salaryMin && typeof salaryMin === 'string'
+            ? salaryMin
+            : `Up to ${salaryMax.toLocaleString('en-US')} USD`}
         </CharacteristicItem>
 
         {highlightBenefits && (

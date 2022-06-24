@@ -25,7 +25,7 @@ function CompanyOverview() {
 
           <div className={cx('name')}>
             <h3 className={cx('title')}>{selectedCompany.name}</h3>
-            <span className={cx('sub-title')}>{selectedCompany.slogan}</span>
+            <span className={cx('sub-title')}>{selectedCompany.slogan || selectedCompany.name}</span>
           </div>
         </div>
 

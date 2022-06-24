@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -18,11 +18,10 @@ import styles from './Header.module.scss';
 import config from '~/config';
 import images from '~/assess/images';
 import { JOBS, IT_COMPANIES } from '~/assess/constants';
-import NavLink from './components/NavLink';
+import NavItem from './components/NavItem';
 import Menu from '~/components/Popper/Menu';
 import Search from './components/Search';
 import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
 
 const cx = classNames.bind(styles);
 
@@ -63,20 +62,23 @@ function Header({ search = false }) {
   // will call api
   const user = true;
 
-  const [state, dispatch] = useGlobalStore();
-  const { headerShrink } = state;
+  const [, , headerShrink, setHeaderShrink] = useGlobalStore();
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0 && !search) {
-        dispatch(actions.setHeaderShrink(true));
+        setHeaderShrink(true);
       } else {
-        dispatch(actions.setHeaderShrink(false));
+        setHeaderShrink(false);
       }
     };
 
     window.addEventListener('scroll', handleScroll);
-  }, [headerShrink]);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   return (
     <nav className={cx('wrapper', { shrink: headerShrink })}>
@@ -91,18 +93,18 @@ function Header({ search = false }) {
           <div className={cx('links')}>
             {/* Jobs  */}
             <Menu items={JOBS}>
-              <NavLink to={config.routes.jobs} multilevel>
+              <NavItem to={config.routes.jobs} multilevel>
                 All Jobs
-              </NavLink>
+              </NavItem>
             </Menu>
 
             {/* IT Companies  */}
             <Menu items={IT_COMPANIES}>
-              <NavLink multilevel>IT Companies</NavLink>
+              <NavItem multilevel>IT Companies</NavItem>
             </Menu>
 
             {/* Blog  */}
-            <NavLink to={config.routes.blog}>Blog</NavLink>
+            <NavItem to={config.routes.blog}>Blog</NavItem>
 
             {search && <Search />}
           </div>
@@ -110,23 +112,23 @@ function Header({ search = false }) {
           <div className={cx('actions')}>
             {user ? (
               <Menu items={userLinks} smallItem>
-                <NavLink>
-                  <div className={cx('user')}>
+                <NavItem>
+                  <div className={cx('user', { showLess: search })}>
                     <div className={cx('user-name')}>
-                      <span>A Nguyen Van</span>
-                      <i>
+                      <span className={cx('user-name_text')}>A Nguyen Van</span>
+                      <i className={cx('user-name_icon')}>
                         <FontAwesomeIcon icon={faSortDown} />
                       </i>
                     </div>
                     <div className={cx('avatar', { shrink: headerShrink })}>A</div>
                   </div>
-                </NavLink>
+                </NavItem>
               </Menu>
             ) : (
               actionLinks.map((link, index) => (
-                <NavLink key={index} to={link.to} multilevel={link.multilevel}>
+                <NavItem key={index} to={link.to} multilevel={link.multilevel}>
                   {link.title}
-                </NavLink>
+                </NavItem>
               ))
             )}
 
@@ -158,4 +160,4 @@ Header.propTypes = {
   search: PropTypes.bool,
 };
 
-export default Header;
+export default memo(Header);

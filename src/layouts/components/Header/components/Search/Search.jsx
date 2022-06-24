@@ -1,24 +1,77 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+import { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
-
-import styles from './Search.module.scss';
-import NavLink from '../NavLink';
-import { CITIES } from '~/assess/constants';
-import PopperWrapper from '~/components/Popper/PopperWrapper';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faChevronDown, faLocationDot } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
+
+import styles from './Search.module.scss';
+import NavItem from '../NavItem';
+import { CITIES } from '~/assess/constants';
+import PopperWrapper from '~/components/Popper/PopperWrapper';
+import { useGlobalStore } from '~/store/useGlobalStore';
+import * as actions from '~/state/actions';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
 function Search({ className, big }) {
+  const [state, dispatch, , , , setSearchTextError] = useGlobalStore();
+  const { jobList, recommendedJobList, searchText, searchLocation } = state;
+  const navigate = useNavigate();
+
   const [activeOverlay, setActiveOverlay] = useState(false);
   const [activeInputSearch, setActiveInputSearch] = useState(false);
   const [activeCityOption, setActiveCityOption] = useState(false);
 
+  // reset searchText when loading the page
+  const location = useLocation();
+  useEffect(() => {
+    if (location.pathname === config.routes.home) {
+      dispatch(actions.setSearchText(''));
+    }
+  }, []);
+
+  const handleSearchJobs = () => {
+    // reset searchTextError
+    setSearchTextError(false);
+
+    // filter location
+    let locationFilteredJobList;
+    switch (searchLocation) {
+      case 'All Cities':
+        locationFilteredJobList = jobList;
+        break;
+      case 'Others':
+        locationFilteredJobList = jobList.filter((job) => job.location !== 'Ho Chi Minh' || 'Ha Noi' || 'Da Nang');
+      default:
+        locationFilteredJobList = jobList.filter((job) => job.location === searchLocation);
+    }
+
+    // filter search input
+    const result = locationFilteredJobList.filter(
+      (job) =>
+        job.title.toLowerCase().includes(searchText.toLowerCase()) ||
+        job.skills.map((skill) => skill.toLowerCase()).includes(searchText.toLowerCase()),
+    );
+
+    if (result.length > 0) {
+      dispatch(actions.setSearchJobList(result));
+      dispatch(actions.setFilteredJobList(result));
+      dispatch(actions.setSelectedJob(result[0]));
+    } else {
+      setSearchTextError(true);
+      dispatch(actions.setFilteredJobList(recommendedJobList.slice(0, 5)));
+    }
+
+    // navigate to job page and reset filters
+    navigate(config.routes.jobs);
+    dispatch(actions.removeAllFilters());
+  };
+
   return (
-    <NavLink className={cx('search', className, { big })}>
+    <NavItem className={cx('search', className, { big })}>
       <div className={cx('container')}>
         {/* search input */}
         <div className={cx('search-input', { active: activeInputSearch })}>
@@ -30,6 +83,8 @@ function Search({ className, big }) {
               setActiveOverlay(true);
               setActiveInputSearch(true);
             }}
+            value={searchText}
+            onChange={(e) => dispatch(actions.setSearchText(e.target.value))}
           />
         </div>
 
@@ -38,9 +93,12 @@ function Search({ className, big }) {
           render={(attrs) => (
             <div className={cx('city-container')} tabIndex="-1" {...attrs}>
               <PopperWrapper className={cx('city-option')} fixed>
-                <span className={cx('city-item')}>All Cities</span>
                 {CITIES.map((city, index) => (
-                  <span key={index} className={cx('city-item')}>
+                  <span
+                    key={index}
+                    className={cx('city-item')}
+                    onClick={() => dispatch(actions.setSearchLocation(city))}
+                  >
                     {city}
                   </span>
                 ))}
@@ -51,6 +109,8 @@ function Search({ className, big }) {
           placement="bottom"
           appendTo={document.body}
           trigger="click"
+          hideOnClick="true"
+          onClickOutside={(instance) => instance.hide()}
         >
           <div
             className={cx('city', { active: activeCityOption })}
@@ -67,14 +127,14 @@ function Search({ className, big }) {
               ) : (
                 ''
               )}
-              <span className={cx('city-title')}>Ho Chi Minh</span>
+              <span className={cx('city-title')}>{searchLocation}</span>
             </div>
             <FontAwesomeIcon icon={faChevronDown} />
           </div>
         </Tippy>
 
         {/* search button */}
-        <button className={cx('search-btn')}>
+        <button className={cx('search-btn')} onClick={handleSearchJobs}>
           {big ? <span>Search</span> : <FontAwesomeIcon icon={faMagnifyingGlass} />}
         </button>
 
@@ -88,7 +148,7 @@ function Search({ className, big }) {
           }}
         ></div>
       </div>
-    </NavLink>
+    </NavItem>
   );
 }
 
@@ -97,4 +157,4 @@ Search.propTypes = {
   big: PropTypes.bool,
 };
 
-export default Search;
+export default memo(Search);

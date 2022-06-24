@@ -1,11 +1,16 @@
 .wrapper {
   width: 600px;
-  height: 100vh;
+  height: calc(100vh - var(--header-height));
   max-height: 1200px;
   padding: 20px 10px 0;
   overflow: scroll;
   position: sticky;
-  top: 0;
+  top: var(--header-height);
+
+  &.shrink {
+    top: var(--header-height-onsroll-down);
+    height: calc(100vh - var(--header-height-onsroll-down));
+  }
 }
 
 .title {
@@ -14,4 +19,82 @@
   line-height: 3.5rem;
   padding-left: 10px;
   margin-bottom: 20px;
+}
+
+.hightlight-text {
+  font-size: 3rem;
+  color: var(--primary);
+}
+
+.result-text {
+  font-size: 2.3rem;
+}
+
+// company spotlight
+.company-spotlight {
+  margin-top: 17px;
+  border-top: 1px solid #e7e7e7;
+}
+
+.company-title {
+  font-size: 2.6rem;
+  font-weight: normal;
+  text-align: center;
+  line-height: 40px;
+  margin: 17px 0;
+}
+
+.company-images {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+
+  .image {
+    max-width: 100%;
+  }
+
+  .logo {
+    position: absolute;
+    z-index: 5;
+    bottom: 0;
+    left: 50%;
+    transform: translate(-50%, 50%);
+  }
+}
+
+.company-info {
+  background-color: #f4f4f4;
+  padding: 42px 6px;
+  text-align: center;
+  display: block;
+
+  h4 {
+    font-size: 1.7rem;
+    font-weight: 500;
+  }
+
+  .location {
+    color: var(--medium-grey);
+    font-size: 1.4rem;
+  }
+
+  .slogan {
+    font-size: 1.5rem;
+  }
+}
+
+.job-item {
+  padding: 15px 0;
+  font-size: 1.5rem;
+  border-bottom: 1px solid #e7e7e7;
+  text-align: center;
+  cursor: pointer;
+
+  &:hover {
+    color: var(--primary);
+  }
+
+  &.view-all {
+    color: var(--primary);
+  }
 }

@@ -1,5 +1,5 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
@@ -30,7 +30,7 @@ const newestBlogs = [
   },
 ];
 
-function BlogEntries({ children }) {
+function BlogEntries() {
   return (
     <div className={cx('wrapper')}>
       <div className={cx('header')}>
@@ -75,8 +75,4 @@ function BlogEntries({ children }) {
   );
 }
 
-BlogEntries.propTypes = {
-  children: PropTypes.node,
-};
-
-export default BlogEntries;
+export default memo(BlogEntries);

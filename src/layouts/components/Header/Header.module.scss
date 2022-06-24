@@ -97,6 +97,18 @@
 .user {
   display: flex;
   flex-direction: row;
+
+  &.showLess {
+    flex-direction: row-reverse;
+
+    .user-name_text {
+      display: none;
+    }
+
+    .user-name_icon {
+      margin-left: 0;
+    }
+  }
 }
 
 .user-name {

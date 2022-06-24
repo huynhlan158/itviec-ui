@@ -1,7 +1,7 @@
 const routes = {
   home: '/',
   signIn: '/sign-in',
-  profile: '/profile',
+  profile: '/@:username',
   jobs: '/it-jobs',
   jobsBySkill: '/jobs-skill-index',
   jobsByTitle: '/jobs-title-index',
@@ -12,7 +12,7 @@ const routes = {
   bestCompanies2019: '/vietnam-best-it-companies-2019',
   reviewCompany: '/review-company',
   blog: '/blog',
-  companyProfile: '/company-profile',
+  companyProfile: '/companies/@:companyName',
   employer: '/post-jobs',
   textOnly: '/text-only',
   pending: '/pending',

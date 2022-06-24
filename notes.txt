@@ -1,29 +1,37 @@
 HEADER:
-- menu items: 
+- menu items: =======================> OK 
     - grid?
     - "View all job by..."
 - input search: the text color of placeholder is not right =======================> OK (set opacity = 1 for ::placeholder)
 
 COMPANY OVERVIEW (1/ bottom of job overview, 2/ top of company profile, 3/ right side of job page):
-- reuse?
+- reuse? =======================> OK 
 
 CHARACTERISTICITEM:
 - get icons from official website?
 
 JOBLIST:
-- scroll behavior to bottom
-- 1st click to jobItem (affected by a callback which is setState in useEffect, ): component re-render 2 times?
+- scroll behavior to bottom =======================> OK (set height to fit the screen)
+- 1st click to jobItem (affected by a callback which is setState (useState) in useEffect): component re-render 2 times?
 
 JOBITEM:
-- job-title: margin-bottom does not work
+- job-title: margin-bottom does not work =======================> OK (set display block/flex)
 
 PAGINATION:
 - optimize logic?
 
 GLOBALSTORE:
-- headerShrink state causes components re-render many times
 - structure for multiple state?
+- jobList vs recommendedJobList
+- use memo to avoid components re-render when state changes: does not work with headerShrink
 
-COMON: 
+FILTERJOBS:
+- optimize logic?
+
+COMMON: 
 - data structure's rules?
-- check the existence before processing data
+- check the existence before processing data (data is undefined before calling apis causes error: "Cannot read properties of undefined ")
+- components' separation is reasonable?
+- tippyjs: hideOnClick does not work
+
+login function: https://www.youtube.com/watch?v=QoLUB0QkUaE

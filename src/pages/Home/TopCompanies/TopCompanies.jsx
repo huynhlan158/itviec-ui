@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import axios from 'axios';
 import classNames from 'classnames/bind';
 
@@ -21,7 +21,7 @@ function TopCompanies() {
     let currentIndex = array.length,
       randomIndex;
 
-    while (currentIndex != 0) {
+    while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
 
@@ -48,4 +48,4 @@ function TopCompanies() {
   );
 }
 
-export default TopCompanies;
+export default memo(TopCompanies);

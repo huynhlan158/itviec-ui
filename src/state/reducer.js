@@ -1,19 +1,41 @@
 import {
+  // job + company list
   SET_JOB_LIST,
   SET_SELECTED_JOB,
-  SET_CURRENT_PAGE,
   SET_COMPANY_LIST,
   SET_SELECTED_COMPANY,
-  SET_HEADER_SHRINK,
+  SET_RECOMMENDED_JOB_LIST,
+
+  // filter jobs
+  ADD_FILTER_LEVEL,
+  REMOVE_FILTER_LEVEL,
+  ADD_FILTER_SALARY,
+  REMOVE_FILTER_SALARY,
+  ADD_FILTER_COMPANY_TYPE,
+  REMOVE_FILTER_COMPANY_TYPE,
+  REMOVE_ALL_FILTERS,
+  SET_SEARCH_TEXT,
+  SET_SEARCH_LOCATION,
+  SET_SEARCH_JOB_LIST,
+  SET_FILTERED_JOB_LIST,
 } from './constants';
 
 const initState = {
-  currentPage: 1,
+  // job + company list
   selectedJob: {},
   jobList: [],
+  recommendedJobList: [],
   selectedCompany: {},
   companyList: [],
-  headerShrink: false,
+
+  // filter jobs
+  filterJobLevel: [],
+  filterSalaryRange: [],
+  filterCompanyType: [],
+  searchText: '',
+  searchLocation: 'Ho Chi Minh',
+  searchJobList: [],
+  filteredJobList: [],
 };
 
 function reducer(state, action) {
@@ -28,11 +50,6 @@ function reducer(state, action) {
         ...state,
         selectedJob: action.payload,
       };
-    case SET_CURRENT_PAGE:
-      return {
-        ...state,
-        currentPage: action.payload,
-      };
     case SET_COMPANY_LIST:
       return {
         ...state,
@@ -43,10 +60,69 @@ function reducer(state, action) {
         ...state,
         selectedCompany: action.payload,
       };
-    case SET_HEADER_SHRINK:
+    case SET_RECOMMENDED_JOB_LIST:
       return {
         ...state,
-        headerShrink: action.payload,
+        recommendedJobList: action.payload,
+      };
+
+    // filter jobs
+    case ADD_FILTER_LEVEL:
+      return {
+        ...state,
+        filterJobLevel: [...state.filterJobLevel, action.payload],
+      };
+    case REMOVE_FILTER_LEVEL:
+      return {
+        ...state,
+        filterJobLevel: state.filterJobLevel.filter((item) => item !== action.payload),
+      };
+    case ADD_FILTER_SALARY:
+      return {
+        ...state,
+        filterSalaryRange: [...state.filterSalaryRange, action.payload],
+      };
+    case REMOVE_FILTER_SALARY:
+      return {
+        ...state,
+        filterSalaryRange: state.filterSalaryRange.filter((item) => item !== action.payload),
+      };
+    case ADD_FILTER_COMPANY_TYPE:
+      return {
+        ...state,
+        filterCompanyType: [...state.filterCompanyType, action.payload],
+      };
+    case REMOVE_FILTER_COMPANY_TYPE:
+      return {
+        ...state,
+        filterCompanyType: state.filterCompanyType.filter((item) => item !== action.payload),
+      };
+    case REMOVE_ALL_FILTERS:
+      return {
+        ...state,
+        filterJobLevel: [],
+        filterSalaryRange: [],
+        filterCompanyType: [],
+      };
+    case SET_SEARCH_TEXT:
+      return {
+        ...state,
+        searchText: action.payload,
+      };
+    case SET_SEARCH_LOCATION:
+      return {
+        ...state,
+        searchLocation: action.payload,
+      };
+    case SET_SEARCH_JOB_LIST:
+      return {
+        ...state,
+        searchJobList: action.payload,
+      };
+    case SET_FILTERED_JOB_LIST:
+      return {
+        ...state,
+        filteredJobList: action.payload,
       };
     default:
       console.error('Invalid');

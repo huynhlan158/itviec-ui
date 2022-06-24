@@ -1,7 +1,7 @@
 import config from '~/config';
 
 // header
-const CITIES = ['Ho Chi Minh', 'Ha Noi', 'Da Nang', 'Others'];
+const CITIES = ['All Cities', 'Ho Chi Minh', 'Ha Noi', 'Da Nang', 'Others'];
 
 const JOBS = [
   {
@@ -112,6 +112,29 @@ const IT_COMPANIES = [
   { title: 'Company Reviews', link: config.routes.reviewCompany },
 ];
 
-// store provider
+// filtered jobs
+const FILTER_TITLES = {
+  level: 'Job Level',
+  salary: 'Salary Range',
+  companyType: 'Company Type',
+};
 
-export { CITIES, JOBS, IT_COMPANIES };
+const FILTERS = [
+  {
+    title: FILTER_TITLES.level,
+    data: ['Fresher', 'Junior', 'Senior', 'Manager'],
+  },
+  {
+    title: FILTER_TITLES.salary,
+    data: [500, 1000, 2000, 2500],
+    leftCharacter: '>=',
+    rightCharacter: 'USD',
+  },
+  {
+    title: FILTER_TITLES.companyType,
+    data: ['Oursourcing', 'Product'],
+  },
+];
+
+// export
+export { CITIES, JOBS, IT_COMPANIES, FILTERS, FILTER_TITLES };

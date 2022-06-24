@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
 
-import styles from './NavLink.module.scss';
+import styles from './NavItem.module.scss';
 
 const cx = classNames.bind(styles);
 
-const NavLink = forwardRef(({ children, multilevel = false, to, className, ...passProps }, ref) => {
+const NavItem = forwardRef(({ children, multilevel = false, to, className, ...passProps }, ref) => {
   let Wrap = 'div';
 
   if (to) {
@@ -21,11 +21,11 @@ const NavLink = forwardRef(({ children, multilevel = false, to, className, ...pa
   );
 });
 
-NavLink.propTypes = {
+NavItem.propTypes = {
   children: PropTypes.node.isRequired,
   multilevel: PropTypes.bool,
   to: PropTypes.string,
   className: PropTypes.string,
 };
 
-export default NavLink;
+export default NavItem;

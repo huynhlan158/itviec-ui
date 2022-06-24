@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -9,9 +9,9 @@ const cx = classNames.bind(styles);
 
 function CompanyImage({ className, to, src, alt }) {
   return (
-    <NavLink to={to} className={cx('wrapper', className)}>
+    <Link to={to} className={cx('wrapper', className)}>
       <Image src={src} alt={alt} />
-    </NavLink>
+    </Link>
   );
 }
 

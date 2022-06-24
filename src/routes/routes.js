@@ -24,10 +24,10 @@ import {
 
 // public routes
 const publicRoutes = [
-  { path: config.routes.home, component: Home },
+  { path: config.routes.home, component: Home }, //done
   { path: config.routes.signIn, component: SignIn },
-  { path: config.routes.signIn, component: Profile },
-  { path: config.routes.jobs, component: Jobs, layout: JobSearchLayout },
+  { path: config.routes.profile, component: Profile },
+  { path: config.routes.jobs, component: Jobs, layout: JobSearchLayout }, //on-go
   { path: config.routes.jobsBySkill, component: JobsBySkill },
   { path: config.routes.jobsByTitle, component: JobsByTitle },
   { path: config.routes.jobsByCompany, component: JobsByCompany },

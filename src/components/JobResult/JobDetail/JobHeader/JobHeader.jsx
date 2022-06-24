@@ -6,12 +6,13 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import styles from './JobHeader.module.scss';
 import Button from '~/components/Button';
 import { useGlobalStore } from '~/store/useGlobalStore';
+import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
 function JobHeader() {
-  const [state] = useGlobalStore();
-  const { selectedJob, selectedCompany, headerShrink } = state;
+  const [state, , headerShrink] = useGlobalStore();
+  const { selectedJob, selectedCompany } = state;
 
   return (
     <header className={cx('wrapper', { shrink: headerShrink })}>
@@ -30,4 +31,4 @@ function JobHeader() {
   );
 }
 
-export default JobHeader;
+export default memo(JobHeader);
