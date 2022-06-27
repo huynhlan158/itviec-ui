@@ -49,7 +49,7 @@ function MenuSubItem({ children, className, search, searchBy }) {
 
       // navigate to companyProfile/ job page and reset filters
       if (searchBy === 'company') {
-        navigate(config.routes.companyProfile);
+        navigate(config.routes.companyProfile.replace(':companyname', children));
       } else {
         navigate(config.routes.jobs);
         dispatch(actions.removeAllFilters());

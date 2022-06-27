@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDisplay, faDollarSign, faLocationDot, faCalendarDays } from '@fortawesome/free-solid-svg-icons';
@@ -5,14 +6,11 @@ import { faDisplay, faDollarSign, faLocationDot, faCalendarDays } from '@fortawe
 import styles from './JobOverview.module.scss';
 import Button from '~/components/Button';
 import CharacteristicItem from '~/components/CharacteristicItem';
-import { useGlobalStore } from '~/store/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
-function JobOverview() {
-  const [state] = useGlobalStore();
-  const { selectedJob } = state;
-  const { postedTime, id, skills, salaryMin, salaryMax, address, mapLink, type } = selectedJob;
+function JobOverview({ job }) {
+  const { postedTime, id, skills, salaryMin, salaryMax, address, mapLink, type } = job;
 
   const jobPostedDay = Math.floor(postedTime / 1000 / 60 / 60 / 24);
   const dayUnit = jobPostedDay > 1 ? 'days' : 'day';
@@ -62,5 +60,9 @@ function JobOverview() {
     );
   }
 }
+
+JobOverview.propTypes = {
+  job: PropTypes.object.isRequired,
+};
 
 export default JobOverview;

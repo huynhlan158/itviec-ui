@@ -7,6 +7,7 @@ import {
   SignIn,
   Profile,
   Jobs,
+  Job,
   JobsBySkill,
   JobsByTitle,
   JobsByCompany,
@@ -27,7 +28,8 @@ const publicRoutes = [
   { path: config.routes.home, component: Home }, //done
   { path: config.routes.signIn, component: SignIn },
   { path: config.routes.profile, component: Profile },
-  { path: config.routes.jobs, component: Jobs, layout: JobSearchLayout }, //on-go
+  { path: config.routes.jobs, component: Jobs, layout: JobSearchLayout }, //done
+  { path: config.routes.job, component: Job }, //done
   { path: config.routes.jobsBySkill, component: JobsBySkill },
   { path: config.routes.jobsByTitle, component: JobsByTitle },
   { path: config.routes.jobsByCompany, component: JobsByCompany },

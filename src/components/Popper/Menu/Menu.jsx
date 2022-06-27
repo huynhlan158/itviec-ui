@@ -13,11 +13,9 @@ const cx = classNames.bind(styles);
 
 function Menu({ children, className, items = [], search }) {
   const [subMenu, setSubMenu] = useState(items[0]);
-  const [searchBy, setSearchBy] = useState('skills');
 
   const handleMenuHover = (item) => {
     setSubMenu(item);
-    setSearchBy();
   };
 
   return (
@@ -31,7 +29,7 @@ function Menu({ children, className, items = [], search }) {
                   key={index}
                   leftIcon={item.icon}
                   nextIcon={item.data && true}
-                  to={item.to}
+                  to={item.link}
                   onMouseEnter={() => handleMenuHover(item)}
                 >
                   {item.title}

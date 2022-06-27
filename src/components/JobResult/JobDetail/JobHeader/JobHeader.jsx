@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
@@ -10,14 +11,13 @@ import { memo } from 'react';
 
 const cx = classNames.bind(styles);
 
-function JobHeader() {
-  const [state, , headerShrink] = useGlobalStore();
-  const { selectedJob, selectedCompany } = state;
+function JobHeader({ job, company }) {
+  const [, , headerShrink] = useGlobalStore();
 
   return (
     <header className={cx('wrapper', { shrink: headerShrink })}>
-      <h1 className={cx('title')}>{selectedJob.title}</h1>
-      <span className={cx('sub-title')}>{selectedCompany.name}</span>
+      <h1 className={cx('title')}>{job.title}</h1>
+      <span className={cx('sub-title')}>{company.name}</span>
       <div className={cx('apply')}>
         <Button primary xl>
           Apply Now
@@ -30,5 +30,10 @@ function JobHeader() {
     </header>
   );
 }
+
+JobHeader.propTypes = {
+  job: PropTypes.object.isRequired,
+  company: PropTypes.object.isRequired,
+};
 
 export default memo(JobHeader);

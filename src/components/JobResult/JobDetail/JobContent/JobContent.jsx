@@ -1,26 +1,23 @@
+import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 import styles from './JobContent.module.scss';
-import { useGlobalStore } from '~/store/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
-function JobContent() {
-  const [state] = useGlobalStore();
-  const { selectedJob } = state;
-
-  if (selectedJob.id) {
+function JobContent({ job }) {
+  if (job.id) {
     return (
       <div className={cx('wrapper')}>
-        {selectedJob.reasonToJoin && <h2 className={cx('title')}>Top 3 Reasons To Join Us</h2>}
+        {job.reasonToJoin && <h2 className={cx('title')}>Top 3 Reasons To Join Us</h2>}
         <ul className={cx('detail', 'hightlight')}>
-          {selectedJob.reasonToJoin?.map((item, index) => (
+          {job.reasonToJoin?.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
         </ul>
 
         <h2 className={cx('title')}>Job Description</h2>
-        {selectedJob.description?.map((item, index) => (
+        {job.description?.map((item, index) => (
           <div key={index}>
             {item.title && <h3 className={cx('sub-title')}>{`${item.title}: `}</h3>}
             {item.detail && (
@@ -38,7 +35,7 @@ function JobContent() {
         ))}
 
         <h2 className={cx('title')}>Your Skills and Experience</h2>
-        {selectedJob.requirements?.map((item, index) => (
+        {job.requirements?.map((item, index) => (
           <div key={index}>
             {item.title && <h3 className={cx('sub-title')}>{`${item.title}: `}</h3>}
             <ul className={cx('detail')}>
@@ -55,7 +52,7 @@ function JobContent() {
 
         <h2 className={cx('title')}>Why You'll Love Working Here</h2>
         <ul className={cx('detail')}>
-          {selectedJob.benefit?.map((item, index) => (
+          {job.benefit?.map((item, index) => (
             <li key={index}>{item}</li>
           ))}
         </ul>
@@ -63,5 +60,9 @@ function JobContent() {
     );
   }
 }
+
+JobContent.propTypes = {
+  job: PropTypes.object.isRequired,
+};
 
 export default JobContent;

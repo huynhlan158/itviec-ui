@@ -16,7 +16,7 @@ function MenuItem({ children, leftIcon, nextIcon, onMouseEnter, to }) {
   }
 
   return (
-    <Wrap className={cx('menu-item')} to={to} onMouseEnter={onMouseEnter}>
+    <Wrap className={cx('menu-item', { pointer: !!to })} to={to} onMouseEnter={onMouseEnter}>
       <div className={cx('item-content')}>
         {leftIcon && <span className={cx('left-icon')}>{leftIcon}</span>}
         {children}

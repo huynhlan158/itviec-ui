@@ -30,12 +30,17 @@ FILTERJOBS:
 - optimize logic?
 - setSearchText in Search components
 
+APIS:
+- call apis one or many times? reset data when switching among pages
+- url structure, how to remove multiple special characters from a string
+- job api
+
 COMMON: 
 - data structure's rules?
 - check the existence before processing data (data is undefined before calling apis causes error: "Cannot read properties of undefined ")
 - components' separation is reasonable?
 - tippyjs: hideOnClick does not work
 - how to reuse a function (ex: handleSearchJobs)?
-- call apis one or many times? reset data when switching among pages
+
 
 login function: https://www.youtube.com/watch?v=QoLUB0QkUaE

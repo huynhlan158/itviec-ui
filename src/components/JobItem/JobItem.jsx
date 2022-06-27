@@ -32,7 +32,13 @@ function JobItem({ data, selectJob }) {
       <CompanyImage className={cx('logo-image')} to={config.routes.companyProfile} src={logo} alt="company_img" />
 
       <div className={cx('info')}>
-        <Link to={config.routes.pending} className={cx('job-title')}>
+        <Link
+          to={config.routes.job.replace(
+            ':jobname',
+            title.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() + id.replace('_', '-').toLowerCase(),
+          )}
+          className={cx('job-title')}
+        >
           {title}
         </Link>
 

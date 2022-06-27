@@ -7,6 +7,8 @@ import FilterJobs from './FilterJobs';
 import JobResult from '~/components/JobResult';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import * as actions from '~/state/actions';
+import config from '~/config';
+import Path from '~/components/Path';
 
 const cx = classNames.bind(styles);
 
@@ -55,8 +57,12 @@ function Jobs() {
 
   return (
     <div className={cx('wrapper')}>
-      <FilterJobs />
-      <JobResult jobList={filteredJobList} />
+      <div className={cx('container')}>
+        <FilterJobs />
+        <JobResult jobList={filteredJobList} />
+      </div>
+
+      <Path items={[{ title: 'Home', to: config.routes.home }, { title: 'All IT Jobs' }]} />
     </div>
   );
 }

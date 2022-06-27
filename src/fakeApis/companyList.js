@@ -4,7 +4,7 @@ import config from '~/config';
 
 export const companyList = [
   {
-    id: 'COM_01',
+    id: 'COM_001',
     name: 'Hanwha Financial Technology',
     slogan: 'We Can Make It',
     logo: logos.COM_01,
@@ -56,7 +56,7 @@ export const companyList = [
     viewNumber: 648,
   },
   {
-    id: 'COM_02',
+    id: 'COM_002',
     name: 'Bstar Solutions',
     logo: logos.COM_02,
     images: images,
@@ -119,7 +119,7 @@ export const companyList = [
     ],
   },
   {
-    id: 'COM_03',
+    id: 'COM_003',
     name: 'ECR VIETNAM CO., LTD',
     slogan: 'Founded in 1973, ECR is one of the oldest EPoS providers in the world',
     logo: logos.COM_03,
@@ -145,7 +145,7 @@ export const companyList = [
     viewNumber: 463,
   },
   {
-    id: 'COM_04',
+    id: 'COM_004',
     name: 'MONEX JSC',
     slogan: 'We Can Make It',
     logo: logos.COM_04,
@@ -171,7 +171,7 @@ export const companyList = [
     viewNumber: 38,
   },
   {
-    id: 'COM_05',
+    id: 'COM_005',
     name: 'SMART - SOLUTIONS',
     slogan: 'CUNG CẤP GIẢI PHÁP TỐT NHẤT CHO DOANH NGHIỆP',
     logo: logos.COM_05,
@@ -202,7 +202,7 @@ export const companyList = [
     viewNumber: 29,
   },
   {
-    id: 'COM_06',
+    id: 'COM_006',
     name: 'TJ Tech',
     logo: logos.COM_06,
     images: images,
@@ -265,7 +265,7 @@ export const companyList = [
     viewNumber: 3811,
   },
   {
-    id: 'COM_07',
+    id: 'COM_007',
     name: 'bbv Vietnam',
     slogan: 'bbv Vietnam stands for top quality in consulting, first class software engineering',
     logo: logos.COM_07,
@@ -346,7 +346,7 @@ export const companyList = [
     ],
   },
   {
-    id: 'COM_08',
+    id: 'COM_008',
     name: 'VNIB Tech',
     slogan: 'Communicate, Collaborate and Create value',
     logo: logos.COM_08,
@@ -429,7 +429,7 @@ export const companyList = [
     ],
   },
   {
-    id: 'COM_09',
+    id: 'COM_009',
     name: 'Alpha Networks Solution',
     slogan: 'Alpha Networks is a fully fledged IT solutions and systems integrator in South East Asia.',
     logo: logos.COM_09,
@@ -460,7 +460,7 @@ export const companyList = [
     viewNumber: 3452,
   },
   {
-    id: 'COM_10',
+    id: 'COM_010',
     name: 'Athena Studio',
     slogan: 'Athena Studio (http://www.athena.studio) - Playful workplace of smart and creative talent',
     logo: logos.COM_10,
@@ -575,7 +575,7 @@ export const companyList = [
 
 export const topCompanyList = [
   {
-    id: 'COM_01',
+    id: 'COM_001',
     name: 'Hanwha Financial Technology',
     slogan: 'We Can Make It',
     logo: logos.COM_01,
@@ -627,7 +627,7 @@ export const topCompanyList = [
     viewNumber: 648,
   },
   {
-    id: 'COM_02',
+    id: 'COM_002',
     name: 'Bstar Solutions',
     logo: logos.COM_02,
     images: images,
@@ -690,7 +690,7 @@ export const topCompanyList = [
     ],
   },
   {
-    id: 'COM_03',
+    id: 'COM_003',
     name: 'ECR VIETNAM CO., LTD',
     slogan: 'Founded in 1973, ECR is one of the oldest EPoS providers in the world',
     logo: logos.COM_03,
@@ -716,7 +716,7 @@ export const topCompanyList = [
     viewNumber: 463,
   },
   {
-    id: 'COM_04',
+    id: 'COM_004',
     name: 'MONEX JSC',
     slogan: 'We Can Make It',
     logo: logos.COM_04,
@@ -742,7 +742,7 @@ export const topCompanyList = [
     viewNumber: 38,
   },
   {
-    id: 'COM_05',
+    id: 'COM_005',
     name: 'SMART - SOLUTIONS',
     slogan: 'CUNG CẤP GIẢI PHÁP TỐT NHẤT CHO DOANH NGHIỆP',
     logo: logos.COM_05,
@@ -773,7 +773,7 @@ export const topCompanyList = [
     viewNumber: 29,
   },
   {
-    id: 'COM_06',
+    id: 'COM_006',
     name: 'TJ Tech',
     logo: logos.COM_06,
     images: images,
@@ -836,7 +836,7 @@ export const topCompanyList = [
     viewNumber: 3811,
   },
   {
-    id: 'COM_07',
+    id: 'COM_007',
     name: 'bbv Vietnam',
     slogan: 'bbv Vietnam stands for top quality in consulting, first class software engineering',
     logo: logos.COM_07,
@@ -917,7 +917,7 @@ export const topCompanyList = [
     ],
   },
   {
-    id: 'COM_08',
+    id: 'COM_008',
     name: 'VNIB Tech',
     slogan: 'Communicate, Collaborate and Create value',
     logo: logos.COM_08,
@@ -1000,7 +1000,7 @@ export const topCompanyList = [
     ],
   },
   {
-    id: 'COM_09',
+    id: 'COM_009',
     name: 'Alpha Networks Solution',
     slogan: 'Alpha Networks is a fully fledged IT solutions and systems integrator in South East Asia.',
     logo: logos.COM_09,
@@ -1031,7 +1031,7 @@ export const topCompanyList = [
     viewNumber: 3452,
   },
   {
-    id: 'COM_10',
+    id: 'COM_010',
     name: 'Athena Studio',
     slogan: 'Athena Studio (http://www.athena.studio) - Playful workplace of smart and creative talent',
     logo: logos.COM_10,
