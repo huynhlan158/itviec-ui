@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 setupServer();
 
 function Home() {
-  const [state, dispatch] = useGlobalStore();
+  const [state, dispatch, , , , , , setSearchText] = useGlobalStore();
   const { recommendedJobList } = state;
 
   // will call api
@@ -25,14 +25,17 @@ function Home() {
   };
 
   useEffect(() => {
+    // reset searchText when loading the home page
+    dispatch(actions.setUserInputText(''));
+    setSearchText('');
+
     // set scroll to top when loading the page
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 
     // call api & set states
     axios.get('/api/it-jobs').then((res) => {
-      const jobList = res.data.jobs;
-      const recommendedJobList = jobList.filter((job) => {
+      const recommendedJobList = res.data.jobs.filter((job) => {
         const skillsLowerCase = job.skills.map((skill) => skill.toLowerCase());
         let jobMatch = false;
 
@@ -45,12 +48,12 @@ function Home() {
         return jobMatch;
       });
 
-      dispatch(actions.setJobList(jobList));
+      dispatch(actions.setJobList(res.data.jobs));
       dispatch(actions.setRecommendedJobList(recommendedJobList));
       dispatch(actions.setSelectedJob(recommendedJobList[0]));
       dispatch(actions.setCompanyList(res.data.companies));
 
-      const selectedCompany = res.data.companies.find((company) => company.id === res.data.jobs[0].companyId);
+      const selectedCompany = res.data.companies.find((company) => company.id === recommendedJobList[0].companyId);
       dispatch(actions.setSelectedCompany(selectedCompany));
     });
   }, []);

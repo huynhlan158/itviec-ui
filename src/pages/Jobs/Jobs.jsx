@@ -41,18 +41,15 @@ function Jobs() {
 
       dispatch(actions.setJobList(res.data.jobs));
       dispatch(actions.setRecommendedJobList(recommendedJobList));
-      dispatch(actions.setSelectedJob(res.data.jobs[0]));
       dispatch(actions.setCompanyList(res.data.companies));
 
+      // to set default data for searchJobList & filteredJobList when accessing the page directly with provided link / refresh the page
       if (searchJobList.length === 0) {
         dispatch(actions.setSearchJobList(res.data.jobs));
       }
       if (filteredJobList.length === 0) {
         dispatch(actions.setFilteredJobList(res.data.jobs));
       }
-
-      const selectedCompany = res.data.companies.find((company) => company.id === res.data.jobs[0].companyId);
-      dispatch(actions.setSelectedCompany(selectedCompany));
     });
   }, []);
 

@@ -11,11 +11,13 @@ import MenuSubItem from './MenuSubItem';
 
 const cx = classNames.bind(styles);
 
-function Menu({ children, className, items = [] }) {
+function Menu({ children, className, items = [], search }) {
   const [subMenu, setSubMenu] = useState(items[0]);
+  const [searchBy, setSearchBy] = useState('skills');
 
   const handleMenuHover = (item) => {
     setSubMenu(item);
+    setSearchBy();
   };
 
   return (
@@ -51,7 +53,11 @@ function Menu({ children, className, items = [] }) {
                 )}
               >
                 {subMenu.data.map((subItem, index) => {
-                  return <MenuSubItem key={index}>{subItem}</MenuSubItem>;
+                  return (
+                    <MenuSubItem key={index} search={search} searchBy={subMenu.searchBy}>
+                      {subItem}
+                    </MenuSubItem>
+                  );
                 })}
 
                 {subMenu.viewAll && (
@@ -77,6 +83,7 @@ Menu.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   items: PropTypes.array,
+  search: PropTypes.bool,
 };
 
 export default Menu;

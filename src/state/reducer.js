@@ -32,8 +32,8 @@ const initState = {
   filterJobLevel: [],
   filterSalaryRange: [],
   filterCompanyType: [],
-  searchText: '',
-  searchLocation: 'Ho Chi Minh',
+  userInputText: '',
+  searchLocation: 'All Cities',
   searchJobList: [],
   filteredJobList: [],
 };
@@ -107,7 +107,7 @@ function reducer(state, action) {
     case SET_SEARCH_TEXT:
       return {
         ...state,
-        searchText: action.payload,
+        userInputText: action.payload,
       };
     case SET_SEARCH_LOCATION:
       return {

@@ -14,53 +14,27 @@ const cx = classNames.bind(styles);
 const user = {
   firstName: 'A',
   lastName: 'Nguyen Van',
-  skills: ['AngularJS', 'ReactJS'],
+  skills: ['AngularJS', 'ReactJS', 'front-end'],
+  location: 'Ho Chi Minh',
 };
 
 function HeadSearch() {
-  const [state, dispatch, , , , setSearchTextError] = useGlobalStore();
-  const { jobList, searchText, searchLocation, recommendedJobList, filteredJobList } = state;
+  const [state, dispatch, , , , , , setSearchText] = useGlobalStore();
+  const { jobList } = state;
   const navigate = useNavigate();
 
-  const handleSearchJobs = (skill) => {
-    dispatch(actions.setSearchText(skill));
+  const handleSearchText = (skill) => {
+    dispatch(actions.setUserInputText(skill));
+    setSearchText(skill);
+    dispatch(actions.setSearchLocation(user.location));
 
-    // reset searchTextError
-    setSearchTextError(false);
-
-    // filter location
-    let locationFilteredJobList;
-    switch (searchLocation) {
-      case 'All Cities':
-        locationFilteredJobList = jobList;
-        break;
-      case 'Others':
-        locationFilteredJobList = jobList.filter((job) => job.location !== 'Ho Chi Minh' || 'Ha Noi' || 'Da Nang');
-      default:
-        locationFilteredJobList = jobList.filter((job) => job.location === searchLocation);
-    }
-
-    // filter search input
-    const result = locationFilteredJobList.filter(
-      (job) =>
-        job.title.toLowerCase().includes(searchText.toLowerCase()) ||
-        job.skills.map((skill) => skill.toLowerCase()).includes(searchText.toLowerCase()),
-    );
-
-    if (result.length > 0) {
-      dispatch(actions.setSearchJobList(result));
-      dispatch(actions.setFilteredJobList(result));
-      dispatch(actions.setSelectedJob(result[0]));
-    } else {
-      setSearchTextError(true);
-      dispatch(actions.setFilteredJobList(recommendedJobList.slice(0, 5)));
-    }
+    // set default data here to avoid setting default data again when calling api at job page that causes error when using quick search from home page for the 1st time
+    dispatch(actions.setSearchJobList(jobList));
+    dispatch(actions.setFilteredJobList(jobList));
 
     // navigate to job page and reset filters
     navigate(config.routes.jobs);
     dispatch(actions.removeAllFilters());
-
-    console.log(searchText, skill);
   };
 
   return (
@@ -72,7 +46,7 @@ function HeadSearch() {
         </div>
         <div className={cx('search-skills')}>
           {user.skills.map((skill, index) => (
-            <button key={index} className={cx('skill')} onClick={() => handleSearchJobs(skill)}>
+            <button key={index} className={cx('skill')} onClick={() => handleSearchText(skill)}>
               {skill}
             </button>
           ))}

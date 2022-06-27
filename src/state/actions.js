@@ -81,7 +81,7 @@ export const removeAllFilters = () => ({
   type: REMOVE_ALL_FILTERS,
 });
 
-export const setSearchText = (payload) => ({
+export const setUserInputText = (payload) => ({
   type: SET_SEARCH_TEXT,
   payload,
 });

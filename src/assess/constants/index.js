@@ -6,6 +6,7 @@ const CITIES = ['All Cities', 'Ho Chi Minh', 'Ha Noi', 'Da Nang', 'Others'];
 const JOBS = [
   {
     title: 'Jobs by Skill',
+    searchBy: 'skills',
     link: config.routes.jobsBySkill,
     data: [
       'Java',
@@ -45,6 +46,7 @@ const JOBS = [
   },
   {
     title: 'Job by Title',
+    searchBy: 'title',
     link: config.routes.jobsByTitle,
     data: [
       'Java Developer',
@@ -76,6 +78,7 @@ const JOBS = [
   },
   {
     title: 'Jobs by Company',
+    searchBy: 'company',
     link: config.routes.jobsByCompany,
     data: [
       'MB Bank',
@@ -99,6 +102,7 @@ const JOBS = [
   },
   {
     title: 'Jobs by City',
+    searchBy: 'location',
     data: CITIES,
   },
 ];

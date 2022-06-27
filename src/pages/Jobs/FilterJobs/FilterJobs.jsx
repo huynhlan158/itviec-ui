@@ -7,12 +7,11 @@ import { FILTERS, FILTER_TITLES } from '~/assess/constants';
 import FilterInput from './FilterInput';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import * as actions from '~/state/actions';
-import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
 function FilterJobs() {
-  const [state, dispatch, , , searchTextError] = useGlobalStore();
+  const [state, dispatch, , , searchTextError, setSearchTextError] = useGlobalStore();
   const { filterJobLevel, filterSalaryRange, filterCompanyType, searchJobList, companyList, recommendedJobList } =
     state;
 
@@ -40,6 +39,9 @@ function FilterJobs() {
   };
 
   const handleFilterJobs = () => {
+    setSearchTextError(false);
+
+    // prevent filter when searchText is not found
     if (searchTextError) {
       dispatch(actions.setFilteredJobList([]));
       return;
@@ -76,7 +78,10 @@ function FilterJobs() {
     if (result.length > 0) {
       dispatch(actions.setFilteredJobList(result));
       dispatch(actions.setSelectedJob(result[0]));
+      const selectedCompany = companyList.find((company) => company.id === result[0].companyId);
+      dispatch(actions.setSelectedCompany(selectedCompany));
     } else {
+      setSearchTextError(true);
       dispatch(actions.setFilteredJobList(recommendedJobList.slice(0, 5)));
     }
   };

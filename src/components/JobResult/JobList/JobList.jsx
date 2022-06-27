@@ -27,8 +27,8 @@ const user = {
 function JobList({ jobList: passedJobList = [] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [topCompany, setTopCompany] = useState({});
-  const [state, dispatch, headerShrink, , searchTextError] = useGlobalStore();
-  const { companyList, jobList, searchText, searchLocation, filteredJobList } = state;
+  const [state, dispatch, headerShrink, , searchTextError, setSearchTextError, searchText] = useGlobalStore();
+  const { companyList, jobList, searchLocation, filteredJobList, recommendedJobList } = state;
   const jobListRef = useRef();
   const location = useLocation();
   const topCompanyJobList = jobList.filter((job) => job.companyId === topCompany.id);
@@ -40,14 +40,16 @@ function JobList({ jobList: passedJobList = [] }) {
   const indexOfLastJob = currentPage * jobsPerPage;
   const indexOfFirstJob = indexOfLastJob - jobsPerPage;
 
+  // set current list of jobs to render
   const currentJobList = passedJobList.slice(indexOfFirstJob, indexOfLastJob);
 
-  // reset selected job when changing current page
+  // get 1 top company randomly in company top list
   useEffect(() => {
-    if (passedJobList.length > 0) {
-      dispatch(actions.setSelectedJob(currentJobList[0]));
-    }
-  }, [currentPage]);
+    axios.get('/api/top-companies').then((res) => {
+      const randomIndex = Math.floor(Math.random() * res.data.topCompanies.length);
+      setTopCompany(res.data.topCompanies[randomIndex]);
+    });
+  }, []);
 
   // set title for job list
   let title = `${passedJobList.length} Jobs recommended for ${user.firstName} ${user.lastName}`;
@@ -68,21 +70,77 @@ function JobList({ jobList: passedJobList = [] }) {
         </>
       );
     } else {
-      title = `${passedJobList.length} ${searchText} jobs in ${searchLocation}`;
+      title = `${passedJobList.length} ${searchText ? searchText : 'IT'} jobs in ${
+        searchLocation === 'All Cities' ? 'Viet Nam' : searchLocation
+      }`;
     }
   }
 
+  // filter jobs by search values
   useEffect(() => {
-    axios.get('/api/top-companies').then((res) => {
-      const randomIndex = Math.floor(Math.random() * res.data.topCompanies.length);
-      setTopCompany(res.data.topCompanies[randomIndex]);
+    setSearchTextError(false);
+
+    // filter by location
+    let locationFilteredJobList;
+    switch (searchLocation) {
+      case 'All Cities':
+        locationFilteredJobList = jobList;
+        break;
+      case 'Others':
+        locationFilteredJobList = jobList.filter((job) => job.location !== 'Ho Chi Minh' || 'Ha Noi' || 'Da Nang');
+      default:
+        locationFilteredJobList = jobList.filter((job) => job.location === searchLocation);
+    }
+
+    // then filter by text
+    const result = locationFilteredJobList.filter((job) => {
+      if (searchText) {
+        return (
+          job.title.toLowerCase().includes(searchText.toLowerCase()) ||
+          job.skills.map((skill) => skill.toLowerCase()).includes(searchText.toLowerCase())
+        );
+      } else {
+        return job;
+      }
     });
-  }, []);
+
+    if (result.length > 0) {
+      dispatch(actions.setSearchJobList(result));
+      dispatch(actions.setFilteredJobList(result));
+      dispatch(actions.setSelectedJob(result[0]));
+
+      const selectedCompany = companyList.find((company) => company.id === result[0].companyId);
+      dispatch(actions.setSelectedCompany(selectedCompany));
+    } else {
+      setSearchTextError(true);
+      dispatch(actions.setFilteredJobList(recommendedJobList.slice(0, 5)));
+    }
+  }, [searchText, searchLocation]);
+
+  // reset selected job when changing current page
+  useEffect(() => {
+    if (passedJobList.length > 0) {
+      dispatch(actions.setSelectedJob(currentJobList[0]));
+      const selectedCompany = companyList.find((company) => company.id === currentJobList[0].companyId);
+      dispatch(actions.setSelectedCompany(selectedCompany));
+    }
+  }, [currentPage]);
+
+  // reset currentpage, selected job, selected company when changing filtered job list
+  useEffect(() => {
+    setCurrentPage(1);
+
+    if (passedJobList.length > 0) {
+      dispatch(actions.setSelectedJob(passedJobList[0]));
+      const selectedCompany = companyList.find((company) => company.id === passedJobList[0].companyId);
+      dispatch(actions.setSelectedCompany(selectedCompany));
+    }
+  }, [passedJobList]);
 
   return (
     <aside className={cx('wrapper', { shrink: headerShrink })} ref={jobListRef}>
       <h1 className={cx('title')}>
-        {passedJobList.length === jobList.length ? `${passedJobList.length} IT jobs in Vietnam` : title}
+        {passedJobList.length === jobList.length ? `${passedJobList.length} IT jobs in Viet Nam` : title}
       </h1>
       <div className={cx('job-list')}>
         {currentJobList.map((job, index) => (
@@ -121,7 +179,9 @@ function JobList({ jobList: passedJobList = [] }) {
 
           <Link className={cx('company-info')} to={topCompany.profileLink}>
             <h4>{topCompany.name}</h4>
-            <p className={cx('location')}>{topCompany.district}</p>
+            <p className={cx('location')}>
+              {typeof topCompany.district === 'number' ? `District ${topCompany.district}` : topCompany.district}
+            </p>
             <p className={cx('slogan')}>{topCompany.slogan || topCompany.name}</p>
           </Link>
 

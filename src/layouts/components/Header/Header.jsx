@@ -92,7 +92,7 @@ function Header({ search = false }) {
         <div className={cx('navbar')}>
           <div className={cx('links')}>
             {/* Jobs  */}
-            <Menu items={JOBS}>
+            <Menu items={JOBS} search>
               <NavItem to={config.routes.jobs} multilevel>
                 All Jobs
               </NavItem>

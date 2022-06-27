@@ -59,11 +59,11 @@
 .search,
 .actions {
   height: 100%;
+  display: flex;
 }
 
 .links {
   flex: 1;
-  display: flex;
 }
 
 .language {
