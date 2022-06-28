@@ -9,11 +9,11 @@ import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 import styles from './JobList.module.scss';
 import JobItem from '~/components/JobItem';
 import Pagination from '~/components/Pagination';
-import config from '~/config';
+import CompanyImage from '~/components/CompanyImage';
+import Image from '~/components/Image';
 import * as actions from '~/state/actions';
 import { useGlobalStore } from '~/store/useGlobalStore';
-import Image from '~/components/Image';
-import CompanyImage from '~/components/CompanyImage';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -27,7 +27,8 @@ const user = {
 function JobList({ jobList: passedJobList = [] }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [topCompany, setTopCompany] = useState({});
-  const [state, dispatch, headerShrink, , searchTextError, setSearchTextError, searchText] = useGlobalStore();
+  const [state, dispatch, headerShrink, , searchTextError, setSearchTextError, searchText, , , setCurrentCity] =
+    useGlobalStore();
   const { companyList, jobList, searchLocation, filteredJobList, recommendedJobList } = state;
   const jobListRef = useRef();
   const location = useLocation();
@@ -79,6 +80,7 @@ function JobList({ jobList: passedJobList = [] }) {
   // filter jobs by search values
   useEffect(() => {
     setSearchTextError(false);
+    setCurrentCity(searchLocation);
 
     // filter by location
     let locationFilteredJobList;
@@ -187,12 +189,22 @@ function JobList({ jobList: passedJobList = [] }) {
 
           <div>
             {topCompanyJobList.slice(0, 3).map((job, index) => (
-              <div key={index} className={cx('job-item')}>
+              <Link
+                key={index}
+                className={cx('job-item')}
+                to={config.routes.job.replace(
+                  ':jobname',
+                  job.title.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() + job.id.replace('_', '-').toLowerCase(),
+                )}
+              >
                 {job.title}
-              </div>
+              </Link>
             ))}
             <div className={cx('job-item', 'view-all')}>
-              {`View ${topCompanyJobList.length} jobs`} <FontAwesomeIcon icon={faCaretRight} />
+              {`View ${topCompanyJobList.length} jobs`}{' '}
+              <i>
+                <FontAwesomeIcon icon={faCaretRight} />
+              </i>
             </div>
           </div>
         </div>

@@ -39,7 +39,7 @@ function FilterJobs() {
   };
 
   const handleFilterJobs = () => {
-    setSearchTextError(false);
+    // setSearchTextError(false);
 
     // prevent filter when searchText is not found
     if (searchTextError) {

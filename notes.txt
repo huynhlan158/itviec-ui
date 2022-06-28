@@ -16,6 +16,7 @@ JOBLIST:
 
 JOBITEM:
 - job-title: margin-bottom does not work =======================> OK (set display block/flex)
+- using reload when switching among jobs
 
 PAGINATION:
 - optimize logic?
