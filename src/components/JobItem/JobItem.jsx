@@ -13,11 +13,24 @@ import { useGlobalStore } from '~/store/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
-function JobItem({ data, selectJob }) {
+function JobItem({ data, selectJob = () => {} }) {
   const [state] = useGlobalStore();
-  const { selectedJob } = state;
+  const { selectedJob, companyList } = state;
 
-  const { logo, title, salaryMin, salaryMax, highlightBenefits, skills, location, postedTime, hotJob, seen, id } = data;
+  const {
+    id,
+    logo,
+    title,
+    salaryMin,
+    salaryMax,
+    highlightBenefits,
+    skills,
+    location,
+    postedTime,
+    hotJob,
+    seen,
+    companyId,
+  } = data;
 
   const jobPostedDay = Math.floor(postedTime / 1000 / 60 / 60 / 24);
   const jobPostedHour = Math.floor((postedTime / 1000 / 60 / 60) % 24);
@@ -29,7 +42,19 @@ function JobItem({ data, selectJob }) {
       className={cx('wrapper', { special: !!highlightBenefits, selected: selectedJob.id === id })}
       onClick={() => selectJob(data)}
     >
-      <CompanyImage className={cx('logo-image')} to={config.routes.companyProfile} src={logo} alt="company_img" />
+      <CompanyImage
+        className={cx('logo-image')}
+        to={config.routes.companyProfile.replace(
+          ':companyname',
+          companyList.length > 0 &&
+            companyList
+              .find((company) => company.id === companyId)
+              .name.replace(/[^a-zA-Z1-10000]/g, '-')
+              .toLowerCase() + companyId.replace('_', '-').toLowerCase(),
+        )}
+        src={logo}
+        alt="company_img"
+      />
 
       <div className={cx('info')}>
         <Link

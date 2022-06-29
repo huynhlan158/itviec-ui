@@ -63,7 +63,7 @@ function JobList({ jobList: passedJobList = [] }) {
           <p className={cx('result-text')}>Here are some recommended jobs for you.</p>
         </>
       );
-    } else if (searchTextError && filteredJobList.length === 0) {
+    } else if (filteredJobList.length === 0) {
       title = (
         <>
           <p className={cx('hightlight-text')}>Oops!</p>
@@ -169,20 +169,45 @@ function JobList({ jobList: passedJobList = [] }) {
         }}
       />
 
+      {/* company spotlight */}
       {topCompany.id && (
         <div className={cx('company-spotlight')}>
           <h3 className={cx('company-title')}>Company Spotlight</h3>
           <div className={cx('company-images')}>
-            <Link to={topCompany.profileLink}>
+            <Link
+              to={config.routes.companyProfile.replace(
+                ':companyname',
+                topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+                  topCompany.id.replace('_', '-').toLowerCase(),
+              )}
+            >
               <Image className={cx('image')} src={topCompany.images[0]} alt="company_img" />
             </Link>
-            <CompanyImage className={cx('logo')} to={topCompany.profileLink} src={topCompany.logo} alt="company_logo" />
+            <CompanyImage
+              className={cx('logo')}
+              to={config.routes.companyProfile.replace(
+                ':companyname',
+                topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+                  topCompany.id.replace('_', '-').toLowerCase(),
+              )}
+              src={topCompany.logo}
+              alt="company_logo"
+            />
           </div>
 
-          <Link className={cx('company-info')} to={topCompany.profileLink}>
+          <Link
+            className={cx('company-info')}
+            to={config.routes.companyProfile.replace(
+              ':companyname',
+              topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+                topCompany.id.replace('_', '-').toLowerCase(),
+            )}
+          >
             <h4>{topCompany.name}</h4>
             <p className={cx('location')}>
-              {typeof topCompany.district === 'number' ? `District ${topCompany.district}` : topCompany.district}
+              {typeof topCompany.district === 'number'
+                ? `District ${topCompany.district}, ${topCompany.province}`
+                : `${topCompany.district}, ${topCompany.province}`}
             </p>
             <p className={cx('slogan')}>{topCompany.slogan || topCompany.name}</p>
           </Link>
@@ -200,12 +225,19 @@ function JobList({ jobList: passedJobList = [] }) {
                 {job.title}
               </Link>
             ))}
-            <div className={cx('job-item', 'view-all')}>
+            <Link
+              to={config.routes.companyProfile.replace(
+                ':companyname',
+                topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+                  topCompany.id.replace('_', '-').toLowerCase(),
+              )}
+              className={cx('job-item', 'view-all')}
+            >
               {`View ${topCompanyJobList.length} jobs`}{' '}
               <i>
                 <FontAwesomeIcon icon={faCaretRight} />
               </i>
-            </div>
+            </Link>
           </div>
         </div>
       )}

@@ -102,7 +102,15 @@ function Job() {
                 </div>
 
                 <div className={cx('view-profile')}>
-                  <Button to={config.routes.companyProfile} outline lg>
+                  <Button
+                    to={config.routes.companyProfile.replace(
+                      ':companyname',
+                      currentCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+                        currentCompany.id.replace('_', '-').toLowerCase(),
+                    )}
+                    outline
+                    lg
+                  >
                     View Company Profile
                   </Button>
                 </div>

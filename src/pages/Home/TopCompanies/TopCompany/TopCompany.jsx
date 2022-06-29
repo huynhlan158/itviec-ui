@@ -5,6 +5,7 @@ import classNames from 'classnames/bind';
 import styles from './TopCompany.module.scss';
 import Image from '~/components/Image';
 import { useGlobalStore } from '~/store/useGlobalStore';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -12,11 +13,17 @@ function TopCompany({ data }) {
   const [state] = useGlobalStore();
   const { jobList } = state;
 
-  const { id, name, profileLink, logo, province } = data;
+  const { id, name, logo, province } = data;
   const numberOfJobOpening = jobList.filter((job) => job.companyId === id).length;
 
   return (
-    <Link className={cx('wrapper')} to={profileLink}>
+    <Link
+      className={cx('wrapper')}
+      to={config.routes.companyProfile.replace(
+        ':companyname',
+        name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() + id.replace('_', '-').toLowerCase(),
+      )}
+    >
       <div className={cx('logo')}>
         <Image src={logo} alt="company_logo" />
       </div>

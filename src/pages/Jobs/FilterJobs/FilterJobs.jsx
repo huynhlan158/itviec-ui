@@ -39,8 +39,6 @@ function FilterJobs() {
   };
 
   const handleFilterJobs = () => {
-    // setSearchTextError(false);
-
     // prevent filter when searchText is not found
     if (searchTextError) {
       dispatch(actions.setFilteredJobList([]));
@@ -76,6 +74,7 @@ function FilterJobs() {
     }
 
     if (result.length > 0) {
+      setSearchTextError(false);
       dispatch(actions.setFilteredJobList(result));
       dispatch(actions.setSelectedJob(result[0]));
       const selectedCompany = companyList.find((company) => company.id === result[0].companyId);

@@ -35,6 +35,7 @@ APIS:
 - call apis one or many times? reset data when switching among pages
 - url structure, how to remove multiple special characters from a string
 - job api
+- redirect to 404 page when url is not correct
 
 COMMON: 
 - data structure's rules?

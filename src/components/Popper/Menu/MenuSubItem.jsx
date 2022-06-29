@@ -11,7 +11,7 @@ const cx = classNames.bind(styles);
 
 function MenuSubItem({ children, className, search, searchBy }) {
   const [state, dispatch, , , , , , setSearchText, , setCurrentCity] = useGlobalStore();
-  const { jobList, filteredJobList, searchJobList } = state;
+  const { jobList, filteredJobList, searchJobList, companyList } = state;
   const navigate = useNavigate();
 
   const handleSearchJobs = () => {
@@ -49,7 +49,18 @@ function MenuSubItem({ children, className, search, searchBy }) {
 
       // navigate to companyProfile/ job page and reset filters
       if (searchBy === 'company') {
-        navigate(config.routes.companyProfile.replace(':companyname', children));
+        navigate(
+          config.routes.companyProfile.replace(
+            ':companyname',
+            children.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+              companyList
+                .find((company) => company.name === children)
+                .id.replace('_', '-')
+                .toLowerCase(),
+          ),
+        );
+        companyList.find((company) => company.name === children).id !==
+          window.location.pathname.slice(-7).replace('-', '_') && window.location.reload(false);
       } else {
         navigate(config.routes.jobs);
         dispatch(actions.removeAllFilters());

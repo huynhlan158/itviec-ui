@@ -22,6 +22,7 @@ import NavItem from './components/NavItem';
 import Menu from '~/components/Popper/Menu';
 import Search from './components/Search';
 import { useGlobalStore } from '~/store/useGlobalStore';
+import * as actions from '~/state/actions';
 
 const cx = classNames.bind(styles);
 
@@ -62,7 +63,7 @@ function Header({ search = false }) {
   // will call api
   const user = true;
 
-  const [, , headerShrink, setHeaderShrink] = useGlobalStore();
+  const [, dispatch, headerShrink, setHeaderShrink] = useGlobalStore();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,9 +94,11 @@ function Header({ search = false }) {
           <div className={cx('links')}>
             {/* Jobs  */}
             <Menu items={JOBS} search>
-              <NavItem to={config.routes.jobs} multilevel>
-                All Jobs
-              </NavItem>
+              <div onClick={() => dispatch(actions.setSearchLocation('All Cities'))}>
+                <NavItem to={config.routes.jobs} multilevel>
+                  All Jobs
+                </NavItem>
+              </div>
             </Menu>
 
             {/* IT Companies  */}

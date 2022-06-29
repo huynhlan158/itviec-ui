@@ -16,40 +16,41 @@ const cx = classNames.bind(styles);
 function CompanyOverview() {
   const [state] = useGlobalStore();
   const { selectedCompany } = state;
+  const { id, logo, name, slogan, type, size, workingDays, countryCode, country, overtime } = selectedCompany;
 
-  if (selectedCompany.id) {
+  if (id) {
     return (
       <div className={cx('wrapper')}>
         <div className={cx('header')}>
-          <CompanyImage to={config.routes.companyProfile} src={selectedCompany.logo} />
+          <CompanyImage to={config.routes.companyProfile} src={logo} />
 
           <div className={cx('name')}>
-            <h3 className={cx('title')}>{selectedCompany.name}</h3>
-            <span className={cx('sub-title')}>{selectedCompany.slogan || selectedCompany.name}</span>
+            <h3 className={cx('title')}>{name}</h3>
+            <span className={cx('sub-title')}>{slogan || name}</span>
           </div>
         </div>
 
         <div className={cx('content')}>
           <div className={cx('characteristics')}>
-            <CharacteristicItem icon={<FontAwesomeIcon icon={faGear} />}>{selectedCompany.type}</CharacteristicItem>
-            <CharacteristicItem icon={<FontAwesomeIcon icon={faUserGroup} />}>
-              {selectedCompany.size}
+            <CharacteristicItem icon={<FontAwesomeIcon icon={faGear} />}>{type}</CharacteristicItem>
+            <CharacteristicItem icon={<FontAwesomeIcon icon={faUserGroup} />}>{size}</CharacteristicItem>
+            <CharacteristicItem icon={<FontAwesomeIcon icon={faCalendarDays} />}>{workingDays}</CharacteristicItem>
+            <CharacteristicItem icon={<Flag code={countryCode} fallback={<FontAwesomeIcon icon={faFlag} />} />}>
+              {country}
             </CharacteristicItem>
-            <CharacteristicItem icon={<FontAwesomeIcon icon={faCalendarDays} />}>
-              {selectedCompany.workingDays}
-            </CharacteristicItem>
-            <CharacteristicItem
-              icon={<Flag code={selectedCompany.countryCode} fallback={<FontAwesomeIcon icon={faFlag} />} />}
-            >
-              {selectedCompany.country}
-            </CharacteristicItem>
-            {!selectedCompany.overtime && (
-              <CharacteristicItem icon={<FontAwesomeIcon icon={faClock} />}>No OT</CharacteristicItem>
-            )}
+            {!overtime && <CharacteristicItem icon={<FontAwesomeIcon icon={faClock} />}>No OT</CharacteristicItem>}
           </div>
 
           <div className={cx('view-profile')}>
-            <Button to={config.routes.companyProfile} outline lg>
+            <Button
+              to={config.routes.companyProfile.replace(
+                ':companyname',
+                selectedCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+                  selectedCompany.id.replace('_', '-').toLowerCase(),
+              )}
+              outline
+              lg
+            >
               View Company Profile
             </Button>
           </div>
