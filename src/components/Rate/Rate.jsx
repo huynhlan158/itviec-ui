@@ -11,8 +11,6 @@ function Rate({ score, small = false, big = false, background = false }) {
   const scoreP1 = Math.floor(score);
   const scoreP2 = score % 1;
 
-  console.log({ score, scoreP1, scoreP2 });
-
   if (background) {
     return (
       <div className={cx('wrapper')}>

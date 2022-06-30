@@ -57,7 +57,7 @@ export const companyList = [
     recommendation: {
       ratio: 87,
 
-      overalScore: 4.8,
+      overallScore: 4.8,
       detail: [
         { title: 'Salary & benefits', score: 3.0 },
         { title: 'Training & learning', score: 3.5 },
@@ -154,7 +154,7 @@ export const companyList = [
     recommendation: {
       ratio: 91,
 
-      overalScore: 4.8,
+      overallScore: 4.8,
       detail: [
         { title: 'Salary & benefits', score: 3.5 },
         { title: 'Training & learning', score: 4.5 },
@@ -225,7 +225,7 @@ export const companyList = [
     recommendation: {
       ratio: 85,
 
-      overalScore: 4.8,
+      overallScore: 4.8,
       detail: [
         { title: 'Salary & benefits', score: 4.5 },
         { title: 'Training & learning', score: 3.5 },
@@ -288,7 +288,7 @@ export const companyList = [
     recommendation: {
       ratio: 75,
 
-      overalScore: 4.8,
+      overallScore: 4.8,
       detail: [
         { title: 'Salary & benefits', score: 3.5 },
         { title: 'Training & learning', score: 3.5 },
@@ -462,7 +462,7 @@ export const companyList = [
     rating: 4.2,
     recommendation: {
       ratio: 100,
-      overalScore: 4.8,
+      overallScore: 4.8,
       detail: [
         { title: 'Salary & benefits', score: 4.2 },
         { title: 'Training & learning', score: 3.8 },
@@ -583,7 +583,7 @@ export const companyList = [
     rating: 2.5,
     recommendation: {
       ratio: 51,
-      overalScore: 4.8,
+      overallScore: 4.8,
       detail: [
         { title: 'Salary & benefits', score: 2.0 },
         { title: 'Training & learning', score: 2.5 },
@@ -759,7 +759,7 @@ export const companyList = [
     viewNumber: 47241,
     recommendation: {
       ratio: 100,
-      overalScore: 4.8,
+      overallScore: 4.8,
       detail: [
         { title: 'Salary & benefits', score: 2.0 },
         { title: 'Training & learning', score: 2.5 },

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Flag from 'react-world-flags';
 import PropTypes from 'prop-types';
@@ -28,10 +29,11 @@ import Rate from '~/components/Rate';
 const cx = classNames.bind(styles);
 
 function CompanyProfile() {
-  const [, dispatch, headerShrink] = useGlobalStore();
+  const [, dispatch, headerShrink, , , setSearchTextError, , setSearchText] = useGlobalStore();
   const [currentCompany, setCurrentCompany] = useState({});
   const [type, setType] = useState('job');
   const [currentJobList, setCurrentJobList] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // set scroll to top when loading the page
@@ -49,6 +51,20 @@ function CompanyProfile() {
       dispatch(actions.setSelectedJob({}));
     });
   }, []);
+
+  const handleSearchJobs = (skill) => {
+    // reset searchTextError
+    setSearchTextError(false);
+
+    // set value for searchText & location
+    setSearchText(skill);
+    dispatch(actions.setUserInputText(skill));
+    dispatch(actions.setSearchLocation('All Cities'));
+
+    // navigate to job page and reset filters
+    navigate(config.routes.jobs);
+    dispatch(actions.removeAllFilters());
+  };
 
   return (
     currentCompany && (
@@ -153,7 +169,7 @@ function CompanyProfile() {
                         </h3>
                         <div className={cx('skill-list')}>
                           {currentCompany.skills.list?.map((skill, index) => (
-                            <Button key={index} basic>
+                            <Button key={index} basic onClick={() => handleSearchJobs(skill)}>
                               {skill}
                             </Button>
                           ))}
@@ -230,8 +246,8 @@ function CompanyProfile() {
                     <div className={cx('content-right_item')}>
                       <h3 className={cx('content-title')}>Overall Rating</h3>
                       <div className={cx('overall-rating')}>
-                        <Rate big score={currentCompany.recommendation.overalScore} background />
-                        <span className={cx('overall-score')}>{currentCompany.recommendation.overalScore}</span>
+                        <Rate big score={currentCompany.recommendation.overallScore} background />
+                        <span className={cx('overall-score')}>{currentCompany.recommendation.overallScore}</span>
                       </div>
                       <div className={cx('rating-overall')}>
                         <div className={cx('rating-ratio')}>{currentCompany.recommendation.ratio}%</div>
@@ -273,32 +289,34 @@ function CompanyProfile() {
               </>
             ) : type === 'review' ? (
               <>
-                <div className={cx('content-left')}>
-                  <div className={cx('rating-overall_left')}>
-                    <div className={cx('rating-item_left')}>
-                      <span className={cx('overall-score')}>{currentCompany.recommendation.overalScore}</span>
-                      <Rate big score={currentCompany.recommendation.overalScore} background />
+                {currentCompany.recommendation && (
+                  <div className={cx('content-left')}>
+                    <div className={cx('rating-overall_left')}>
+                      <div className={cx('rating-item_left')}>
+                        <span className={cx('overall-score')}>{currentCompany.recommendation.overallScore}</span>
+                        <Rate big score={currentCompany.recommendation.overallScore} background />
+                      </div>
+                      <div className={cx('rating-item_left')}>
+                        <div className={cx('rating-ratio')}>{currentCompany.recommendation.ratio}%</div>
+                        <div className={cx('rating-comment')}>Recommend working here to a friend</div>
+                      </div>
                     </div>
-                    <div className={cx('rating-item_left')}>
-                      <div className={cx('rating-ratio')}>{currentCompany.recommendation.ratio}%</div>
-                      <div className={cx('rating-comment')}>Recommend working here to a friend</div>
-                    </div>
-                  </div>
 
-                  <div className={cx('content-left_item')}>
-                    <h3 className={cx('content-title')}>
-                      {currentCompany.review && currentCompany.review?.length} Employee Reviews
-                    </h3>
-                    {currentCompany.review &&
-                      currentCompany.review?.map((item, index) => (
-                        <div className={cx('review-comment')} key={index}>
-                          <h3 className={cx('content-title')}>{item.title}</h3>
-                          <Rate small score={item.score} />
-                          <span>{item.comment}</span>
-                        </div>
-                      ))}
+                    <div className={cx('content-left_item')}>
+                      <h3 className={cx('content-title')}>
+                        {currentCompany.review && currentCompany.review?.length} Employee Reviews
+                      </h3>
+                      {currentCompany.review &&
+                        currentCompany.review?.map((item, index) => (
+                          <div className={cx('review-comment')} key={index}>
+                            <h3 className={cx('content-title')}>{item.title}</h3>
+                            <Rate small score={item.score} />
+                            <span>{item.comment}</span>
+                          </div>
+                        ))}
+                    </div>
                   </div>
-                </div>
+                )}
 
                 <div className={cx('content-right')}>
                   <div className={cx('content-right_item')}>

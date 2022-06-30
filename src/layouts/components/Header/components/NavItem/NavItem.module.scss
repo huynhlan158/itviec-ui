@@ -4,7 +4,11 @@
   justify-content: center;
   height: 100%;
   margin: 0 10px;
-  cursor: pointer;
+  user-select: none;
+
+  &.pointer {
+    cursor: pointer;
+  }
 }
 
 .content {

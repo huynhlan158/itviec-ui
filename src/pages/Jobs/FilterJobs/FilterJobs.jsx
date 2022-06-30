@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faFilter } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
@@ -7,13 +8,14 @@ import { FILTERS, FILTER_TITLES } from '~/assess/constants';
 import FilterInput from './FilterInput';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import * as actions from '~/state/actions';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
 function FilterJobs() {
-  const [state, dispatch, , , searchTextError, setSearchTextError] = useGlobalStore();
-  const { filterJobLevel, filterSalaryRange, filterCompanyType, searchJobList, companyList, recommendedJobList } =
-    state;
+  const [state, dispatch, , , , setSearchTextError] = useGlobalStore();
+  const { filterJobLevel, filterSalaryRange, filterCompanyType, searchJobList, companyList } = state;
+  const navigate = useNavigate();
 
   const checkedCount = (item) => {
     switch (item) {
@@ -34,18 +36,24 @@ function FilterJobs() {
     }
   };
 
-  const handleClearFilters = () => {
-    dispatch(actions.removeAllFilters());
-  };
-
   const handleFilterJobs = () => {
-    // prevent filter when searchText is not found
-    if (searchTextError) {
-      dispatch(actions.setFilteredJobList([]));
-      return;
-    }
-
     let result = searchJobList;
+
+    // handle clear filters manually on filter bar & prevent filter when searchText is not found
+    if (filterJobLevel.length === 0 && filterSalaryRange.length === 0 && filterCompanyType.length === 0) {
+      // set result
+      if (searchJobList.length > 0) {
+        setSearchTextError(false);
+        dispatch(actions.setFilteredJobList(searchJobList));
+        dispatch(actions.setSelectedJob(searchJobList[0]));
+
+        const selectedCompany = companyList.find((company) => company.id === searchJobList[0].companyId);
+        dispatch(actions.setSelectedCompany(selectedCompany));
+      } else {
+        setSearchTextError(true);
+        dispatch(actions.setFilteredJobList([]));
+      }
+    }
 
     // filter by job level
     if (filterJobLevel.length > 0) {
@@ -73,6 +81,7 @@ function FilterJobs() {
       });
     }
 
+    // set result
     if (result.length > 0) {
       setSearchTextError(false);
       dispatch(actions.setFilteredJobList(result));
@@ -81,8 +90,27 @@ function FilterJobs() {
       dispatch(actions.setSelectedCompany(selectedCompany));
     } else {
       setSearchTextError(true);
-      dispatch(actions.setFilteredJobList(recommendedJobList.slice(0, 5)));
+      dispatch(actions.setFilteredJobList([]));
     }
+  };
+
+  const handleClearFilters = () => {
+    // setSearchTextError(false);
+
+    // set result
+    if (searchJobList.length > 0) {
+      setSearchTextError(false);
+      dispatch(actions.setFilteredJobList(searchJobList));
+      dispatch(actions.setSelectedJob(searchJobList[0]));
+      const selectedCompany = companyList.find((company) => company.id === searchJobList[0].companyId);
+      dispatch(actions.setSelectedCompany(selectedCompany));
+    } else {
+      setSearchTextError(true);
+      dispatch(actions.setFilteredJobList([]));
+    }
+
+    // reset filters
+    dispatch(actions.removeAllFilters());
   };
 
   return (

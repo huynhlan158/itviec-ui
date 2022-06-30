@@ -58,11 +58,12 @@ function Menu({ children, className, items = [], search }) {
                   );
                 })}
 
-                {subMenu.viewAll && (
+                {/* not yet develop view all page */}
+                {/* {subMenu.viewAll && (
                   <MenuSubItem className={cx('view-all')}>
                     <Link to={subMenu.link}>{`View all Jobs by ${subMenu.viewAll}`}</Link>
                   </MenuSubItem>
-                )}
+                )} */}
               </div>
             )}
           </PopperWrapper>

@@ -6,7 +6,12 @@ import styles from './BestCompanies.module.scss';
 const cx = classNames.bind(styles);
 
 function BestCompanies({ children }) {
-  return <h1>BestCompanies</h1>;
+  return (
+    <div className={cx('wrapper')}>
+      <h1>Best Companies Page</h1>
+      <p>Not yet developed...</p>
+    </div>
+  );
 }
 
 BestCompanies.propTypes = {

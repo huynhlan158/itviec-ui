@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -10,12 +10,14 @@ import Button from '../Button';
 import config from '~/config';
 import CharacteristicItem from '~/components/CharacteristicItem';
 import { useGlobalStore } from '~/store/useGlobalStore';
+import * as actions from '~/state/actions';
 
 const cx = classNames.bind(styles);
 
 function JobItem({ data, selectJob = () => {} }) {
-  const [state] = useGlobalStore();
+  const [state, dispatch, , , , setSearchTextError, , setSearchText] = useGlobalStore();
   const { selectedJob, companyList } = state;
+  const navigate = useNavigate();
 
   const {
     id,
@@ -36,6 +38,20 @@ function JobItem({ data, selectJob = () => {} }) {
   const jobPostedHour = Math.floor((postedTime / 1000 / 60 / 60) % 24);
   const jobPostedMinute = Math.ceil((postedTime / 1000 / 60) % 60);
   const timeUnit = jobPostedDay > 0 ? 'd' : jobPostedHour > 0 ? 'h' : 'm';
+
+  const handleSearchJobs = (skill) => {
+    // reset searchTextError
+    setSearchTextError(false);
+
+    // set value for searchText & location
+    setSearchText(skill);
+    dispatch(actions.setUserInputText(skill));
+    dispatch(actions.setSearchLocation('All Cities'));
+
+    // navigate to job page and reset filters
+    navigate(config.routes.jobs);
+    dispatch(actions.removeAllFilters());
+  };
 
   return (
     <div
@@ -87,7 +103,12 @@ function JobItem({ data, selectJob = () => {} }) {
 
         <div className={cx('skills')}>
           {skills.map((skill, index) => (
-            <Button className={cx({ active: selectedJob.id === id })} key={index} basic>
+            <Button
+              className={cx({ active: selectedJob.id === id })}
+              key={index}
+              basic
+              onClick={() => handleSearchJobs(skill)}
+            >
               {skill}
             </Button>
           ))}

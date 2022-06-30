@@ -15,7 +15,7 @@ const NavItem = forwardRef(({ children, multilevel = false, to, className, ...pa
   }
 
   return (
-    <Wrap className={cx('nav-link', className)} to={to} ref={ref} {...passProps}>
+    <Wrap className={cx('nav-link', className, { pointer: !!to })} to={to} ref={ref} {...passProps}>
       <span className={cx('content', { multilevel })}>{children}</span>
     </Wrap>
   );

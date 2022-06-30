@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,10 +7,16 @@ import { faDisplay, faDollarSign, faLocationDot, faCalendarDays } from '@fortawe
 import styles from './JobOverview.module.scss';
 import Button from '~/components/Button';
 import CharacteristicItem from '~/components/CharacteristicItem';
+import config from '~/config';
+import { useGlobalStore } from '~/store/useGlobalStore';
+import * as actions from '~/state/actions';
 
 const cx = classNames.bind(styles);
 
 function JobOverview({ job }) {
+  const [, dispatch, , , , setSearchTextError, , setSearchText] = useGlobalStore();
+  const navigate = useNavigate();
+
   const { postedTime, id, skills, salaryMin, salaryMax, address, mapLink, type } = job;
 
   const jobPostedDay = Math.floor(postedTime / 1000 / 60 / 60 / 24);
@@ -19,12 +26,26 @@ function JobOverview({ job }) {
   const jobPostedMinute = Math.ceil((postedTime / 1000 / 60) % 60);
   const minuteUnit = jobPostedMinute > 1 ? 'minutes' : 'minute';
 
+  const handleSearchJobs = (skill) => {
+    // reset searchTextError
+    setSearchTextError(false);
+
+    // set value for searchText & location
+    setSearchText(skill);
+    dispatch(actions.setUserInputText(skill));
+    dispatch(actions.setSearchLocation('All Cities'));
+
+    // navigate to job page and reset filters
+    navigate(config.routes.jobs);
+    dispatch(actions.removeAllFilters());
+  };
+
   if (id) {
     return (
       <div className={cx('wrapper')}>
         <div className={cx('skills')}>
           {skills?.map((skill, index) => (
-            <Button key={index} basic md>
+            <Button key={index} basic md onClick={() => handleSearchJobs(skill)}>
               {skill}
             </Button>
           ))}

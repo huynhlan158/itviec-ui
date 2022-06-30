@@ -20,39 +20,95 @@ function Footer() {
               <Link className={cx('item')} to={config.routes.home}>
                 Home
               </Link>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                About Us
-              </Link>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                Contact Us
-              </Link>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'about-us') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'about-us')}>
+                  About Us
+                </Link>
+              </div>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'contact-us') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'contact-us')}>
+                  Contact Us
+                </Link>
+              </div>
               <Link className={cx('item')} to={config.routes.jobs}>
                 All Jobs
               </Link>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                FAQ
-              </Link>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'faq') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'faq')}>
+                  FAQ
+                </Link>
+              </div>
             </div>
           </div>
 
           <div className={cx('links-terms')}>
             <h4 className={cx('title')}>Terms & Conditions</h4>
             <div className={cx('items')}>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                Privacy Policy
-              </Link>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                Operating Regulation
-              </Link>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                Complaint Handling
-              </Link>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                Terms & Conditions
-              </Link>
-              <Link className={cx('item')} to={config.routes.textOnly}>
-                Press
-              </Link>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'privacy-policy') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'privacy-policy')}>
+                  Privacy Policy
+                </Link>
+              </div>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'operating-regulation') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'operating-regulation')}>
+                  Operating Regulation
+                </Link>
+              </div>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'complaint-handling') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'complaint-handling')}>
+                  Complaint Handling
+                </Link>
+              </div>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'term-and-conditions') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'term-and-conditions')}>
+                  Terms & Conditions
+                </Link>
+              </div>
+              <div
+                onClick={() => {
+                  window.location.pathname === config.routes.pending.replace(':pathname', 'press') &&
+                    window.location.reload(false);
+                }}
+              >
+                <Link className={cx('item')} to={config.routes.pending.replace(':pathname', 'press')}>
+                  Press
+                </Link>
+              </div>
             </div>
           </div>
 

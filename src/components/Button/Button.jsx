@@ -6,7 +6,7 @@ import styles from './Button.module.scss';
 
 const cx = classNames.bind(styles);
 
-function Button({ children, className, to, href, basic, primary, outline, md, lg, xl }) {
+function Button({ children, className, to, href, basic, primary, outline, md, lg, xl, onClick = () => {} }) {
   // button type (choose only one, default is basic): basic/ primary/ outlined
   // button size (choose only one, default is small): md/ lg/ xl
 
@@ -19,7 +19,12 @@ function Button({ children, className, to, href, basic, primary, outline, md, lg
   }
 
   return (
-    <Wrap className={cx('wrapper', className, { basic, primary, outline, md, lg, xl })} to={to} href={href}>
+    <Wrap
+      className={cx('wrapper', className, { basic, primary, outline, md, lg, xl })}
+      to={to}
+      href={href}
+      onClick={onClick}
+    >
       {children}
     </Wrap>
   );
@@ -36,6 +41,7 @@ Button.propTypes = {
   md: PropTypes.bool,
   lg: PropTypes.bool,
   xl: PropTypes.bool,
+  onClick: PropTypes.func,
 };
 
 export default Button;

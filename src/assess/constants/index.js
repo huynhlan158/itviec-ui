@@ -7,7 +7,6 @@ const JOBS = [
   {
     title: 'Jobs by Skill',
     searchBy: 'skills',
-    link: config.routes.jobsBySkill,
     data: [
       'Java',
       'PHP',
@@ -47,7 +46,6 @@ const JOBS = [
   {
     title: 'Job by Title',
     searchBy: 'title',
-    link: config.routes.jobsByTitle,
     data: [
       'Java Developer',
       'PHP Developer',
@@ -79,7 +77,6 @@ const JOBS = [
   {
     title: 'Jobs by Company',
     searchBy: 'company',
-    link: config.routes.jobsByCompany,
     data: [
       'Hanwha Financial Technology',
       'Bstar Solutions',
@@ -136,7 +133,7 @@ const FILTERS = [
   },
   {
     title: FILTER_TITLES.companyType,
-    data: ['Oursourcing', 'Product'],
+    data: ['Outsourcing', 'Product'],
   },
 ];
 

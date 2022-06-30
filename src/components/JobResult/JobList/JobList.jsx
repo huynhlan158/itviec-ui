@@ -115,6 +115,7 @@ function JobList({ jobList: passedJobList = [] }) {
       dispatch(actions.setSelectedCompany(selectedCompany));
     } else {
       setSearchTextError(true);
+      dispatch(actions.setSearchJobList([]));
       dispatch(actions.setFilteredJobList(recommendedJobList.slice(0, 5)));
     }
   }, [searchText, searchLocation]);

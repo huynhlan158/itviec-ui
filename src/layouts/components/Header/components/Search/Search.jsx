@@ -18,7 +18,7 @@ const cx = classNames.bind(styles);
 
 function Search({ className, big }) {
   const [state, dispatch, , , , setSearchTextError, , setSearchText, currentCity, setCurrentCity] = useGlobalStore();
-  const { userInputText } = state;
+  const { userInputText, searchJobList } = state;
   const navigate = useNavigate();
 
   const [activeOverlay, setActiveOverlay] = useState(false);
@@ -26,6 +26,11 @@ function Search({ className, big }) {
   const [activeCityOption, setActiveCityOption] = useState(false);
 
   const handleSearchJobs = () => {
+    // prevent search job again if textsearch is not found
+    if (searchJobList.length === 0) {
+      dispatch(actions.setFilteredJobList([]));
+    }
+
     // reset searchTextError
     setSearchTextError(false);
 

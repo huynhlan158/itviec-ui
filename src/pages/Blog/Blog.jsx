@@ -6,7 +6,12 @@ import styles from './Blog.module.scss';
 const cx = classNames.bind(styles);
 
 function Blog({ children }) {
-  return <h1>Blog</h1>;
+  return (
+    <div className={cx('wrapper')}>
+      <h1>Blog Page</h1>
+      <p>Not yet developed...</p>
+    </div>
+  );
 }
 
 Blog.propTypes = {

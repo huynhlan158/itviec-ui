@@ -125,7 +125,7 @@ function reducer(state, action) {
         filteredJobList: action.payload,
       };
     default:
-      console.error('Invalid');
+      alert('Invalid action');
   }
 }
 

@@ -49,24 +49,24 @@ function BlogEntries() {
       <div className={cx('content')}>
         {newestBlogs.map((blog, index) => (
           <div key={index} className={cx('blog')}>
-            <a href={blog.link} className={cx('blog-picture')}>
+            <Link to={config.routes.blog} className={cx('blog-picture')}>
               <Image src={blog.picture} />
-            </a>
+            </Link>
 
             <div className={cx('blog-info')}>
               <div>
-                <a href={blog.link} className={cx('blog-title')}>
+                <Link to={config.routes.blog} className={cx('blog-title')}>
                   <h4>{blog.title}</h4>
-                </a>
+                </Link>
                 <span className={cx('blog-subtitle')}>{blog.hightlight}</span>
               </div>
 
-              <a href={blog.link} className={cx('read-more')}>
+              <Link to={config.routes.blog} className={cx('read-more')}>
                 <span>Read more</span>
                 <span>
                   <FontAwesomeIcon icon={faCaretRight} />
                 </span>
-              </a>
+              </Link>
             </div>
           </div>
         ))}

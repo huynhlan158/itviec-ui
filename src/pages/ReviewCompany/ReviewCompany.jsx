@@ -6,7 +6,12 @@ import styles from './ReviewCompany.module.scss';
 const cx = classNames.bind(styles);
 
 function ReviewCompany({ children }) {
-  return <h1>ReviewCompany</h1>;
+  return (
+    <div className={cx('wrapper')}>
+      <h1>Review Companies Page</h1>
+      <p>Not yet developed...</p>
+    </div>
+  );
 }
 
 ReviewCompany.propTypes = {

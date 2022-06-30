@@ -94,7 +94,12 @@ function Header({ search = false }) {
           <div className={cx('links')}>
             {/* Jobs  */}
             <Menu items={JOBS} search>
-              <div onClick={() => dispatch(actions.setSearchLocation('All Cities'))}>
+              <div
+                onClick={() => {
+                  dispatch(actions.setSearchLocation('All Cities'));
+                  window.location.reload(false);
+                }}
+              >
                 <NavItem to={config.routes.jobs} multilevel>
                   All Jobs
                 </NavItem>
