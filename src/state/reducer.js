@@ -18,6 +18,11 @@ import {
   SET_SEARCH_LOCATION,
   SET_SEARCH_JOB_LIST,
   SET_FILTERED_JOB_LIST,
+
+  // user
+  ADD_USER,
+  SET_CURRENT_USER,
+  SET_LOGIN_STATUS,
 } from './constants';
 
 const initState = {
@@ -36,10 +41,16 @@ const initState = {
   searchLocation: 'All Cities',
   searchJobList: [],
   filteredJobList: [],
+
+  // user
+  userList: [],
+  loginStatus: false,
+  currentUser: {},
 };
 
 function reducer(state, action) {
   switch (action.type) {
+    // set job + company lists
     case SET_JOB_LIST:
       return {
         ...state,
@@ -123,6 +134,23 @@ function reducer(state, action) {
       return {
         ...state,
         filteredJobList: action.payload,
+      };
+
+    // sign up
+    case ADD_USER:
+      return {
+        ...state,
+        userList: action.payload,
+      };
+    case SET_CURRENT_USER:
+      return {
+        ...state,
+        currentUser: action.payload,
+      };
+    case SET_LOGIN_STATUS:
+      return {
+        ...state,
+        loginStatus: action.payload,
       };
     default:
       alert('Invalid action');

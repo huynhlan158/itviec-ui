@@ -17,3 +17,8 @@ export const SET_SEARCH_TEXT = 'set_search_text';
 export const SET_SEARCH_LOCATION = 'set_search_location';
 export const SET_SEARCH_JOB_LIST = 'set_search_job_list';
 export const SET_FILTERED_JOB_LIST = 'set_filtered_job_list';
+
+// user
+export const ADD_USER = 'add_user';
+export const SET_CURRENT_USER = 'set_current_user';
+export const SET_LOGIN_STATUS = 'set_login_status';

@@ -61,7 +61,7 @@ const userLinks = [
 
 function Header({ search = false }) {
   // will call api
-  const user = true;
+  const user = false;
 
   const [, dispatch, headerShrink, setHeaderShrink] = useGlobalStore();
 

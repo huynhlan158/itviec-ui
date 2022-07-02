@@ -43,6 +43,7 @@ COMMON:
 - components' separation is reasonable?
 - tippyjs: hideOnClick does not work
 - how to reuse a function (ex: handleSearchJobs)?
+- window.location.reload(false)
 
 
-login function: https://www.youtube.com/watch?v=QoLUB0QkUaE
+Authentication: https://www.youtube.com/watch?v=6sLh_5iFnFc

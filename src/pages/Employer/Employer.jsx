@@ -6,7 +6,12 @@ import styles from './Employer.module.scss';
 const cx = classNames.bind(styles);
 
 function Employer({ children }) {
-  return <h1>Employer</h1>;
+  return (
+    <div className={cx('wrapper')}>
+      <h1>Employer Page</h1>
+      <p>Not yet developed...</p>
+    </div>
+  );
 }
 
 Employer.propTypes = {

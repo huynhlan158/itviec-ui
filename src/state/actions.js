@@ -18,6 +18,11 @@ import {
   SET_SEARCH_LOCATION,
   SET_SEARCH_JOB_LIST,
   SET_FILTERED_JOB_LIST,
+
+  // user
+  ADD_USER,
+  SET_CURRENT_USER,
+  SET_LOGIN_STATUS,
 } from './constants';
 
 // job + company list
@@ -98,5 +103,21 @@ export const setSearchJobList = (payload) => ({
 
 export const setFilteredJobList = (payload) => ({
   type: SET_FILTERED_JOB_LIST,
+  payload,
+});
+
+// user
+export const addUser = (payload) => ({
+  type: ADD_USER,
+  payload,
+});
+
+export const setCurrentUser = (payload) => ({
+  type: SET_CURRENT_USER,
+  payload,
+});
+
+export const setLoginStatus = (payload) => ({
+  type: SET_LOGIN_STATUS,
   payload,
 });

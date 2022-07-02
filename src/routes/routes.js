@@ -4,6 +4,7 @@ import JobSearchLayout from '~/layouts/JobSearchLayout';
 // pages
 import {
   Home,
+  SignUp,
   SignIn,
   Profile,
   Jobs,
@@ -19,6 +20,7 @@ import {
 // public routes
 const publicRoutes = [
   { path: config.routes.home, component: Home }, //done
+  { path: config.routes.signUp, component: SignUp },
   { path: config.routes.signIn, component: SignIn },
   { path: config.routes.profile, component: Profile },
   { path: config.routes.jobs, component: Jobs, layout: JobSearchLayout }, //done

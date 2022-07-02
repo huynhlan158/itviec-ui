@@ -17,7 +17,9 @@ setupServer();
 
 function Home() {
   const [state, dispatch, , , , , , setSearchText] = useGlobalStore();
-  const { recommendedJobList } = state;
+  const { recommendedJobList, loginStatus, currentUser } = state;
+
+  console.log({ loginStatus, currentUser });
 
   // will call api
   const user = {
