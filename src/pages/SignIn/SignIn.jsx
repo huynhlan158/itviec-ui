@@ -37,9 +37,9 @@ function SignIn() {
     },
   ];
 
-  useEffect(() => {
-    console.log(server.db.users);
-  }, []);
+  // useEffect(() => {
+  //   console.log(server.db.users);
+  // }, []);
 
   const [state, dispatch] = useGlobalStore();
   const { userList } = state;

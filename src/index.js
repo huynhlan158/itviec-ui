@@ -8,13 +8,13 @@ import GlobalProvider from '~/store/GlobalProvider';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <GlobalStyles>
-      <GlobalProvider>
-        <App />
-      </GlobalProvider>
-    </GlobalStyles>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <GlobalStyles>
+    <GlobalProvider>
+      <App />
+    </GlobalProvider>
+  </GlobalStyles>,
+  // </React.StrictMode>,
 );
 
 // If you want to start measuring performance in your app, pass a function

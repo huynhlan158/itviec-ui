@@ -45,14 +45,20 @@ function SignUp() {
     },
   ];
 
+  useEffect(() => {
+    axios('api/users').then((res) => console.log(res.data));
+  }, []);
+
   const handleSignUp = (data) => {
-    server.db.users.insert(data);
+    // server.db.users.insert(data);
 
     axios
-      .post('/api/users', data)
+      .post('api/users', data)
       .then(() =>
-        axios('/api/users').then((res) => {
-          dispatch(actions.addUser(res.data.users));
+        axios('api/users').then((res) => {
+          console.log(res.data);
+
+          // dispatch(actions.addUser(res.data));
         }),
       )
       .catch((err) => alert(err));
