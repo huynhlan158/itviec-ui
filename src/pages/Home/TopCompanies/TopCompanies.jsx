@@ -1,8 +1,8 @@
 import { memo, useEffect, useState } from 'react';
-import axios from 'axios';
 import classNames from 'classnames/bind';
 
 import styles from './TopCompanies.module.scss';
+import * as topCompaniesService from '~/services/topCompaniesService';
 import TopCompany from './TopCompany';
 
 const cx = classNames.bind(styles);
@@ -11,9 +11,12 @@ function TopCompanies() {
   const [topCompanyList, setTopCompanyList] = useState([]);
 
   useEffect(() => {
-    axios.get('/api/top-companies').then((res) => {
-      setTopCompanyList(res.data.topCompanies);
-    });
+    const fetchApi = async () => {
+      const result = await topCompaniesService.getTopCompanies();
+      setTopCompanyList(result.topCompanies);
+    };
+
+    fetchApi();
   }, []);
 
   // shuffle the list to have new order everytime the page re-load

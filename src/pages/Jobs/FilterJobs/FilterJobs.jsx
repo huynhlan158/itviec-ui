@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faFilter } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
@@ -8,14 +7,12 @@ import { FILTERS, FILTER_TITLES } from '~/assess/constants';
 import FilterInput from './FilterInput';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import * as actions from '~/state/actions';
-import config from '~/config';
 
 const cx = classNames.bind(styles);
 
 function FilterJobs() {
   const [state, dispatch, , , , setSearchTextError] = useGlobalStore();
   const { filterJobLevel, filterSalaryRange, filterCompanyType, searchJobList, companyList } = state;
-  const navigate = useNavigate();
 
   const checkedCount = (item) => {
     switch (item) {

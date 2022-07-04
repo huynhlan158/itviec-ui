@@ -16,7 +16,7 @@ const cx = classNames.bind(styles);
 
 function JobItem({ data, selectJob = () => {} }) {
   const [state, dispatch, , , , setSearchTextError, , setSearchText] = useGlobalStore();
-  const { selectedJob, companyList } = state;
+  const { selectedJob, companyList, jobList } = state;
   const navigate = useNavigate();
 
   const {
@@ -47,6 +47,10 @@ function JobItem({ data, selectJob = () => {} }) {
     setSearchText(skill);
     dispatch(actions.setUserInputText(skill));
     dispatch(actions.setSearchLocation('All Cities'));
+
+    // set default data here to avoid setting default data again when calling api at job page that causes error when using quick search from home page for the 1st time
+    dispatch(actions.setSearchJobList(jobList));
+    dispatch(actions.setFilteredJobList(jobList));
 
     // navigate to job page and reset filters
     navigate(config.routes.jobs);

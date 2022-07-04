@@ -1,6 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import classNames from 'classnames/bind';
 
 import styles from './SignUp.module.scss';
@@ -11,7 +10,6 @@ import Button from '~/components/Button';
 import Form from '~/components/Form';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import * as actions from '~/state/actions';
-import { server } from '~/fakeApis';
 
 const cx = classNames.bind(styles);
 
@@ -45,24 +43,7 @@ function SignUp() {
     },
   ];
 
-  useEffect(() => {
-    axios('api/users').then((res) => console.log(res.data));
-  }, []);
-
-  const handleSignUp = (data) => {
-    // server.db.users.insert(data);
-
-    axios
-      .post('api/users', data)
-      .then(() =>
-        axios('api/users').then((res) => {
-          console.log(res.data);
-
-          // dispatch(actions.addUser(res.data));
-        }),
-      )
-      .catch((err) => alert(err));
-  };
+  const handleSignUp = (data) => {};
 
   return (
     <div className={cx('wrapper')}>

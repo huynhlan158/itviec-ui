@@ -47,3 +47,6 @@ COMMON:
 
 
 Authentication: https://www.youtube.com/watch?v=6sLh_5iFnFc
+BUGS:
+- 2nd click on btn of skill in JobItem, JobOverview
+- joblist result display when accessing the page: Home, All jobs

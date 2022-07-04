@@ -8,9 +8,6 @@ import styles from './Rate.module.scss';
 const cx = classNames.bind(styles);
 
 function Rate({ score, small = false, big = false, background = false }) {
-  const scoreP1 = Math.floor(score);
-  const scoreP2 = score % 1;
-
   if (background) {
     return (
       <div className={cx('wrapper')}>

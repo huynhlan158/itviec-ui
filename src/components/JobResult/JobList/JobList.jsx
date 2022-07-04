@@ -1,19 +1,15 @@
 import { useState, useEffect, useRef, memo } from 'react';
-import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './JobList.module.scss';
 import JobItem from '~/components/JobItem';
 import Pagination from '~/components/Pagination';
-import CompanyImage from '~/components/CompanyImage';
-import Image from '~/components/Image';
 import * as actions from '~/state/actions';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import config from '~/config';
+import CompanySpotlight from './CompanySpotlight';
 
 const cx = classNames.bind(styles);
 
@@ -26,13 +22,11 @@ const user = {
 
 function JobList({ jobList: passedJobList = [] }) {
   const [currentPage, setCurrentPage] = useState(1);
-  const [topCompany, setTopCompany] = useState({});
   const [state, dispatch, headerShrink, , searchTextError, setSearchTextError, searchText, , , setCurrentCity] =
     useGlobalStore();
   const { companyList, jobList, searchLocation, filteredJobList, recommendedJobList } = state;
   const jobListRef = useRef();
   const location = useLocation();
-  const topCompanyJobList = jobList.filter((job) => job.companyId === topCompany.id);
 
   // pagination settings
   const showNavigateButtons = config.pagination.showNavigateButtons;
@@ -43,14 +37,6 @@ function JobList({ jobList: passedJobList = [] }) {
 
   // set current list of jobs to render
   const currentJobList = passedJobList.slice(indexOfFirstJob, indexOfLastJob);
-
-  // get 1 top company randomly in company top list
-  useEffect(() => {
-    axios.get('/api/top-companies').then((res) => {
-      const randomIndex = Math.floor(Math.random() * res.data.topCompanies.length);
-      setTopCompany(res.data.topCompanies[randomIndex]);
-    });
-  }, []);
 
   // set title for job list
   let title = `${passedJobList.length} Jobs recommended for ${user.firstName} ${user.lastName}`;
@@ -171,77 +157,7 @@ function JobList({ jobList: passedJobList = [] }) {
       />
 
       {/* company spotlight */}
-      {topCompany.id && (
-        <div className={cx('company-spotlight')}>
-          <h3 className={cx('company-title')}>Company Spotlight</h3>
-          <div className={cx('company-images')}>
-            <Link
-              to={config.routes.companyProfile.replace(
-                ':companyname',
-                topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
-                  topCompany.id.replace('_', '-').toLowerCase(),
-              )}
-            >
-              <Image className={cx('image')} src={topCompany.images[0]} alt="company_img" />
-            </Link>
-            <CompanyImage
-              className={cx('logo')}
-              to={config.routes.companyProfile.replace(
-                ':companyname',
-                topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
-                  topCompany.id.replace('_', '-').toLowerCase(),
-              )}
-              src={topCompany.logo}
-              alt="company_logo"
-            />
-          </div>
-
-          <Link
-            className={cx('company-info')}
-            to={config.routes.companyProfile.replace(
-              ':companyname',
-              topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
-                topCompany.id.replace('_', '-').toLowerCase(),
-            )}
-          >
-            <h4>{topCompany.name}</h4>
-            <p className={cx('location')}>
-              {typeof topCompany.district === 'number'
-                ? `District ${topCompany.district}, ${topCompany.province}`
-                : `${topCompany.district}, ${topCompany.province}`}
-            </p>
-            <p className={cx('slogan')}>{topCompany.slogan || topCompany.name}</p>
-          </Link>
-
-          <div>
-            {topCompanyJobList.slice(0, 3).map((job, index) => (
-              <Link
-                key={index}
-                className={cx('job-item')}
-                to={config.routes.job.replace(
-                  ':jobname',
-                  job.title.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() + job.id.replace('_', '-').toLowerCase(),
-                )}
-              >
-                {job.title}
-              </Link>
-            ))}
-            <Link
-              to={config.routes.companyProfile.replace(
-                ':companyname',
-                topCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
-                  topCompany.id.replace('_', '-').toLowerCase(),
-              )}
-              className={cx('job-item', 'view-all')}
-            >
-              {`View ${topCompanyJobList.length} jobs`}{' '}
-              <i>
-                <FontAwesomeIcon icon={faCaretRight} />
-              </i>
-            </Link>
-          </div>
-        </div>
-      )}
+      <CompanySpotlight />
     </aside>
   );
 }

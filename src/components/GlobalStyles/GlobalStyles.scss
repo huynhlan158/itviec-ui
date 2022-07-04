@@ -50,9 +50,11 @@ body {
 }
 
 input,
-button {
+button,
+textarea {
   border: none;
   outline: none;
+  font-family: var(--font-family);
   background-color: transparent;
 }
 

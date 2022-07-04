@@ -29,7 +29,7 @@ function Menu({ children, className, items = [], search }) {
                   key={index}
                   leftIcon={item.icon}
                   nextIcon={item.data && true}
-                  to={item.link}
+                  to={item.to}
                   onMouseEnter={() => handleMenuHover(item)}
                 >
                   {item.title}

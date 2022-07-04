@@ -2,7 +2,7 @@ const routes = {
   home: '/',
   signUp: '/sign-up',
   signIn: '/sign-in',
-  profile: '/@:username',
+  profile: '/profile',
   jobs: '/it-jobs',
   job: '/it-jobs/@:jobname',
   bestCompanies: '/vietnam-best-it-companies',

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Flag from 'react-world-flags';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -8,6 +7,7 @@ import { faCalendarDays, faClock, faFlag, faGear, faUserGroup } from '@fortaweso
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './Job.module.scss';
+import * as jobsService from '~/services/jobsService';
 import Path from '~/components/Path';
 import config from '~/config';
 import JobHeader from '~/components/JobResult/JobDetail/JobHeader';
@@ -36,16 +36,19 @@ function Job() {
     document.documentElement.scrollTop = 0;
 
     // call api & set states
-    axios.get('/api/it-jobs').then((res) => {
-      const currjob = res.data.jobs.find((job) => job.id.toLowerCase() === jobId);
+    const fetchApi = async () => {
+      const result = await jobsService.getJobs();
+      const currjob = result.jobs.find((job) => job.id.toLowerCase() === jobId);
 
       setCurrentJob(currjob);
-      setCurrentCompany(res.data.companies.find((company) => company.id === currjob.companyId));
+      setCurrentCompany(result.companies.find((company) => company.id === currjob.companyId));
       setRecommendedJobList(
-        res.data.jobs.filter((job) => job.skills.some((skill) => currjob.skills.includes(skill))).slice(0, 10),
+        result.jobs.filter((job) => job.skills.some((skill) => currjob.skills.includes(skill))).slice(0, 10),
       );
       dispatch(actions.setSelectedJob({}));
-    });
+    };
+
+    fetchApi();
   }, []);
 
   useEffect(() => {

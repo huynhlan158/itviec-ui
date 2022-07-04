@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import axios from 'axios';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -13,7 +11,6 @@ import Button from '~/components/Button';
 import Form from '~/components/Form';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import * as actions from '~/state/actions';
-import { server } from '~/fakeApis';
 
 const cx = classNames.bind(styles);
 
@@ -36,10 +33,6 @@ function SignIn() {
       require: true,
     },
   ];
-
-  // useEffect(() => {
-  //   console.log(server.db.users);
-  // }, []);
 
   const [state, dispatch] = useGlobalStore();
   const { userList } = state;
