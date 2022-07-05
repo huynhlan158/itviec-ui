@@ -21,7 +21,6 @@ import config from '~/config';
 import { useGlobalStore } from '~/store/useGlobalStore';
 import * as actions from '~/state/actions';
 import Path from '~/components/Path';
-import Rate from '~/components/Rate';
 import Jobs from './Jobs';
 import Review from './Review';
 

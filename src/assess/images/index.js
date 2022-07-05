@@ -4,6 +4,8 @@ const images = {
   noImage: require('~/assess/images/no_image.jpg'),
   signup: require('~/assess/images/signup.png'),
   google: require('~/assess/images/google.png'),
+  none_jobs_applied: require('~/assess/images/none_jobs_applied.png'),
+  none_jobs_saved: require('~/assess/images/none_jobs_saved.png'),
 };
 
 export default images;

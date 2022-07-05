@@ -7,6 +7,9 @@ import {
   SignUp,
   SignIn,
   Profile,
+  AppliedJobs,
+  SavedJobs,
+  MyJobRobot,
   Jobs,
   Job,
   BestCompanies,
@@ -19,18 +22,21 @@ import {
 
 // public routes
 const publicRoutes = [
-  { path: config.routes.home, component: Home }, //DONE
-  { path: config.routes.signUp, component: SignUp }, //DONE
-  { path: config.routes.signIn, component: SignIn }, //DONE
-  { path: config.routes.profile, component: Profile }, //DONE
-  { path: config.routes.jobs, component: Jobs, layout: JobSearchLayout }, //DONE
-  { path: config.routes.job, component: Job }, //DONE
-  { path: config.routes.bestCompanies, component: BestCompanies }, //skip
-  { path: config.routes.reviewCompany, component: ReviewCompany }, //skip
-  { path: config.routes.blog, component: Blog }, // skip
-  { path: config.routes.employer, component: Employer }, //skip
-  { path: config.routes.companyProfile, component: CompanyProfile }, //DONE
-  { path: config.routes.pending, component: Pending }, //skip
+  { path: config.routes.home, component: Home },
+  { path: config.routes.signUp, component: SignUp },
+  { path: config.routes.signIn, component: SignIn },
+  { path: config.routes.profile, component: Profile },
+  { path: config.routes.appliedJobs, component: AppliedJobs },
+  { path: config.routes.savedJobs, component: SavedJobs },
+  { path: config.routes.myJobRobot, component: MyJobRobot },
+  { path: config.routes.jobs, component: Jobs, layout: JobSearchLayout },
+  { path: config.routes.job, component: Job },
+  { path: config.routes.bestCompanies, component: BestCompanies },
+  { path: config.routes.reviewCompany, component: ReviewCompany },
+  { path: config.routes.blog, component: Blog },
+  { path: config.routes.employer, component: Employer },
+  { path: config.routes.companyProfile, component: CompanyProfile },
+  { path: config.routes.pending, component: Pending },
 ];
 
 export { publicRoutes };

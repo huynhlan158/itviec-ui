@@ -40,17 +40,17 @@ const userLinks = [
   {
     icon: <FontAwesomeIcon icon={faRobot} />,
     title: 'My Jobs Robot',
-    to: config.routes.profile,
+    to: config.routes.myJobRobot,
   },
   {
     icon: <FontAwesomeIcon icon={faHeart} />,
     title: 'Saved Jobs',
-    to: config.routes.profile,
+    to: config.routes.savedJobs,
   },
   {
     icon: <FontAwesomeIcon icon={faCheckToSlot} />,
     title: 'Applied Jobs',
-    to: config.routes.profile,
+    to: config.routes.appliedJobs,
   },
   {
     icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
