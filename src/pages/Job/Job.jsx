@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Flag from 'react-world-flags';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -7,7 +8,6 @@ import { faCalendarDays, faClock, faFlag, faGear, faUserGroup } from '@fortaweso
 import { faBell } from '@fortawesome/free-regular-svg-icons';
 
 import styles from './Job.module.scss';
-import * as jobsService from '~/services/jobsService';
 import Path from '~/components/Path';
 import config from '~/config';
 import JobHeader from '~/components/JobResult/JobDetail/JobHeader';
@@ -17,38 +17,32 @@ import JobItem from '~/components/JobItem';
 import Image from '~/components/Image';
 import CharacteristicItem from '~/components/CharacteristicItem';
 import Button from '~/components/Button';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
+import { useReduxSelector } from '~/redux/selectors';
+import { jobsSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function Job() {
-  const [, , headerShrink] = useGlobalStore();
+  const dispatch = useDispatch();
+  const { jobList, companyList, headerShrink } = useReduxSelector();
+
   const [jobId, setJobId] = useState(window.location.pathname.slice(-7).replace('-', '_'));
-  const [currentJob, setCurrentJob] = useState({});
-  const [currentCompany, setCurrentCompany] = useState({});
-  const [recommendedJobList, setRecommendedJobList] = useState([]);
-  const [, dispatch] = useGlobalStore();
+
+  const currentJob = jobList.find((job) => {
+    return job.id.toLowerCase() === jobId;
+  });
+  const currentCompany = companyList.find((company) => company.id === currentJob.companyId);
+  const recommendedJobList = jobList
+    .filter((job) => job.skills.some((skill) => currentJob.skills.includes(skill)))
+    .slice(0, 10);
 
   useEffect(() => {
     // set scroll to top when loading the page
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 
-    // call api & set states
-    const fetchApi = async () => {
-      const result = await jobsService.getJobs();
-      const currjob = result.jobs.find((job) => job.id.toLowerCase() === jobId);
-
-      setCurrentJob(currjob);
-      setCurrentCompany(result.companies.find((company) => company.id === currjob.companyId));
-      setRecommendedJobList(
-        result.jobs.filter((job) => job.skills.some((skill) => currjob.skills.includes(skill))).slice(0, 10),
-      );
-      dispatch(actions.setSelectedJob({}));
-    };
-
-    fetchApi();
+    // get rid of styling for selected job on this page
+    dispatch(jobsSlice.actions.selectJob({}));
   }, []);
 
   useEffect(() => {

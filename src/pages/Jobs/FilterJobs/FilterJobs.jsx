@@ -1,32 +1,63 @@
+import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faFilter } from '@fortawesome/free-solid-svg-icons';
 import classNames from 'classnames/bind';
 
 import styles from './FilterJobs.module.scss';
-import { FILTERS, FILTER_TITLES } from '~/assess/constants';
 import FilterInput from './FilterInput';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
+import { FILTERS, FILTER_TITLES } from '~/assess/constants';
+import { useReduxSelector } from '~/redux/selectors';
+import { filtersSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function FilterJobs() {
-  const [state, dispatch, , , , setSearchTextError] = useGlobalStore();
-  const { filterJobLevel, filterSalaryRange, filterCompanyType, searchJobList, companyList } = state;
+  const dispatch = useDispatch();
+  const { searchTextError } = useReduxSelector();
 
-  const checkedCount = (item) => {
-    switch (item) {
+  const [levels, setLevels] = useState([]);
+  const [salaryRanges, setSalaryRanges] = useState([]);
+  const [companyTypes, setCompanyTypes] = useState([]);
+
+  const UPDATED_FILTERS = FILTERS.map((filter) => ({
+    ...filter,
+    state:
+      filter.title === FILTER_TITLES.level
+        ? levels
+        : filter.title === FILTER_TITLES.salary
+        ? salaryRanges
+        : filter.title === FILTER_TITLES.companyType
+        ? companyTypes
+        : {},
+    setState:
+      filter.title === FILTER_TITLES.level
+        ? setLevels
+        : filter.title === FILTER_TITLES.salary
+        ? setSalaryRanges
+        : filter.title === FILTER_TITLES.companyType
+        ? setCompanyTypes
+        : {},
+  }));
+
+  // reset filters when accessing the page
+  useEffect(() => {
+    handleClearFilters();
+  }, []);
+
+  const checkedCount = (title) => {
+    switch (title) {
       case FILTER_TITLES.level:
-        if (filterJobLevel.length > 0) {
-          return <span className={cx('filter-number')}>{filterJobLevel.length}</span>;
+        if (levels.length > 0) {
+          return <span className={cx('filter-number')}>{levels.length}</span>;
         } else return;
       case FILTER_TITLES.salary:
-        if (filterSalaryRange.length > 0) {
-          return <span className={cx('filter-number')}>{filterSalaryRange.length}</span>;
+        if (salaryRanges.length > 0) {
+          return <span className={cx('filter-number')}>{salaryRanges.length}</span>;
         } else return;
       case FILTER_TITLES.companyType:
-        if (filterCompanyType.length > 0) {
-          return <span className={cx('filter-number')}>{filterCompanyType.length}</span>;
+        if (companyTypes.length > 0) {
+          return <span className={cx('filter-number')}>{companyTypes.length}</span>;
         } else return;
       default:
         return;
@@ -34,92 +65,36 @@ function FilterJobs() {
   };
 
   const handleFilterJobs = () => {
-    let result = searchJobList;
-
-    // handle clear filters manually on filter bar & prevent filter when searchText is not found
-    if (filterJobLevel.length === 0 && filterSalaryRange.length === 0 && filterCompanyType.length === 0) {
-      // set result
-      if (searchJobList.length > 0) {
-        setSearchTextError(false);
-        dispatch(actions.setFilteredJobList(searchJobList));
-        dispatch(actions.setSelectedJob(searchJobList[0]));
-
-        const selectedCompany = companyList.find((company) => company.id === searchJobList[0].companyId);
-        dispatch(actions.setSelectedCompany(selectedCompany));
-      } else {
-        setSearchTextError(true);
-        dispatch(actions.setFilteredJobList([]));
-      }
+    if (searchTextError) {
+      dispatch(filtersSlice.actions.searchTextErrorChange(false));
     }
 
-    // filter by job level
-    if (filterJobLevel.length > 0) {
-      result = result.filter((job) => {
-        return filterJobLevel.map((level) => level.toLowerCase()).includes(job.jobLevel.toLowerCase());
-      });
-    }
-
-    // filter by salary
-    if (filterSalaryRange.length > 0) {
-      result = result.filter((job) => {
-        if (job.salaryMin && typeof job.salaryMin === 'string') {
-          return job;
-        } else {
-          return job.salaryMax >= Math.min(...filterSalaryRange);
-        }
-      });
-    }
-
-    // filter by company type
-    if (filterCompanyType.length > 0) {
-      result = result.filter((job) => {
-        const company = companyList.find((company) => company.id === job.companyId);
-        return filterCompanyType.map((type) => type.toLowerCase()).includes(company.type.toLowerCase());
-      });
-    }
-
-    // set result
-    if (result.length > 0) {
-      setSearchTextError(false);
-      dispatch(actions.setFilteredJobList(result));
-      dispatch(actions.setSelectedJob(result[0]));
-      const selectedCompany = companyList.find((company) => company.id === result[0].companyId);
-      dispatch(actions.setSelectedCompany(selectedCompany));
-    } else {
-      setSearchTextError(true);
-      dispatch(actions.setFilteredJobList([]));
-    }
+    dispatch(filtersSlice.actions.levelsFilterChange(levels));
+    dispatch(filtersSlice.actions.salaryRangesFilterChange(salaryRanges));
+    dispatch(filtersSlice.actions.companyTypesFilterChange(companyTypes));
   };
 
   const handleClearFilters = () => {
-    // setSearchTextError(false);
+    dispatch(filtersSlice.actions.searchTextErrorChange(false));
 
-    // set result
-    if (searchJobList.length > 0) {
-      setSearchTextError(false);
-      dispatch(actions.setFilteredJobList(searchJobList));
-      dispatch(actions.setSelectedJob(searchJobList[0]));
-      const selectedCompany = companyList.find((company) => company.id === searchJobList[0].companyId);
-      dispatch(actions.setSelectedCompany(selectedCompany));
-    } else {
-      setSearchTextError(true);
-      dispatch(actions.setFilteredJobList([]));
-    }
-
-    // reset filters
-    dispatch(actions.removeAllFilters());
+    setLevels([]);
+    setSalaryRanges([]);
+    setCompanyTypes([]);
+    dispatch(filtersSlice.actions.resetFilters());
   };
 
   return (
     <div className={cx('wrapper')}>
       <div className={cx('filter-form')}>
-        {FILTERS.map((filter, index) => (
+        {UPDATED_FILTERS.map((filter, index) => (
           <FilterInput
             key={index}
             title={filter.title}
             items={filter.data}
             leftCharacter={filter.leftCharacter}
             rightCharacter={filter.rightCharacter}
+            state={filter.state}
+            setState={filter.setState}
           >
             <button className={cx('filter-item')}>
               {checkedCount(filter.title)}

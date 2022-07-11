@@ -1,5 +1,6 @@
 import { memo, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import Tippy from '@tippyjs/react/headless';
@@ -18,59 +19,62 @@ import styles from './Header.module.scss';
 import config from '~/config';
 import images from '~/assess/images';
 import { JOBS, IT_COMPANIES } from '~/assess/constants';
-import NavItem from './components/NavItem';
 import Menu from '~/components/Popper/Menu';
+import Image from '~/components/Image';
+import NavItem from './components/NavItem';
 import Search from './components/Search';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
+import { filtersSlice, headerSlice, usersSlice } from '~/redux/slices';
+import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);
 
-const actionLinks = [
-  { title: 'For Employers', to: config.routes.employer },
-  { title: 'Sign in', to: config.routes.signIn },
-];
-
-const userLinks = [
-  {
-    icon: <FontAwesomeIcon icon={faUser} />,
-    title: 'My Account',
-    to: config.routes.profile,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faRobot} />,
-    title: 'My Jobs Robot',
-    to: config.routes.myJobRobot,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faHeart} />,
-    title: 'Saved Jobs',
-    to: config.routes.savedJobs,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faCheckToSlot} />,
-    title: 'Applied Jobs',
-    to: config.routes.appliedJobs,
-  },
-  {
-    icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
-    title: 'Sign Out',
-    to: config.routes.profile,
-  },
-];
-
 function Header({ search = false }) {
-  // will call api
-  const user = true;
+  const dispatch = useDispatch();
+  const { headerShrink, currentUser } = useReduxSelector();
+  const navigate = useNavigate();
 
-  const [, dispatch, headerShrink, setHeaderShrink] = useGlobalStore();
+  const actionLinks = [
+    { title: 'For Employers', to: config.routes.employer },
+    { title: 'Sign in', to: config.routes.signIn },
+  ];
+
+  const userLinks = [
+    {
+      icon: <FontAwesomeIcon icon={faUser} />,
+      title: 'My Account',
+      to: config.routes.profile,
+    },
+    {
+      icon: <FontAwesomeIcon icon={faRobot} />,
+      title: 'My Jobs Robot',
+      to: config.routes.myJobRobot,
+    },
+    {
+      icon: <FontAwesomeIcon icon={faHeart} />,
+      title: 'Saved Jobs',
+      to: config.routes.savedJobs,
+    },
+    {
+      icon: <FontAwesomeIcon icon={faCheckToSlot} />,
+      title: 'Applied Jobs',
+      to: config.routes.appliedJobs,
+    },
+    {
+      icon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
+      title: 'Sign Out',
+      onClick: () => {
+        dispatch(usersSlice.actions.signOut());
+        navigate(config.routes.home);
+      },
+    },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 0 && !search) {
-        setHeaderShrink(true);
+        dispatch(headerSlice.actions.setHeaderShrink(true));
       } else {
-        setHeaderShrink(false);
+        dispatch(headerSlice.actions.setHeaderShrink(false));
       }
     };
 
@@ -96,7 +100,7 @@ function Header({ search = false }) {
             <Menu items={JOBS} search>
               <div
                 onClick={() => {
-                  dispatch(actions.setSearchLocation('All Cities'));
+                  dispatch(filtersSlice.actions.locationFilterChange('All Cities'));
                   window.location.reload(false);
                 }}
               >
@@ -118,17 +122,23 @@ function Header({ search = false }) {
           </div>
 
           <div className={cx('actions')}>
-            {user ? (
+            {currentUser ? (
               <Menu items={userLinks} smallItem>
                 <NavItem>
                   <div className={cx('user', { showLess: search })}>
                     <div className={cx('user-name')}>
-                      <span className={cx('user-name_text')}>A Nguyen Van</span>
+                      <span className={cx('user-name_text')}>{currentUser.fullname}</span>
                       <i className={cx('user-name_icon')}>
                         <FontAwesomeIcon icon={faSortDown} />
                       </i>
                     </div>
-                    <div className={cx('avatar', { shrink: headerShrink })}>A</div>
+                    <div className={cx('avatar', { shrink: headerShrink })}>
+                      {currentUser.avatar ? (
+                        <Image src={currentUser.avatar} alt={`${currentUser.fullname}_avatar`} />
+                      ) : (
+                        currentUser.fullname.slice(0, 1)
+                      )}
+                    </div>
                   </div>
                 </NavItem>
               </Menu>

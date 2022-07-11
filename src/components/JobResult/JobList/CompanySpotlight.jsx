@@ -1,38 +1,25 @@
-import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './JobList.module.scss';
-import * as topCompaniesService from '~/services/topCompaniesService';
 import CompanyImage from '~/components/CompanyImage';
 import Image from '~/components/Image';
 import config from '~/config';
-import { useGlobalStore } from '~/store/useGlobalStore';
 
 const cx = classNames.bind(styles);
 
-function CompanySpotlight() {
-  const [state] = useGlobalStore();
-  const { jobList } = state;
-  const [topCompany, setTopCompany] = useState({});
+function CompanySpotlight({ topCompanyList = [], jobList = [] }) {
+  // get 1 top company randomly in company top list
+  const randomIndex = Math.floor(Math.random() * topCompanyList.length);
+  const topCompany = topCompanyList[randomIndex];
+
+  // job list of top company selected
   const topCompanyJobList = jobList.filter((job) => job.companyId === topCompany.id);
 
-  // get 1 top company randomly in company top list
-  useEffect(() => {
-    const fetchApi = async () => {
-      const result = await topCompaniesService.getTopCompanies();
-
-      const randomIndex = Math.floor(Math.random() * result.topCompanies.length);
-      setTopCompany(result.topCompanies[randomIndex]);
-    };
-
-    fetchApi();
-  }, []);
-
   return (
-    topCompany.id && (
+    topCompany && (
       <div className={cx('company-spotlight')}>
         <h3 className={cx('company-title')}>Company Spotlight</h3>
         <div className={cx('company-images')}>

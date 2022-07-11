@@ -4,14 +4,13 @@ import classNames from 'classnames/bind';
 
 import styles from './TopCompany.module.scss';
 import Image from '~/components/Image';
-import { useGlobalStore } from '~/store/useGlobalStore';
 import config from '~/config';
+import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);
 
 function TopCompany({ data }) {
-  const [state] = useGlobalStore();
-  const { jobList } = state;
+  const { jobList } = useReduxSelector();
 
   const { id, name, logo, province } = data;
   const numberOfJobOpening = jobList.filter((job) => job.companyId === id).length;

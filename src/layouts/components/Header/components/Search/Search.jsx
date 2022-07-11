@@ -1,5 +1,6 @@
+import { memo, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { memo, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
@@ -10,37 +11,41 @@ import styles from './Search.module.scss';
 import NavItem from '../NavItem';
 import { CITIES } from '~/assess/constants';
 import PopperWrapper from '~/components/Popper/PopperWrapper';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
 import config from '~/config';
+import { useReduxSelector } from '~/redux/selectors';
+import { filtersSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function Search({ className, big }) {
-  const [state, dispatch, , , , setSearchTextError, , setSearchText, currentCity, setCurrentCity] = useGlobalStore();
-  const { userInputText, searchJobList } = state;
+  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { searchText, location } = useReduxSelector();
 
+  const [searchTextDisplay, setSearchTextDisplay] = useState('');
+  const [locationDisplay, setLocationDisplay] = useState('All Cities');
   const [activeOverlay, setActiveOverlay] = useState(false);
   const [activeInputSearch, setActiveInputSearch] = useState(false);
   const [activeCityOption, setActiveCityOption] = useState(false);
 
-  const handleSearchJobs = () => {
-    // prevent search job again if textsearch is not found
-    if (searchJobList.length === 0) {
-      dispatch(actions.setFilteredJobList([]));
+  useEffect(() => {
+    if (window.location.pathname === config.routes.jobs) {
+      setSearchTextDisplay(searchText);
+      setLocationDisplay(location);
     }
+  }, [searchText, location]);
 
+  const handleSearchJobs = () => {
     // reset searchTextError
-    setSearchTextError(false);
+    dispatch(filtersSlice.actions.searchTextErrorChange(false));
 
     // set value for searchText & location
-    setSearchText(userInputText);
-    dispatch(actions.setSearchLocation(currentCity));
+    dispatch(filtersSlice.actions.searchFilterChange(searchTextDisplay));
+    dispatch(filtersSlice.actions.locationFilterChange(locationDisplay));
 
     // navigate to job page and reset filters
+    dispatch(filtersSlice.actions.resetFilters());
     navigate(config.routes.jobs);
-    dispatch(actions.removeAllFilters());
   };
 
   return (
@@ -56,8 +61,8 @@ function Search({ className, big }) {
               setActiveOverlay(true);
               setActiveInputSearch(true);
             }}
-            value={userInputText}
-            onChange={(e) => dispatch(actions.setUserInputText(e.target.value))}
+            value={searchTextDisplay}
+            onChange={(e) => setSearchTextDisplay(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === 'Enter') {
                 handleSearchJobs();
@@ -67,7 +72,7 @@ function Search({ className, big }) {
               }
             }}
           />
-          <i className={cx({ show: !!userInputText })} onClick={() => dispatch(actions.setUserInputText(''))}>
+          <i className={cx({ show: !!searchTextDisplay })} onClick={() => setSearchTextDisplay('')}>
             <FontAwesomeIcon icon={faXmark} />
           </i>
         </div>
@@ -78,7 +83,7 @@ function Search({ className, big }) {
             <div className={cx('city-container')} tabIndex="-1" {...attrs}>
               <PopperWrapper className={cx('city-option')} fixed>
                 {CITIES.map((city, index) => (
-                  <span key={index} className={cx('city-item')} onClick={() => setCurrentCity(city)}>
+                  <span key={index} className={cx('city-item')} onClick={() => setLocationDisplay(city)}>
                     {city}
                   </span>
                 ))}
@@ -107,7 +112,7 @@ function Search({ className, big }) {
               ) : (
                 ''
               )}
-              <span className={cx('city-title')}>{currentCity}</span>
+              <span className={cx('city-title')}>{locationDisplay}</span>
             </div>
             <FontAwesomeIcon icon={faChevronDown} />
           </div>

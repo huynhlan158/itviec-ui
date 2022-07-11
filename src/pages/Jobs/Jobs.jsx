@@ -4,20 +4,14 @@ import classNames from 'classnames/bind';
 import styles from './Jobs.module.scss';
 import FilterJobs from './FilterJobs';
 import JobResult from '~/components/JobResult';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import config from '~/config';
 import Path from '~/components/Path';
+import config from '~/config';
+import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);
 
-// will call api
-const user = {
-  skills: ['React', 'ReactJS', 'Front-end'],
-};
-
 function Jobs() {
-  const [state] = useGlobalStore();
-  const { filteredJobList } = state;
+  const { filteredJobList } = useReduxSelector();
 
   // set scroll to top when loading the page
   useEffect(() => {

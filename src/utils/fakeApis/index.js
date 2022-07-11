@@ -1,39 +1,50 @@
 import { createServer, Model } from 'miragejs';
 import { companyList, topCompanyList } from './companyList';
 import { jobList } from './jobList';
-
-export let server = createServer({
-  models: {
-    users: Model,
-  },
-  routes() {
-    this.namespace = 'api';
-
-    this.get('/users', (schema) => {
-      return schema.db.users;
-    });
-
-    this.post('/users', (schema, request) => {
-      let attrs = JSON.parse(request.requestBody);
-
-      return schema.db.users.insert(attrs);
-    });
-  },
-
-  seeds(server) {
-    server.db.loadData({
-      users: [
-        {
-          fullname: 'Nguyễn Văn B',
-          email: 'nguyenvanb@email.com',
-          password: '123456b@B',
-        },
-      ],
-    });
-  },
-});
+import { userList } from './userList';
 
 export const setupServer = () => {
-  server.get('/it-jobs', { jobs: jobList, companies: companyList });
-  server.get('/top-companies', { topCompanies: topCompanyList });
+  let server = createServer({
+    models: {
+      userList: Model,
+    },
+    routes() {
+      this.namespace = 'api';
+
+      this.get('/it-jobs', (schema) => {
+        return schema.db.jobList;
+      });
+
+      this.get('/it-companies', (schema) => {
+        return schema.db.companyList;
+      });
+
+      this.get('/top-companies', (schema) => {
+        return schema.db.topCompanyList;
+      });
+
+      this.get('/users', (schema) => {
+        return schema.db.userList;
+      });
+
+      this.post('/users', (schema, request) => {
+        let newUser = JSON.parse(request.requestBody);
+        return schema.db.userList.insert(newUser);
+      });
+
+      this.post('/update-users', (schema, request) => {
+        const { id, key, payload } = JSON.parse(request.requestBody);
+        return schema.db.userList.update(id, { [key]: payload });
+      });
+    },
+
+    seeds(server) {
+      server.db.loadData({
+        jobList: jobList,
+        companyList: companyList,
+        topCompanyList: topCompanyList,
+        userList: userList,
+      });
+    },
+  });
 };

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Flag from 'react-world-flags';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -17,18 +18,19 @@ import styles from './CompanyProfile.module.scss';
 import CharacteristicItem from '~/components/CharacteristicItem';
 import Button from '~/components/Button';
 import Image from '~/components/Image';
-import config from '~/config';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
 import Path from '~/components/Path';
+import config from '~/config';
 import Jobs from './Jobs';
 import Review from './Review';
+import { useReduxSelector } from '~/redux/selectors';
+import { jobsSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function CompanyProfile() {
-  const [state, dispatch, headerShrink] = useGlobalStore();
-  const { companyList, jobList } = state;
+  const dispatch = useDispatch();
+  const { companyList, headerShrink } = useReduxSelector();
+
   const [currentCompany, setCurrentCompany] = useState({});
   const [type, setType] = useState('job');
 
@@ -37,14 +39,16 @@ function CompanyProfile() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
 
-    // set current company
+    // get rid of styling for selected job on this page
+    dispatch(jobsSlice.actions.selectJob({}));
+  }, []);
+
+  // set current company
+  useEffect(() => {
     const companyId = window.location.pathname.slice(-7).replace('-', '_');
     const currCompany = companyList.find((company) => company.id.toLowerCase() === companyId);
     setCurrentCompany(currCompany);
-
-    // get rid of styling on selected job on this page
-    dispatch(actions.setSelectedJob({}));
-  }, [companyList, jobList]);
+  }, [companyList]);
 
   return (
     currentCompany && (

@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
@@ -31,6 +30,7 @@ function Menu({ children, className, items = [], search }) {
                   nextIcon={item.data && true}
                   to={item.to}
                   onMouseEnter={() => handleMenuHover(item)}
+                  onClick={item.onClick}
                 >
                   {item.title}
                 </MenuItem>

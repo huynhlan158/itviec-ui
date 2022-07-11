@@ -1,3 +1,6 @@
+import { memo } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,13 +9,41 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './JobHeader.module.scss';
 import Button from '~/components/Button';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import { memo } from 'react';
+import config from '~/config';
+import { useReduxSelector } from '~/redux/selectors';
+import { usersSliceActions, jobsSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
-function JobHeader({ job, company }) {
-  const [, , headerShrink] = useGlobalStore();
+function JobHeader({ job = {}, company = {} }) {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { currentUser, headerShrink, selectedJob } = useReduxSelector();
+
+  const handleToggleSaveJob = () => {
+    if (currentUser) {
+      let savedJobList = currentUser.savedJobs || [];
+      if (savedJobList.includes(job.id)) {
+        savedJobList = savedJobList.filter((jobId) => jobId !== job.id);
+      } else {
+        savedJobList = [...savedJobList, job.id];
+      }
+
+      dispatch(
+        usersSliceActions.updateUser({
+          id: currentUser.id,
+          key: 'savedJobs',
+          payload: savedJobList,
+        }),
+      );
+
+      if (window.location.pathname === config.routes.home || window.location.pathname === config.routes.jobs) {
+        dispatch(jobsSlice.actions.selectJob(selectedJob));
+      }
+    } else {
+      navigate(config.routes.signIn);
+    }
+  };
 
   return (
     <header className={cx('wrapper', { shrink: headerShrink })}>
@@ -22,9 +53,12 @@ function JobHeader({ job, company }) {
         <Button primary xl>
           Apply Now
         </Button>
-        <button className={cx('icons')}>
-          {/* <FontAwesomeIcon icon={faHeart} /> */}
-          <FontAwesomeIcon className={cx('like-icon')} icon={solidHeart} />
+        <button className={cx('icons')} onClick={handleToggleSaveJob}>
+          {currentUser && currentUser.savedJobs?.includes(job.id) ? (
+            <FontAwesomeIcon className={cx('like-icon')} icon={solidHeart} />
+          ) : (
+            <FontAwesomeIcon icon={faHeart} />
+          )}
         </button>
       </div>
     </header>

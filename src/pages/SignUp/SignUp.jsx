@@ -1,6 +1,7 @@
-import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
+import { v4 as uuidv4 } from 'uuid';
 
 import styles from './SignUp.module.scss';
 import config from '~/config';
@@ -8,42 +9,53 @@ import images from '~/assess/images';
 import Image from '~/components/Image';
 import Button from '~/components/Button';
 import Form from '~/components/Form';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
+import { usersSlice, usersSliceActions } from '~/redux/slices';
+import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);
 
+const inputItems = [
+  {
+    name: 'fullname',
+    label: 'Fullname',
+    type: 'text',
+    id: 'fullname',
+    placeholder: 'Name',
+    require: true,
+  },
+  {
+    name: 'email',
+    label: 'Email',
+    type: 'text',
+    id: 'email',
+    placeholder: 'Email',
+    require: true,
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    id: 'password',
+    placeholder: 'Password',
+    require: true,
+  },
+];
+
 function SignUp() {
-  const [state, dispatch] = useGlobalStore();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { userList } = useReduxSelector();
 
-  const inputItems = [
-    {
-      name: 'fullname',
-      label: 'Fullname',
-      type: 'text',
-      id: 'fullname',
-      placeholder: 'Name',
-      require: true,
-    },
-    {
-      name: 'email',
-      label: 'Email',
-      type: 'text',
-      id: 'email',
-      placeholder: 'Email',
-      require: true,
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      type: 'password',
-      id: 'password',
-      placeholder: 'Password',
-      require: true,
-    },
-  ];
-
-  const handleSignUp = (data) => {};
+  const handleSignUp = (newUser) => {
+    if (userList.some((user) => user.email === newUser.email)) {
+      alert('Email account already existed');
+    } else {
+      dispatch(usersSliceActions.signUp(newUser));
+      dispatch(usersSlice.actions.signIn(newUser.id));
+      alert('Sign up successfully');
+      navigate(config.routes.home);
+    }
+  };
 
   return (
     <div className={cx('wrapper')}>
@@ -76,7 +88,11 @@ function SignUp() {
                 <span className={cx('separator-line')}></span>
               </div>
 
-              <Form items={inputItems} handleSubmit={(data) => handleSignUp(data)} submitBtn="Sign up with Email" />
+              <Form
+                items={inputItems}
+                handleSubmit={(data) => handleSignUp({ ...data, id: uuidv4() })}
+                submitBtn="Sign up with Email"
+              />
 
               <div className={cx('sign-in')}>
                 <span>Already had an account? </span>

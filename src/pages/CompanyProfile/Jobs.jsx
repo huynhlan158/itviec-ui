@@ -1,41 +1,36 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 import styles from './CompanyProfile.module.scss';
 import JobItem from '~/components/JobItem';
-import { useGlobalStore } from '~/store/useGlobalStore';
 import Button from '~/components/Button';
 import Rate from '~/components/Rate';
 import config from '~/config';
-import * as actions from '~/state/actions';
+import { useReduxSelector } from '~/redux/selectors';
+import { filtersSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function Jobs({ currentCompany = {} }) {
-  const [state, dispatch, , , , setSearchTextError, , setSearchText] = useGlobalStore();
-  const { jobList } = state;
-  const [currentJobList, setCurrentJobList] = useState([]);
+  const dispatch = useDispatch();
+  const { jobList } = useReduxSelector();
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const companyId = window.location.pathname.slice(-7).replace('-', '_');
-    setCurrentJobList(jobList.filter((job) => job.companyId.toLowerCase() === companyId));
-  }, []);
+  const currentJobList = jobList.filter((job) => job.companyId === currentCompany.id);
 
   const handleSearchJobs = (skill) => {
     // reset searchTextError
-    setSearchTextError(false);
+    dispatch(filtersSlice.actions.searchTextErrorChange(false));
 
     // set value for searchText & location
-    setSearchText(skill);
-    dispatch(actions.setUserInputText(skill));
-    dispatch(actions.setSearchLocation('All Cities'));
+    dispatch(filtersSlice.actions.searchFilterChange(skill));
+    dispatch(filtersSlice.actions.locationFilterChange('All Cities'));
 
-    // navigate to job page and reset filters
+    // navigate to job page
     navigate(config.routes.jobs);
-    dispatch(actions.removeAllFilters());
   };
 
   return (
@@ -43,10 +38,12 @@ function Jobs({ currentCompany = {} }) {
       {/* left side */}
       <div>
         {/* company job list */}
-        <div className={cx('content-left_item')}>
-          <h3 className={cx('content-title')}>{currentCompany.name} Jobs</h3>
-          {currentJobList?.length > 0 && currentJobList?.map((job, index) => <JobItem key={index} data={job} />)}
-        </div>
+        {currentJobList?.length > 0 && (
+          <div className={cx('content-left_item')}>
+            <h3 className={cx('content-title')}>{currentCompany.name} Jobs</h3>
+            {currentJobList.length > 0 && currentJobList.map((job, index) => <JobItem key={index} data={job} />)}
+          </div>
+        )}
 
         {/* company overview */}
         <div className={cx('content-left_item')}>

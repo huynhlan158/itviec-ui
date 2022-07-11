@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,14 +10,14 @@ import CompanyImage from '~/components/CompanyImage';
 import Button from '../Button';
 import config from '~/config';
 import CharacteristicItem from '~/components/CharacteristicItem';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
+import { filtersSlice } from '~/redux/slices';
+import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);
 
 function JobItem({ data, selectJob = () => {} }) {
-  const [state, dispatch, , , , setSearchTextError, , setSearchText] = useGlobalStore();
-  const { selectedJob, companyList, jobList } = state;
+  const dispatch = useDispatch();
+  const { selectedJob, companyList } = useReduxSelector();
   const navigate = useNavigate();
 
   const {
@@ -41,20 +42,14 @@ function JobItem({ data, selectJob = () => {} }) {
 
   const handleSearchJobs = (skill) => {
     // reset searchTextError
-    setSearchTextError(false);
+    dispatch(filtersSlice.actions.searchTextErrorChange(false));
 
     // set value for searchText & location
-    setSearchText(skill);
-    dispatch(actions.setUserInputText(skill));
-    dispatch(actions.setSearchLocation('All Cities'));
+    dispatch(filtersSlice.actions.searchFilterChange(skill));
+    dispatch(filtersSlice.actions.locationFilterChange('All Cities'));
 
-    // set default data here to avoid setting default data again when calling api at job page that causes error when using quick search from home page for the 1st time
-    dispatch(actions.setSearchJobList(jobList));
-    dispatch(actions.setFilteredJobList(jobList));
-
-    // navigate to job page and reset filters
+    // navigate to job page
     navigate(config.routes.jobs);
-    dispatch(actions.removeAllFilters());
   };
 
   return (

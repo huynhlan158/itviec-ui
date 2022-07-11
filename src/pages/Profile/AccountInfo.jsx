@@ -1,29 +1,50 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
 
 import styles from './Profile.module.scss';
 import Button from '~/components/Button';
-import config from '~/config';
 import ToggleSwitch from '~/components/ToggleSwitch';
-import { useState } from 'react';
+import config from '~/config';
+import { useReduxSelector } from '~/redux/selectors';
+import { usersSliceActions } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
-// will call api
-const user = {
-  firstName: 'A',
-  lastName: 'Nguyen Van',
-  skills: ['AngularJS', 'ReactJS'],
-};
-
 function AccountInfo() {
+  const dispatch = useDispatch();
+  const { currentUser } = useReduxSelector();
+
   const [isAccountToggle, setIsAccountToggle] = useState(false);
   const [isLetterToggle, setIsLetterToggle] = useState(false);
   const [isInvitationToggle, setIsInvitationToggle] = useState(true);
-  const [fullname, setFullname] = useState(`${user.firstName} ${user.lastName}`);
+  const [fullname, setFullname] = useState(currentUser.fullname);
+  const [coverLetter, setCoverLetter] = useState(currentUser.coverLetter ? currentUser.coverLetter : '');
+
+  const handleUserNameChange = () => {
+    dispatch(
+      usersSliceActions.updateUser({
+        id: currentUser.id,
+        key: 'fullname',
+        payload: fullname,
+      }),
+    );
+  };
+
+  const handleUserCoverLetterChange = () => {
+    dispatch(
+      usersSliceActions.updateUser({
+        id: currentUser.id,
+        key: 'coverLetter',
+        payload: coverLetter,
+      }),
+    );
+  };
 
   return (
     <>
+      {/* account */}
       <div className={cx('title-container')}>
         <h3 className={cx('profile-title')}>Account</h3>
         <span
@@ -36,13 +57,13 @@ function AccountInfo() {
         </span>
       </div>
 
-      <h5 className={cx('profile-fullname')}>{`${user.firstName} ${user.lastName}`}</h5>
-      <p>Email: nguyenvana@email.com</p>
+      <h5 className={cx('profile-fullname')}>{currentUser.fullname}</h5>
+      <p>Email: {currentUser.email}</p>
 
       <div className={cx('profile-collapse', { show: isAccountToggle })}>
         <div className={cx('form-group')}>
           <label>Email</label>
-          <div>nguyenvana@email.com</div>
+          <div>{currentUser.email}</div>
         </div>
 
         <div className={cx('form-group')}>
@@ -54,10 +75,13 @@ function AccountInfo() {
           <Button outline onClick={() => setIsAccountToggle(!isAccountToggle)}>
             Cancel
           </Button>
-          <Button primary>Save</Button>
+          <Button primary onClick={handleUserNameChange}>
+            Save
+          </Button>
         </div>
       </div>
 
+      {/* cover letter */}
       <div className={cx('title-container')}>
         <h3 className={cx('profile-title')}>Cover Letter</h3>
         <span className={cx('toggle-btn', 'cover-letter')} onClick={() => setIsLetterToggle(!isLetterToggle)}>
@@ -70,13 +94,17 @@ function AccountInfo() {
           className={cx('')}
           rows={4}
           placeholder="Detail and specific examples will make your application stronger..."
+          value={coverLetter}
+          onChange={(e) => setCoverLetter(e.target.value)}
         />
 
         <div className={cx('edit-btn')}>
           <Button outline onClick={() => setIsLetterToggle(!isLetterToggle)}>
             Cancel
           </Button>
-          <Button primary>Save</Button>
+          <Button primary onClick={handleUserCoverLetterChange}>
+            Save
+          </Button>
         </div>
       </div>
 

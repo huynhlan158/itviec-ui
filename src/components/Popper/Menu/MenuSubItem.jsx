@@ -1,50 +1,39 @@
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 import styles from './Menu.module.scss';
-import { useGlobalStore } from '~/store/useGlobalStore';
 import config from '~/config';
-import * as actions from '~/state/actions';
+import { useReduxSelector } from '~/redux/selectors';
+import { filtersSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function MenuSubItem({ children, className, search, searchBy }) {
-  const [state, dispatch, , , , , , setSearchText, , setCurrentCity] = useGlobalStore();
-  const { jobList, filteredJobList, searchJobList, companyList } = state;
+  const dispatch = useDispatch();
+  const { companyList } = useReduxSelector();
   const navigate = useNavigate();
 
   const handleSearchJobs = () => {
     if (search) {
+      // reset searchTextError
+      dispatch(filtersSlice.actions.searchTextErrorChange(false));
+
       // filter jobs by search values
       switch (searchBy) {
         case 'company':
-          setSearchText('');
-          dispatch(actions.setUserInputText(''));
-          dispatch(actions.setSearchLocation('All Cities'));
-          setCurrentCity('All Cities');
+          dispatch(filtersSlice.actions.searchFilterChange(''));
+          dispatch(filtersSlice.actions.locationFilterChange('All Cities'));
           break;
         case 'location':
-          setSearchText('');
-          dispatch(actions.setUserInputText(''));
-          dispatch(actions.setSearchLocation(children));
-          setCurrentCity(children);
+          dispatch(filtersSlice.actions.searchFilterChange(''));
+          dispatch(filtersSlice.actions.locationFilterChange(children));
           break;
         default:
-          setSearchText(children);
-          dispatch(actions.setUserInputText(children));
-          dispatch(actions.setSearchLocation('All Cities'));
-          setCurrentCity('All Cities');
+          dispatch(filtersSlice.actions.searchFilterChange(children));
+          dispatch(filtersSlice.actions.locationFilterChange('All Cities'));
           break;
-      }
-
-      // set default data to avoid setting default data again when calling api at job page that causes error when using quick search from home page for the 1st time
-      // searchJobList.length === 0: to avoid reset data when clicking more than 1 time at the button
-      if (searchJobList.length === 0) {
-        dispatch(actions.setSearchJobList(jobList));
-      }
-      if (filteredJobList.length === 0) {
-        dispatch(actions.setFilteredJobList(jobList));
       }
 
       // navigate to companyProfile/ job page and reset filters
@@ -59,11 +48,12 @@ function MenuSubItem({ children, className, search, searchBy }) {
                 .toLowerCase(),
           ),
         );
+
         companyList.find((company) => company.name === children).id !==
           window.location.pathname.slice(-7).replace('-', '_') && window.location.reload(false);
       } else {
+        dispatch(filtersSlice.actions.resetFilters());
         navigate(config.routes.jobs);
-        dispatch(actions.removeAllFilters());
       }
     }
   };

@@ -3,42 +3,31 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
 import styles from './FilterJobs.module.scss';
-import * as actions from '~/state/actions';
-import { useGlobalStore } from '~/store/useGlobalStore';
 import { FILTER_TITLES } from '~/assess/constants';
 
 const cx = classNames.bind(styles);
 
-function FilterInput({ children, title, items = [], leftCharacter, rightCharacter }) {
-  const [state, dispatch] = useGlobalStore();
-  const { filterJobLevel, filterSalaryRange, filterCompanyType } = state;
-
+function FilterInput({ children, title, items = [], leftCharacter, rightCharacter, state, setState }) {
   // update filter states when checking/unchecking filter items
   const handleFilterCheck = (e) => {
     let isChecked = e.target.checked;
 
     if (isChecked) {
       switch (title) {
-        case FILTER_TITLES.level:
-          dispatch(actions.addFilterLevel(e.target.value));
-          break;
         case FILTER_TITLES.salary:
-          dispatch(actions.addFilterSalary(Number(e.target.value)));
+          setState((prev) => [...prev, Number(e.target.value)]);
           break;
-        case FILTER_TITLES.companyType:
-          dispatch(actions.addFilterCompanyType(e.target.value));
+        default:
+          setState((prev) => [...prev, e.target.value]);
           break;
       }
     } else {
       switch (title) {
-        case FILTER_TITLES.level:
-          dispatch(actions.removeFilterLevel(e.target.value));
-          break;
         case FILTER_TITLES.salary:
-          dispatch(actions.removeFilterSalary(Number(e.target.value)));
+          setState((prev) => prev.filter((item) => item !== Number(e.target.value)));
           break;
-        case FILTER_TITLES.companyType:
-          dispatch(actions.removeFilterCompanyType(e.target.value));
+        default:
+          setState((prev) => prev.filter((item) => item !== e.target.value));
           break;
       }
     }
@@ -46,14 +35,7 @@ function FilterInput({ children, title, items = [], leftCharacter, rightCharacte
 
   // reset checkbox on submit/clear all
   const handleResetCheckbox = (item) => {
-    switch (title) {
-      case FILTER_TITLES.level:
-        return filterJobLevel.includes(item);
-      case FILTER_TITLES.salary:
-        return filterSalaryRange.includes(item);
-      case FILTER_TITLES.companyType:
-        return filterCompanyType.includes(item);
-    }
+    return state.includes(item);
   };
 
   return (

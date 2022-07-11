@@ -1,4 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -9,41 +10,42 @@ import images from '~/assess/images';
 import Image from '~/components/Image';
 import Button from '~/components/Button';
 import Form from '~/components/Form';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
+import { useReduxSelector } from '~/redux/selectors';
+import { usersSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
+const inputItems = [
+  {
+    name: 'email',
+    label: 'Email Address',
+    type: 'text',
+    id: 'email',
+    placeholder: 'Email',
+    require: true,
+  },
+  {
+    name: 'password',
+    label: 'Password',
+    type: 'password',
+    id: 'password',
+    placeholder: 'Password',
+    require: true,
+  },
+];
 function SignIn() {
-  const inputItems = [
-    {
-      name: 'email',
-      label: 'Email Address',
-      type: 'text',
-      id: 'email',
-      placeholder: 'Email',
-      require: true,
-    },
-    {
-      name: 'password',
-      label: 'Password',
-      type: 'password',
-      id: 'password',
-      placeholder: 'Password',
-      require: true,
-    },
-  ];
-
-  const [state, dispatch] = useGlobalStore();
-  const { userList } = state;
+  const dispatch = useDispatch();
+  const { userList } = useReduxSelector();
   const navigate = useNavigate();
 
   const handleSignIn = (data) => {
     if (userList.some((user) => user.email === data.email && user.password === data.password)) {
-      dispatch(actions.setLoginStatus(true));
-      dispatch(actions.setCurrentUser(data));
-
+      dispatch(usersSlice.actions.signIn(userList.find((user) => user.email === data.email).id));
       navigate(config.routes.home);
+    } else {
+      userList.some((user) => user.email === data.email && user.password !== data.password)
+        ? alert('Wrong password')
+        : alert('Email account does not exist');
     }
   };
 

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
@@ -8,7 +9,7 @@ import styles from './Menu.module.scss';
 
 const cx = classNames.bind(styles);
 
-function MenuItem({ children, leftIcon, nextIcon, onMouseEnter, to }) {
+function MenuItem({ children, leftIcon, nextIcon, onMouseEnter, to, onClick }) {
   let Wrap = 'div';
 
   if (to) {
@@ -16,7 +17,12 @@ function MenuItem({ children, leftIcon, nextIcon, onMouseEnter, to }) {
   }
 
   return (
-    <Wrap className={cx('menu-item', { pointer: !!to })} to={to} onMouseEnter={onMouseEnter}>
+    <Wrap
+      className={cx('menu-item', { pointer: !!to || !!onClick })}
+      to={to}
+      onMouseEnter={onMouseEnter}
+      onClick={onClick}
+    >
       <div className={cx('item-content')}>
         {leftIcon && <span className={cx('left-icon')}>{leftIcon}</span>}
         {children}

@@ -11,24 +11,15 @@ import Image from '~/components/Image';
 const cx = classNames.bind(styles);
 
 // will replace by calling api
-const newestBlogs = [
-  {
-    title: 'Thiết kế game là gì? Công việc của Game Designer là gì?',
-    hightlight:
-      'Thiết kế Game là làm gì? Game Designer là ai? Thiết kế game không phải là công việc liên quan đến thiết kế đồ họa như mọi người vẫn nhầm, mà là tạo ra những câu chuyện, nhân vật, mục tiêu… trong trò chơi.',
-    picture:
-      'https://itviec.com/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBeE5tS0E9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--78bc60cf531ced001a6b98760371724c87723776/thiet-ke-game-la-gi-game-designer-thumbnail-300x158.jpg',
-    link: '#',
-  },
-  {
-    title: 'Thiết kế game là gì? Công việc của Game Designer là gì?',
-    hightlight:
-      'Thiết kế Game là làm gì? Game Designer là ai? Thiết kế game không phải là công việc liên quan đến thiết kế đồ họa như mọi người vẫn nhầm, mà là tạo ra những câu chuyện, nhân vật, mục tiêu… trong trò chơi.',
-    picture:
-      'https://itviec.com/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBeE5tS0E9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--78bc60cf531ced001a6b98760371724c87723776/thiet-ke-game-la-gi-game-designer-thumbnail-300x158.jpg',
-    link: '#',
-  },
-];
+const blog = {
+  title: 'Thiết kế game là gì? Công việc của Game Designer là gì?',
+  hightlight:
+    'Thiết kế Game là làm gì? Game Designer là ai? Thiết kế game không phải là công việc liên quan đến thiết kế đồ họa như mọi người vẫn nhầm, mà là tạo ra những câu chuyện, nhân vật, mục tiêu… trong trò chơi.',
+  picture:
+    'https://itviec.com/rails/active_storage/blobs/proxy/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBBeE5tS0E9PSIsImV4cCI6bnVsbCwicHVyIjoiYmxvYl9pZCJ9fQ==--78bc60cf531ced001a6b98760371724c87723776/thiet-ke-game-la-gi-game-designer-thumbnail-300x158.jpg',
+  link: '#',
+};
+const newestBlogs = [blog, blog];
 
 function BlogEntries() {
   return (

@@ -5,7 +5,7 @@ import styles from './JobContent.module.scss';
 
 const cx = classNames.bind(styles);
 
-function JobContent({ job }) {
+function JobContent({ job = {} }) {
   if (job.id) {
     return (
       <div className={cx('wrapper')}>

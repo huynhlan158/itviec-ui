@@ -1,22 +1,23 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
 
 import styles from './Profile.module.scss';
-import { useGlobalStore } from '~/store/useGlobalStore';
-import * as actions from '~/state/actions';
 import JobItem from '~/components/JobItem';
 import ProfileInfo from './ProfileInfo';
 import AccountInfo from './AccountInfo';
+import { useReduxSelector } from '~/redux/selectors';
+import { jobsSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function Profile() {
-  const [state, dispatch] = useGlobalStore();
-  const { recommendedJobList } = state;
+  const dispatch = useDispatch();
+  const { recommendedJobList } = useReduxSelector();
   const [type, setType] = useState('profile');
 
   useEffect(() => {
-    dispatch(actions.setSelectedJob({}));
+    dispatch(jobsSlice.actions.selectJob({}));
   }, []);
 
   return (

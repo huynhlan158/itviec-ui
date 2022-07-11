@@ -2,42 +2,35 @@ import { memo, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './TopCompanies.module.scss';
-import * as topCompaniesService from '~/services/topCompaniesService';
 import TopCompany from './TopCompany';
+import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);
 
 function TopCompanies() {
-  const [topCompanyList, setTopCompanyList] = useState([]);
+  const { topCompanyList } = useReduxSelector();
+  const [top8, setTop8] = useState([]);
 
-  useEffect(() => {
-    const fetchApi = async () => {
-      const result = await topCompaniesService.getTopCompanies();
-      setTopCompanyList(result.topCompanies);
-    };
-
-    fetchApi();
-  }, []);
-
-  // shuffle the list to have new order everytime the page re-load
+  // function to shuffle an array
   const shuffle = (array) => {
     let currentIndex = array.length,
+      newArray = [...array], // to avoid error incase the array is read only
       randomIndex;
 
     while (currentIndex !== 0) {
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
 
-      [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+      [newArray[currentIndex], newArray[randomIndex]] = [newArray[randomIndex], newArray[currentIndex]];
     }
 
-    return array;
+    return newArray;
   };
 
-  shuffle(topCompanyList);
-
-  // then get the first 8 companies only
-  const top8 = topCompanyList.slice(0, 8);
+  // shuffle the list then get the first 8 companies only
+  useEffect(() => {
+    setTop8(shuffle(topCompanyList).slice(0, 8));
+  }, [topCompanyList]);
 
   return (
     <div className={cx('wrapper')}>
