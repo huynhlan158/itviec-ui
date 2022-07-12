@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown, faXmark } from '@fortawesome/free-solid-svg-icons';
@@ -8,31 +9,29 @@ import styles from './MyJobRobot.module.scss';
 import Button from '~/components/Button';
 import config from '~/config';
 import { useReduxSelector } from '~/redux/selectors';
+import { usersSliceActions } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
-// will call api
-const user = {
-  firstName: 'A',
-  lastName: 'Nguyen Van',
-  skills: ['AngularJS', 'ReactJS', 'front-end'],
-  location: 'Ho Chi Minh',
-  jobRobot: [
-    {
-      keyWord: 'ReactJS',
-      location: 'Ho Chi Minh',
-    },
-    {
-      keyWord: 'AngularJS',
-      location: 'Ha Noi',
-    },
-  ],
-  followedCompany: ['COM_001', 'COM_003', 'COM_007'],
-};
-
 function Companies() {
+  const dispatch = useDispatch();
   const { companyList, currentUser } = useReduxSelector();
   const [keyWord, setKeyWord] = useState('');
+
+  const handleUpdateFollowedCompany = (newList) => {
+    dispatch(
+      usersSliceActions.updateUser({
+        id: currentUser.id,
+        key: 'followedCompany',
+        payload: newList,
+      }),
+    );
+  };
+
+  const handleUnfollowCompany = (companyId) => {
+    const newList = currentUser.followedCompany.filter((id) => id !== companyId);
+    handleUpdateFollowedCompany(newList);
+  };
 
   return (
     <div className={cx('box')}>
@@ -50,7 +49,7 @@ function Companies() {
           {currentUser.followedCompany.map((item, index) => (
             <div key={index} className={cx('subscribed-item')}>
               <div>
-                <button className={cx('clear-btn')}>
+                <button className={cx('clear-btn')} onClick={() => handleUnfollowCompany(item)}>
                   <FontAwesomeIcon icon={faXmark} />
                 </button>
                 <Link

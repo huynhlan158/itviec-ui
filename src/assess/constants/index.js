@@ -107,10 +107,10 @@ const JOBS = [
 const IT_COMPANIES = [
   {
     title: 'Vietnam Best IT Companies',
-    link: config.routes.bestCompanies,
+    to: config.routes.bestCompanies,
     data: ['Best IT Companies 2022', 'Best IT Companies 2021', 'Best IT Companies 2020', 'Best IT Companies 2019'],
   },
-  { title: 'Company Reviews', link: config.routes.reviewCompany },
+  { title: 'Company Reviews', to: config.routes.reviewCompany },
 ];
 
 // filtered jobs

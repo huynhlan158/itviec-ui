@@ -19,18 +19,16 @@ function JobResult({ jobList }) {
       <JobList jobList={jobList} />
 
       <div className={cx('detail')}>
-        {selectedJob && (
-          <>
-            <div className={cx('job')}>
-              <JobHeader job={selectedJob} company={selectedCompany} />
-              <JobOverview job={selectedJob} />
-              <JobContent job={selectedJob} />
-            </div>
-            <div className={cx('company')}>
-              <CompanyOverview company={selectedCompany} />
-            </div>
-          </>
-        )}
+        <>
+          <div className={cx('job')}>
+            <JobHeader job={selectedJob} company={selectedCompany} />
+            <JobOverview job={selectedJob} />
+            <JobContent job={selectedJob} />
+          </div>
+          <div className={cx('company')}>
+            <CompanyOverview company={selectedCompany} />
+          </div>
+        </>
       </div>
     </div>
   );

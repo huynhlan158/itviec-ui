@@ -23,7 +23,6 @@ function JobList({ jobList: passedJobList }) {
     searchText,
     searchTextError,
     recommendedJobList,
-    filteredJobList,
     location,
   } = useReduxSelector();
 
@@ -83,7 +82,7 @@ function JobList({ jobList: passedJobList }) {
     } else {
       dispatch(filtersSlice.actions.searchTextErrorChange(true));
     }
-  }, [searchText, location]);
+  }, [searchText, location, passedJobList]);
 
   // reset selected job when changing current page
   useEffect(() => {
@@ -101,6 +100,7 @@ function JobList({ jobList: passedJobList }) {
     }
   }, [passedJobList]);
 
+  console.log(passedJobList);
   return (
     <aside className={cx('wrapper', { shrink: headerShrink })} ref={jobListRef}>
       <h1 className={cx('title')}>{title}</h1>

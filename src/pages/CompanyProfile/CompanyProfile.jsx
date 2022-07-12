@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Flag from 'react-world-flags';
 import PropTypes from 'prop-types';
@@ -7,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRightFromBracket,
   faCalendarDays,
+  faCheck,
   faClock,
   faFlag,
   faGear,
@@ -23,13 +25,14 @@ import config from '~/config';
 import Jobs from './Jobs';
 import Review from './Review';
 import { useReduxSelector } from '~/redux/selectors';
-import { jobsSlice } from '~/redux/slices';
+import { jobsSlice, usersSliceActions } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function CompanyProfile() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { companyList, headerShrink } = useReduxSelector();
+  const { companyList, headerShrink, currentUser } = useReduxSelector();
 
   const [currentCompany, setCurrentCompany] = useState({});
   const [type, setType] = useState('job');
@@ -50,8 +53,34 @@ function CompanyProfile() {
     setCurrentCompany(currCompany);
   }, [companyList]);
 
-  return (
-    currentCompany && (
+  const handleUpdateFollowedCompany = (newList) => {
+    dispatch(
+      usersSliceActions.updateUser({
+        id: currentUser.id,
+        key: 'followedCompany',
+        payload: newList,
+      }),
+    );
+  };
+
+  const handleFollowCompany = () => {
+    if (currentUser) {
+      const newList = currentUser.followedCompany
+        ? [...currentUser.followedCompany, currentCompany.id]
+        : [currentCompany.id];
+      handleUpdateFollowedCompany(newList);
+    } else {
+      navigate(config.routes.signIn);
+    }
+  };
+
+  const handleUnfollowCompany = () => {
+    const newList = currentUser.followedCompany.filter((id) => id !== currentCompany.id);
+    handleUpdateFollowedCompany(newList);
+  };
+
+  if (currentCompany) {
+    return (
       <div className={cx('wrapper')}>
         <div className={cx('container', { shrink: headerShrink })}>
           {/* header */}
@@ -90,12 +119,28 @@ function CompanyProfile() {
               </div>
 
               <div className={cx('actions')}>
-                <Button className={cx('actions-btn')} primary xl>
+                <Button
+                  className={cx('actions-btn')}
+                  primary
+                  xl
+                  onClick={() => alert('Sorry! This function has not been developed.')}
+                >
                   Write Review
                 </Button>
-                <Button className={cx('actions-btn')} outline xl>
-                  Follow
-                </Button>
+                {currentUser && currentUser.followedCompany?.includes(currentCompany.id) ? (
+                  <Button className={cx('actions-btn')} outline xl onClick={handleUnfollowCompany}>
+                    <>
+                      <i>
+                        <FontAwesomeIcon icon={faCheck} />
+                      </i>
+                      <span>Following</span>
+                    </>
+                  </Button>
+                ) : (
+                  <Button className={cx('actions-btn')} outline xl onClick={handleFollowCompany}>
+                    Follow
+                  </Button>
+                )}
               </div>
             </header>
           )}
@@ -120,7 +165,7 @@ function CompanyProfile() {
           {/* company detail info */}
           <div className={cx('content')}>
             {type === 'job' ? (
-              <Jobs currentCompany={currentCompany} />
+              <Jobs currentCompany={currentCompany} setType={setType} />
             ) : type === 'review' ? (
               <Review currentCompany={currentCompany} />
             ) : (
@@ -131,8 +176,8 @@ function CompanyProfile() {
           <Path items={[{ title: 'Home', to: config.routes.home }, { title: currentCompany.name }]} />
         </div>
       </div>
-    )
-  );
+    );
+  }
 }
 
 CompanyProfile.propTypes = {

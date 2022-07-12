@@ -41,6 +41,7 @@ APIS:
 REDUX:
 - blacklist, whitelist: how to apply for children of an obj 
 - usersSlice- updateUser: only update data for currentUser does not update the state in store
+- jobList title display on loading
 
 COMMON: 
 - data structure's rules?

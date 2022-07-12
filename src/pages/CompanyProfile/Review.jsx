@@ -44,7 +44,7 @@ function Review({ currentCompany = {} }) {
           <h3 className={cx('content-title')}>Let your voice be heard.</h3>
           <div>
             <p className={cx('review-title')}>Review {currentCompany.name} now</p>
-            <Button primary xl>
+            <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
               Write review
             </Button>
           </div>

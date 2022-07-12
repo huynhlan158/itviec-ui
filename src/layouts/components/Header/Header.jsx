@@ -100,6 +100,7 @@ function Header({ search = false }) {
             <Menu items={JOBS} search>
               <div
                 onClick={() => {
+                  dispatch(filtersSlice.actions.searchFilterChange(''));
                   dispatch(filtersSlice.actions.locationFilterChange('All Cities'));
                   window.location.reload(false);
                 }}

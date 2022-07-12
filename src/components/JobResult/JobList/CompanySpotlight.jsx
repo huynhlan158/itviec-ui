@@ -16,10 +16,13 @@ function CompanySpotlight({ topCompanyList = [], jobList = [] }) {
   const topCompany = topCompanyList[randomIndex];
 
   // job list of top company selected
-  const topCompanyJobList = jobList.filter((job) => job.companyId === topCompany.id);
+  let topCompanyJobList;
+  if (!!topCompany) {
+    topCompanyJobList = jobList.filter((job) => job.companyId === topCompany.id);
+  }
 
-  return (
-    topCompany && (
+  if (topCompany) {
+    return (
       <div className={cx('company-spotlight')}>
         <h3 className={cx('company-title')}>Company Spotlight</h3>
         <div className={cx('company-images')}>
@@ -89,8 +92,8 @@ function CompanySpotlight({ topCompanyList = [], jobList = [] }) {
           </Link>
         </div>
       </div>
-    )
-  );
+    );
+  }
 }
 
 export default CompanySpotlight;

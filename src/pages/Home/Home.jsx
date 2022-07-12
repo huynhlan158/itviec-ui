@@ -20,18 +20,12 @@ function Home() {
     // set scroll to top
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
-
-    // reset searchText
-    dispatch(filtersSlice.actions.searchFilterChange(''));
-
-    // reset selectedJob
-    dispatch(jobsSlice.actions.selectJob(recommendedJobList[0]));
   }, []);
 
   return (
     <div className={cx('wrapper')}>
       <HeadSearch />
-      {currentUser && currentUser.skills?.length > 0 && <JobResult jobList={recommendedJobList} />}
+      {currentUser && currentUser.skills?.length > 0 ? <JobResult jobList={recommendedJobList} /> : ''}
       <TopCompanies />
       <BlogEntries />
     </div>

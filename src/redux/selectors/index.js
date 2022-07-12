@@ -31,7 +31,9 @@ export const selectedCompanySelector = createSelector(
   companyListSelector,
   selectedJobSelector,
   (companyList, selectedJob) => {
-    return !!selectedJob && companyList.find((company) => company.id === selectedJob.companyId);
+    if (!!selectedJob) {
+      return companyList.find((company) => company.id === selectedJob.companyId);
+    }
   },
 );
 
@@ -74,8 +76,8 @@ export const filteredJobListSelector = createSelector(
     return jobList.filter((job) => {
       return (
         //filter by textSearch
-        (job.title.toLowerCase().includes(searchText) ||
-          job.skills.map((skill) => skill.toLowerCase()).includes(searchText)) &&
+        (job.title.toLowerCase().includes(searchText.toLowerCase()) ||
+          job.skills.map((skill) => skill.toLowerCase()).includes(searchText.toLowerCase())) &&
         //filter by location
         (location !== 'All Cities' ? job.location === location : true) &&
         //filter by levels

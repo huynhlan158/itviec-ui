@@ -69,51 +69,47 @@ function Job() {
 
         {/* company info */}
         <div>
-          {currentCompany.id && (
-            <div className={cx('company-info', { shrink: headerShrink })}>
-              <div className={cx('header')}>
-                <Image className={cx('logo')} to={config.routes.companyProfile} src={currentCompany.logo} />
-                <h3 className={cx('title')}>{currentCompany.name}</h3>
-                <span className={cx('sub-title')}>{currentCompany.slogan || currentCompany.name}</span>
+          <div className={cx('company-info', { shrink: headerShrink })}>
+            <div className={cx('header')}>
+              <Image className={cx('logo')} to={config.routes.companyProfile} src={currentCompany.logo} />
+              <h3 className={cx('title')}>{currentCompany.name}</h3>
+              <span className={cx('sub-title')}>{currentCompany.slogan || currentCompany.name}</span>
+            </div>
+
+            <div className={cx('content')}>
+              <div className={cx('characteristics')}>
+                <CharacteristicItem icon={<FontAwesomeIcon icon={faGear} />}>{currentCompany.type}</CharacteristicItem>
+                <CharacteristicItem icon={<FontAwesomeIcon icon={faUserGroup} />}>
+                  {currentCompany.size}
+                </CharacteristicItem>
+                <CharacteristicItem icon={<FontAwesomeIcon icon={faCalendarDays} />}>
+                  {currentCompany.workingDays}
+                </CharacteristicItem>
+                <CharacteristicItem
+                  icon={<Flag code={currentCompany.countryCode} fallback={<FontAwesomeIcon icon={faFlag} />} />}
+                >
+                  {currentCompany.country}
+                </CharacteristicItem>
+                {!currentCompany.overtime && (
+                  <CharacteristicItem icon={<FontAwesomeIcon icon={faClock} />}>No OT</CharacteristicItem>
+                )}
               </div>
 
-              <div className={cx('content')}>
-                <div className={cx('characteristics')}>
-                  <CharacteristicItem icon={<FontAwesomeIcon icon={faGear} />}>
-                    {currentCompany.type}
-                  </CharacteristicItem>
-                  <CharacteristicItem icon={<FontAwesomeIcon icon={faUserGroup} />}>
-                    {currentCompany.size}
-                  </CharacteristicItem>
-                  <CharacteristicItem icon={<FontAwesomeIcon icon={faCalendarDays} />}>
-                    {currentCompany.workingDays}
-                  </CharacteristicItem>
-                  <CharacteristicItem
-                    icon={<Flag code={currentCompany.countryCode} fallback={<FontAwesomeIcon icon={faFlag} />} />}
-                  >
-                    {currentCompany.country}
-                  </CharacteristicItem>
-                  {!currentCompany.overtime && (
-                    <CharacteristicItem icon={<FontAwesomeIcon icon={faClock} />}>No OT</CharacteristicItem>
+              <div className={cx('view-profile')}>
+                <Button
+                  to={config.routes.companyProfile.replace(
+                    ':companyname',
+                    currentCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
+                      currentCompany.id.replace('_', '-').toLowerCase(),
                   )}
-                </div>
-
-                <div className={cx('view-profile')}>
-                  <Button
-                    to={config.routes.companyProfile.replace(
-                      ':companyname',
-                      currentCompany.name.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() +
-                        currentCompany.id.replace('_', '-').toLowerCase(),
-                    )}
-                    outline
-                    lg
-                  >
-                    View Company Profile
-                  </Button>
-                </div>
+                  outline
+                  lg
+                >
+                  View Company Profile
+                </Button>
               </div>
             </div>
-          )}
+          </div>
         </div>
 
         {/* more jobs */}

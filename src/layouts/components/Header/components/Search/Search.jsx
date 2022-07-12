@@ -20,10 +20,12 @@ const cx = classNames.bind(styles);
 function Search({ className, big }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { searchText, location } = useReduxSelector();
+  const { searchText, location, currentUser } = useReduxSelector();
 
   const [searchTextDisplay, setSearchTextDisplay] = useState('');
-  const [locationDisplay, setLocationDisplay] = useState('All Cities');
+  const [locationDisplay, setLocationDisplay] = useState(
+    currentUser && currentUser.location ? currentUser.location : 'All Cities',
+  );
   const [activeOverlay, setActiveOverlay] = useState(false);
   const [activeInputSearch, setActiveInputSearch] = useState(false);
   const [activeCityOption, setActiveCityOption] = useState(false);

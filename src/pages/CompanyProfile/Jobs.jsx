@@ -14,7 +14,7 @@ import { filtersSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
-function Jobs({ currentCompany = {} }) {
+function Jobs({ currentCompany = {}, setType }) {
   const dispatch = useDispatch();
   const { jobList } = useReduxSelector();
   const navigate = useNavigate();
@@ -116,7 +116,7 @@ function Jobs({ currentCompany = {} }) {
             <h3 className={cx('content-title')}>Let your voice be heard.</h3>
             <div>
               <p className={cx('review-title')}>Review {currentCompany.name} now</p>
-              <Button primary xl>
+              <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
                 Write review
               </Button>
             </div>
@@ -133,7 +133,7 @@ function Jobs({ currentCompany = {} }) {
                 <p className={cx('review-comment')}>{review.comment}</p>
               </div>
             ))}
-            <Button primary xl>
+            <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
               Write review
             </Button>
           </div>
@@ -162,7 +162,7 @@ function Jobs({ currentCompany = {} }) {
               ))}
             </div>
             <div>
-              <Button primary xl>
+              <Button primary xl onClick={() => setType('review')}>
                 See all ratings and reviews
               </Button>
             </div>
@@ -177,7 +177,7 @@ function Jobs({ currentCompany = {} }) {
                 <p className={cx('review-comment')}>{review.comment}</p>
               </div>
             ))}
-            <Button primary xl>
+            <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
               Write review
             </Button>
           </div>

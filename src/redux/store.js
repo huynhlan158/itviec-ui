@@ -21,7 +21,7 @@ const reducers = combineReducers({
 const persistConfig = {
   key: 'main-root',
   storage,
-  // blacklist: ['header'],
+  blacklist: ['filters'],
   // whitelist: [''],
 };
 
