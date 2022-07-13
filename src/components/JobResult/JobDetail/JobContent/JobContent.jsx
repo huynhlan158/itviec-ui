@@ -62,7 +62,7 @@ function JobContent({ job = {} }) {
 }
 
 JobContent.propTypes = {
-  job: PropTypes.object.isRequired,
+  job: PropTypes.object,
 };
 
 export default JobContent;

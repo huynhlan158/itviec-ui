@@ -26,7 +26,7 @@ function ProfileInfo() {
           </label>
         </div>
 
-        <div className={cx('create-profile')}>
+        <div className={cx('create-profile')} onClick={() => alert('Sorry! This function has not been developed yet.')}>
           <i>
             <FontAwesomeIcon icon={faFileLines} />
           </i>

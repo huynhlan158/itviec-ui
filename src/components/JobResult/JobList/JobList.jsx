@@ -24,6 +24,7 @@ function JobList({ jobList: passedJobList }) {
     searchTextError,
     recommendedJobList,
     location,
+    selectedJob,
   } = useReduxSelector();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -71,9 +72,10 @@ function JobList({ jobList: passedJobList }) {
     }
   }
 
-  // reset search text error
+  // reset search text error and selected job
   useEffect(() => {
     dispatch(filtersSlice.actions.searchTextErrorChange(false));
+    dispatch(jobsSlice.actions.selectJob(passedJobList[0]));
   }, []);
 
   useEffect(() => {
@@ -95,12 +97,11 @@ function JobList({ jobList: passedJobList }) {
   useEffect(() => {
     setCurrentPage(1);
 
-    if (passedJobList.length > 0) {
+    if (passedJobList.length > 0 && window.location.pathname === config.routes.jobs) {
       dispatch(jobsSlice.actions.selectJob(passedJobList[0]));
     }
   }, [passedJobList]);
 
-  console.log(passedJobList);
   return (
     <aside className={cx('wrapper', { shrink: headerShrink })} ref={jobListRef}>
       <h1 className={cx('title')}>{title}</h1>

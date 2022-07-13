@@ -1,15 +1,24 @@
+import { useEffect } from 'react';
 import classNames from 'classnames/bind';
+import { useDispatch } from 'react-redux';
 
 import styles from './AppliedJobs.module.scss';
 import Image from '~/components/Image';
 import images from '~/assess/images';
 import JobItem from '~/components/JobItem';
 import { useReduxSelector } from '~/redux/selectors';
+import { jobsSlice } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
 function AppliedJobs() {
+  const dispatch = useDispatch();
   const { jobList, currentUser } = useReduxSelector();
+
+  useEffect(() => {
+    // get rid of styling for selected job on this page
+    dispatch(jobsSlice.actions.selectJob({}));
+  }, []);
 
   return (
     <div className={cx('wrapper')}>

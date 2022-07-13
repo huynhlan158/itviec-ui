@@ -96,3 +96,11 @@ export const filteredJobListSelector = createSelector(
     });
   },
 );
+
+export const skillsSetSelector = createSelector(jobListSelector, (jobList) => {
+  let result = [];
+  jobList.forEach((job) => {
+    result = [...result, ...job.skills];
+  });
+  return [...new Set(result)];
+});

@@ -7,6 +7,7 @@ import { faChevronDown, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './MyJobRobot.module.scss';
 import Button from '~/components/Button';
+import AutoComplete from '~/components/AutoComplete';
 import config from '~/config';
 import { useReduxSelector } from '~/redux/selectors';
 import { usersSliceActions } from '~/redux/slices';
@@ -17,6 +18,9 @@ function Companies() {
   const dispatch = useDispatch();
   const { companyList, currentUser } = useReduxSelector();
   const [keyWord, setKeyWord] = useState('');
+  const [selectedCompany, setSelectedCompany] = useState('');
+
+  const companyNameList = companyList.map((company) => company.name);
 
   const handleUpdateFollowedCompany = (newList) => {
     dispatch(
@@ -28,9 +32,21 @@ function Companies() {
     );
   };
 
+  const handleFollowCompany = (companyName) => {
+    const companyId = companyList.find((company) => company.name === companyName).id;
+    const newList = currentUser.followedCompany ? [...currentUser.followedCompany, companyId] : [companyId];
+    handleUpdateFollowedCompany(newList);
+    setKeyWord('');
+  };
+
   const handleUnfollowCompany = (companyId) => {
     const newList = currentUser.followedCompany.filter((id) => id !== companyId);
     handleUpdateFollowedCompany(newList);
+  };
+
+  const handleSelectCompany = (companyName) => {
+    setSelectedCompany(companyName);
+    setKeyWord(companyName);
   };
 
   return (
@@ -42,7 +58,6 @@ function Companies() {
           Add new, or delete your Following Companies here. You can follow up to 5 companies.
         </p>
       </header>
-
       {/* followed company list */}
       {currentUser?.followedCompany && (
         <div className={cx('subscribed-list')}>
@@ -74,7 +89,7 @@ function Companies() {
 
       {/* actions */}
       <div className={cx('form')}>
-        <div className={cx('form-input')}>
+        <div className={cx('form-input', 'company')}>
           <input
             type="text"
             placeholder="Select Company"
@@ -84,15 +99,20 @@ function Companies() {
           <i>
             <FontAwesomeIcon icon={faChevronDown} />
           </i>
+          <AutoComplete
+            className={cx('skills-suggestion')}
+            search={keyWord}
+            items={companyNameList}
+            handleAdd={(companyName) => handleSelectCompany(companyName)}
+          />
         </div>
 
         <div className={cx('form-actions', 'float-right')}>
-          <Button className={cx('myrj-btn')} primary>
+          <Button className={cx('myrj-btn')} primary onClick={() => handleFollowCompany(selectedCompany)}>
             Follow Company
           </Button>
         </div>
       </div>
-
       {/* more infomation */}
       <div className={cx('explanation')}>
         <p className={cx('explanation-waring')}>Don't miss your next job!</p>

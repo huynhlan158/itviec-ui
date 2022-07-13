@@ -1,17 +1,19 @@
 import { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
+
 import { publicRoutes } from '~/routes';
 import MainLayout from '~/layouts/MainLayout';
 import { jobsSlice, jobsSliceActions, usersSliceActions, companiesSliceActions } from '~/redux/slices';
 import { setupServer } from '~/utils/fakeApis';
+import config from './config';
 import { useReduxSelector } from '~/redux/selectors';
 
 setupServer();
 
 function App() {
   const dispatch = useDispatch();
-  const { jobList, userList } = useReduxSelector();
+  const { jobList, userList, recommendedJobList } = useReduxSelector();
 
   useEffect(() => {
     dispatch(jobsSliceActions.fetchJobs());
@@ -22,7 +24,11 @@ function App() {
   }, []);
 
   useEffect(() => {
-    dispatch(jobsSlice.actions.selectJob(jobList[0]));
+    if (window.location.pathname === config.routes.home && recommendedJobList.length > 0) {
+      dispatch(jobsSlice.actions.selectJob(recommendedJobList[0]));
+    } else if (window.location.pathname === config.routes.home) {
+      dispatch(jobsSlice.actions.selectJob(jobList[0]));
+    }
   }, [jobList]);
 
   return (

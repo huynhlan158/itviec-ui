@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
@@ -9,7 +10,8 @@ import images from '~/assess/images';
 import Image from '~/components/Image';
 import Button from '~/components/Button';
 import Form from '~/components/Form';
-import { usersSlice, usersSliceActions } from '~/redux/slices';
+import Modal from '~/components/Modal';
+import { usersSliceActions } from '~/redux/slices';
 import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);
@@ -46,15 +48,18 @@ function SignUp() {
   const dispatch = useDispatch();
   const { userList } = useReduxSelector();
 
+  const [activeOverlay, setActiveOverlay] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
   const handleSignUp = (newUser) => {
     if (userList.some((user) => user.email === newUser.email)) {
-      alert('Email account already existed');
+      setIsSuccess(false);
     } else {
       dispatch(usersSliceActions.signUp(newUser));
-      dispatch(usersSlice.actions.signIn(newUser.id));
-      alert('Sign up successfully');
-      navigate(config.routes.home);
+      setIsSuccess(true);
     }
+
+    setActiveOverlay(true);
   };
 
   return (
@@ -109,11 +114,22 @@ function SignUp() {
             </div>
 
             <div className={cx('sign-up_image')}>
-              <Image src={images.signup} alt="signup_img" />
+              <Image src={images.success} alt="signup_img" />
             </div>
           </div>
         </div>
       </div>
+
+      <Modal
+        title={isSuccess ? "Cool, you're almost done!" : 'Email account already existed!'}
+        message={isSuccess ? "Let's sign in to search and get your dream job." : 'Please use another email to sign up.'}
+        btn={isSuccess ? 'Sign in' : 'Sign up again'}
+        action={() => {
+          isSuccess ? navigate(config.routes.signIn) : setActiveOverlay(false);
+        }}
+        active={activeOverlay}
+        setActive={setActiveOverlay}
+      />
     </div>
   );
 }

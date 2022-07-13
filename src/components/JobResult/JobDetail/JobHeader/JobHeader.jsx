@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -9,6 +9,8 @@ import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './JobHeader.module.scss';
 import Button from '~/components/Button';
+import Modal from '~/components/Modal';
+import images from '~/assess/images';
 import config from '~/config';
 import { useReduxSelector } from '~/redux/selectors';
 import { usersSliceActions } from '~/redux/slices';
@@ -19,6 +21,7 @@ function JobHeader({ job = {}, company = {} }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser, headerShrink } = useReduxSelector();
+  const [activeOverlay, setActiveOverlay] = useState(false);
 
   const handleToggleSaveJob = () => {
     if (currentUser) {
@@ -41,15 +44,42 @@ function JobHeader({ job = {}, company = {} }) {
     }
   };
 
+  const handleApplyJob = () => {
+    if (currentUser) {
+      let appliedJobList = currentUser.appliedJobs || [];
+      appliedJobList = [...appliedJobList, job.id];
+
+      dispatch(
+        usersSliceActions.updateUser({
+          id: currentUser.id,
+          key: 'appliedJobs',
+          payload: appliedJobList,
+        }),
+      );
+
+      console.log(appliedJobList);
+
+      setActiveOverlay(true);
+    } else {
+      navigate(config.routes.signIn);
+    }
+  };
+
   if (job && company) {
     return (
       <header className={cx('wrapper', { shrink: headerShrink })}>
         <h1 className={cx('title')}>{job.title}</h1>
         <span className={cx('sub-title')}>{company.name}</span>
         <div className={cx('apply')}>
-          <Button primary xl>
-            Apply Now
-          </Button>
+          {!!currentUser && currentUser?.appliedJobs?.includes(job.id) ? (
+            <button className={cx('applied')} disabled>
+              Apply Now
+            </button>
+          ) : (
+            <Button primary xl onClick={handleApplyJob}>
+              Apply Now
+            </Button>
+          )}
           <button className={cx('icons')} onClick={handleToggleSaveJob}>
             {currentUser && currentUser.savedJobs?.includes(job.id) ? (
               <FontAwesomeIcon className={cx('like-icon')} icon={solidHeart} />
@@ -58,14 +88,23 @@ function JobHeader({ job = {}, company = {} }) {
             )}
           </button>
         </div>
+
+        <Modal
+          title="You have applied for this job successfully!"
+          active={activeOverlay}
+          setActive={setActiveOverlay}
+          className={cx('applied-modal')}
+        >
+          <img src={images.success} alt="successful_img" className={cx('success-img')} />
+        </Modal>
       </header>
     );
   }
 }
 
 JobHeader.propTypes = {
-  job: PropTypes.object.isRequired,
-  company: PropTypes.object.isRequired,
+  job: PropTypes.object,
+  company: PropTypes.object,
 };
 
 export default memo(JobHeader);

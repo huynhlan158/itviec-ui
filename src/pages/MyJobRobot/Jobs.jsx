@@ -18,12 +18,7 @@ const cities = ['Ho Chi Minh', 'Ha Noi', 'Da Nang'];
 
 function Jobs() {
   const dispatch = useDispatch();
-  const { jobList, currentUser } = useReduxSelector();
-  let result = [];
-  jobList.forEach((job) => {
-    result = [...result, ...job.skills, job.title];
-  });
-  const recommendSkillAndTitle = [...new Set(result)];
+  const { currentUser } = useReduxSelector();
 
   const [currentCity, setCurrentCity] = useState(currentUser.location ? currentUser.location : 'Ho Chi Minh');
   const [keyWord, setKeyWord] = useState('');

@@ -81,7 +81,7 @@ function JobOverview({ job = {} }) {
 }
 
 JobOverview.propTypes = {
-  job: PropTypes.object.isRequired,
+  job: PropTypes.object,
 };
 
 export default JobOverview;

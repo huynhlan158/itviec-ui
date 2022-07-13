@@ -9,6 +9,7 @@ import {
   selectedJobSelector,
   filteredJobListSelector,
   recommendedJobListSelector,
+  skillsSetSelector,
 
   // filters
   searchTextSelector,
@@ -37,6 +38,7 @@ const useReduxSelector = () => {
   const selectedJob = useSelector(selectedJobSelector);
   const filteredJobList = useSelector(filteredJobListSelector);
   const recommendedJobList = useSelector(recommendedJobListSelector);
+  const skillsSet = useSelector(skillsSetSelector);
 
   // filters
   const searchText = useSelector(searchTextSelector);
@@ -64,6 +66,7 @@ const useReduxSelector = () => {
     jobList,
     filteredJobList,
     recommendedJobList,
+    skillsSet,
 
     // filters
     searchText,

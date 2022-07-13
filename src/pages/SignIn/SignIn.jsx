@@ -1,8 +1,9 @@
+import { useEffect, useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheck } from '@fortawesome/free-solid-svg-icons';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './SignIn.module.scss';
 import config from '~/config';
@@ -10,8 +11,10 @@ import images from '~/assess/images';
 import Image from '~/components/Image';
 import Button from '~/components/Button';
 import Form from '~/components/Form';
+import Modal from '~/components/Modal';
 import { useReduxSelector } from '~/redux/selectors';
-import { usersSlice } from '~/redux/slices';
+import { usersSlice, usersSliceActions } from '~/redux/slices';
+import AutoComplete from '~/components/AutoComplete';
 
 const cx = classNames.bind(styles);
 
@@ -33,21 +36,59 @@ const inputItems = [
     require: true,
   },
 ];
+
 function SignIn() {
   const dispatch = useDispatch();
-  const { userList } = useReduxSelector();
+  const { userList, currentUser, skillsSet } = useReduxSelector();
   const navigate = useNavigate();
+  const inputRef = useRef();
+
+  const [skillsSetOverlay, setSkillsSetOverlay] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [userSkillsSet, setUserSkillSet] = useState([]);
+  const [searchSkill, setSearchSkill] = useState('');
 
   const handleSignIn = (data) => {
     if (userList.some((user) => user.email === data.email && user.password === data.password)) {
       dispatch(usersSlice.actions.signIn(userList.find((user) => user.email === data.email).id));
-      navigate(config.routes.home);
+      setIsSuccess(true);
     } else {
       userList.some((user) => user.email === data.email && user.password !== data.password)
         ? alert('Wrong password')
         : alert('Email account does not exist');
+      setIsSuccess(false);
     }
   };
+
+  const handleAddSkill = (item) => {
+    if (!userSkillsSet.includes(item) && userSkillsSet.length < 3) {
+      setUserSkillSet((prev) => [...prev, item]);
+      setSearchSkill('');
+      inputRef.current.focus();
+    } else if (userSkillsSet.length === 3) {
+      alert('You can select maximum 3 skills');
+    }
+  };
+
+  const handleSearchJobs = () => {
+    dispatch(
+      usersSliceActions.updateUser({
+        id: currentUser.id,
+        key: 'skills',
+        payload: userSkillsSet,
+      }),
+    );
+    navigate(config.routes.home);
+  };
+
+  // show skillsSet modal for user to pick their skills
+  useEffect(() => {
+    if ((isSuccess && currentUser && currentUser?.skills?.length === 0) || (isSuccess && !currentUser?.skills)) {
+      setSkillsSetOverlay(true);
+    } else if (isSuccess && currentUser && currentUser?.skills?.length > 0) {
+      navigate(config.routes.home);
+    }
+  }, [currentUser]);
 
   return (
     <div className={cx('wrapper')}>
@@ -111,6 +152,42 @@ function SignIn() {
           </div>
         </div>
       </div>
+
+      {/* skills set modal */}
+      <Modal
+        title="Pick-up your skills (maximum 3)"
+        btn="Search for jobs"
+        action={isSuccess ? handleSearchJobs : () => navigate(config.routes.home)}
+        active={skillsSetOverlay}
+        setActive={setSkillsSetOverlay}
+      >
+        <div className={cx('skills-set')}>
+          {userSkillsSet.map((skill, index) => (
+            <div key={index} className={cx('skill-item')}>
+              <span>{skill}</span>
+              <button
+                className={cx('clear-skill')}
+                onClick={() => setUserSkillSet((prev) => prev.filter((skillItem) => skillItem !== skill))}
+              >
+                <FontAwesomeIcon icon={faXmark} />
+              </button>
+            </div>
+          ))}
+          <input
+            className={cx('skill-input')}
+            type="text"
+            value={searchSkill}
+            onChange={(e) => setSearchSkill(e.target.value)}
+            ref={inputRef}
+          />
+          <AutoComplete
+            className={cx('skills-suggestion')}
+            search={searchSkill}
+            items={skillsSet}
+            handleAdd={(skill) => handleAddSkill(skill)}
+          />
+        </div>
+      </Modal>
     </div>
   );
 }

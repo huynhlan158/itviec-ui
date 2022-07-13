@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
@@ -6,6 +6,8 @@ import classNames from 'classnames/bind';
 import styles from './Profile.module.scss';
 import Button from '~/components/Button';
 import ToggleSwitch from '~/components/ToggleSwitch';
+import Modal from '~/components/Modal';
+import images from '~/assess/images';
 import config from '~/config';
 import { useReduxSelector } from '~/redux/selectors';
 import { usersSliceActions } from '~/redux/slices';
@@ -21,6 +23,7 @@ function AccountInfo() {
   const [isInvitationToggle, setIsInvitationToggle] = useState(true);
   const [fullname, setFullname] = useState(currentUser.fullname);
   const [coverLetter, setCoverLetter] = useState(currentUser.coverLetter ? currentUser.coverLetter : '');
+  const [activeOverlay, setActiveOverlay] = useState(false);
 
   const handleUserNameChange = () => {
     dispatch(
@@ -41,6 +44,12 @@ function AccountInfo() {
       }),
     );
   };
+
+  useEffect(() => {
+    if (!isInvitationToggle) {
+      setActiveOverlay(true);
+    }
+  }, [isInvitationToggle]);
 
   return (
     <>
@@ -120,6 +129,17 @@ function AccountInfo() {
           <ToggleSwitch state={isInvitationToggle} onToggle={() => setIsInvitationToggle(!isInvitationToggle)} />
         </div>
       </div>
+
+      <Modal
+        title="Warning"
+        message="By turning off this option, you will not receive invitation for high salary jobs and fit your skills. Are you sure you want to do this?"
+        btn="Yes, stop following"
+        action={() => setActiveOverlay(false)}
+        active={activeOverlay}
+        setActive={setActiveOverlay}
+      >
+        <img src={images.success} alt="unfollow_img" className={cx('success-img')} />
+      </Modal>
     </>
   );
 }

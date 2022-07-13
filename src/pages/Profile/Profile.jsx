@@ -13,8 +13,10 @@ const cx = classNames.bind(styles);
 
 function Profile() {
   const dispatch = useDispatch();
-  const { recommendedJobList } = useReduxSelector();
+  const { recommendedJobList, jobList } = useReduxSelector();
   const [type, setType] = useState('profile');
+
+  const recommendedJobListShow = recommendedJobList.length > 0 ? recommendedJobList : jobList;
 
   useEffect(() => {
     dispatch(jobsSlice.actions.selectJob({}));
@@ -38,7 +40,7 @@ function Profile() {
 
         <div className={cx('recommended-jobs')}>
           <h3>Recommended Jobs for you</h3>
-          {recommendedJobList.slice(0, 3).map((job, index) => (
+          {recommendedJobListShow.slice(0, 3).map((job, index) => (
             <JobItem key={index} data={job} />
           ))}
         </div>

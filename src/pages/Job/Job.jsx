@@ -115,7 +115,12 @@ function Job() {
         {/* more jobs */}
         <div className={cx('more-jobs')}>
           <h3 className={cx('more-jobs_title')}>More Jobs for You</h3>
-          <Button className={cx('subscribe-btn')} outline lg>
+          <Button
+            className={cx('subscribe-btn')}
+            outline
+            lg
+            onClick={() => alert('Sorry! This function has not been developed.')}
+          >
             <i>
               <FontAwesomeIcon icon={faBell} />
             </i>
