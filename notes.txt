@@ -50,6 +50,7 @@ COMMON:
 - tippyjs: hideOnClick does not work
 - how to reuse a function (ex: handleSearchJobs)?
 - window.location.reload(false)
+- transition for elements have display none (Modal)
 
 
 Authentication: https://www.youtube.com/watch?v=6sLh_5iFnFc

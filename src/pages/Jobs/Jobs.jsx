@@ -5,6 +5,7 @@ import styles from './Jobs.module.scss';
 import FilterJobs from './FilterJobs';
 import JobResult from '~/components/JobResult';
 import Path from '~/components/Path';
+import Search from '~/layouts/components/Header/components/Search';
 import config from '~/config';
 import { useReduxSelector } from '~/redux/selectors';
 
@@ -21,6 +22,10 @@ function Jobs() {
 
   return (
     <div className={cx('wrapper')}>
+      <div className={cx('search-form')}>
+        <Search className={cx('head-search')} big />
+      </div>
+
       <div className={cx('container')}>
         <FilterJobs />
         <JobResult jobList={filteredJobList} />

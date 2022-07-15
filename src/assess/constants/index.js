@@ -113,6 +113,22 @@ const IT_COMPANIES = [
   { title: 'Company Reviews', to: config.routes.reviewCompany },
 ];
 
+const HEADER_MOBILE_MENU = [
+  { title: 'All Jobs', to: config.routes.jobs },
+  ...JOBS,
+  {
+    title: 'Vietnam Best IT Companies',
+    data: [
+      { title: 'Best IT Companies 2022', to: config.routes.bestCompanies },
+      { title: 'Best IT Companies 2021', to: config.routes.bestCompanies },
+      { title: 'Best IT Companies 2020', to: config.routes.bestCompanies },
+      { title: 'Best IT Companies 2019', to: config.routes.bestCompanies },
+    ],
+  },
+  { title: 'Company Reviews', to: config.routes.reviewCompany },
+  { title: 'Blog', to: config.routes.blog },
+];
+
 // filtered jobs
 const FILTER_TITLES = {
   level: 'Job Level',
@@ -138,4 +154,4 @@ const FILTERS = [
 ];
 
 // export
-export { CITIES, JOBS, IT_COMPANIES, FILTERS, FILTER_TITLES };
+export { CITIES, JOBS, IT_COMPANIES, FILTERS, FILTER_TITLES, HEADER_MOBILE_MENU };

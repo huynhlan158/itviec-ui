@@ -62,3 +62,22 @@ a {
   text-decoration: none;
   color: var(--dark);
 }
+
+// responsive
+
+@media screen and (max-width: 992px) {
+  :root {
+    --default-width: 100%;
+    --default-width-small: 100%;
+  }
+
+  html {
+    font-size: 60%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  html {
+    font-size: 55%;
+  }
+}

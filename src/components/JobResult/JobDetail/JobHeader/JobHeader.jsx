@@ -17,7 +17,7 @@ import { usersSliceActions } from '~/redux/slices';
 
 const cx = classNames.bind(styles);
 
-function JobHeader({ job = {}, company = {} }) {
+function JobHeader({ className, job = {}, company = {} }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { currentUser, headerShrink } = useReduxSelector();
@@ -67,9 +67,9 @@ function JobHeader({ job = {}, company = {} }) {
 
   if (job && company) {
     return (
-      <header className={cx('wrapper', { shrink: headerShrink })}>
+      <header className={cx('wrapper', className, { shrink: headerShrink })}>
         <h1 className={cx('title')}>{job.title}</h1>
-        <span className={cx('sub-title')}>{company.name}</span>
+        <div className={cx('sub-title')}>{company.name}</div>
         <div className={cx('apply')}>
           {!!currentUser && currentUser?.appliedJobs?.includes(job.id) ? (
             <button className={cx('applied')} disabled>
@@ -103,6 +103,7 @@ function JobHeader({ job = {}, company = {} }) {
 }
 
 JobHeader.propTypes = {
+  className: PropTypes.string,
   job: PropTypes.object,
   company: PropTypes.object,
 };

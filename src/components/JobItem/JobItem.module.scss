@@ -50,9 +50,15 @@
 
 .logo-image {
   margin: 4px 25px 0 27px;
+  flex-shrink: 0;
 }
 
 .info {
+  flex: 1;
+}
+
+.main-content {
+  display: flex;
   flex: 1;
 }
 
@@ -122,4 +128,36 @@
 
 .newPost {
   color: var(--blue);
+}
+
+// responsive
+@media screen and (max-width: 992px) {
+}
+
+@media screen and (max-width: 450px) {
+  .wrapper {
+    padding: 20px 0;
+  }
+
+  .logo-image {
+    margin: 4px 15px 0;
+  }
+
+  .main-content {
+    flex-direction: column;
+  }
+
+  .skills {
+    margin-top: 10px;
+  }
+
+  .hight-light {
+    width: 100%;
+    margin-top: 10px;
+    padding-right: 0;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 20px;
+  }
 }

@@ -43,3 +43,27 @@
 .view-profile {
   flex: 1;
 }
+
+@media screen and (max-width: 992px) {
+  .content {
+    flex-direction: column;
+  }
+
+  .characteristics {
+    padding-bottom: 20px;
+  }
+
+  .view-profile {
+    text-align: center;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .header {
+    padding-bottom: 15px;
+  }
+
+  .characteristics {
+    padding-bottom: 15px;
+  }
+}

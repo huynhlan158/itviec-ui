@@ -72,10 +72,9 @@ function JobList({ jobList: passedJobList }) {
     }
   }
 
-  // reset search text error and selected job
+  // reset search text error
   useEffect(() => {
     dispatch(filtersSlice.actions.searchTextErrorChange(false));
-    dispatch(jobsSlice.actions.selectJob(passedJobList[0]));
   }, []);
 
   useEffect(() => {
@@ -88,7 +87,9 @@ function JobList({ jobList: passedJobList }) {
 
   // reset selected job when changing current page
   useEffect(() => {
-    if (passedJobList.length > 0) {
+    if (window.screen.availWidth < 993) {
+      dispatch(jobsSlice.actions.selectJob({}));
+    } else if (passedJobList.length > 0) {
       dispatch(jobsSlice.actions.selectJob(currentJobList[0]));
     }
   }, [currentPage]);
@@ -97,8 +98,12 @@ function JobList({ jobList: passedJobList }) {
   useEffect(() => {
     setCurrentPage(1);
 
-    if (passedJobList.length > 0 && window.location.pathname === config.routes.jobs) {
-      dispatch(jobsSlice.actions.selectJob(passedJobList[0]));
+    if (
+      currentJobList.length > 0 &&
+      window.location.pathname === config.routes.jobs &&
+      window.screen.availWidth > 992
+    ) {
+      dispatch(jobsSlice.actions.selectJob(currentJobList[0]));
     }
   }, [passedJobList]);
 
@@ -118,6 +123,7 @@ function JobList({ jobList: passedJobList }) {
       </div>
 
       <Pagination
+        className={cx('job-pages')}
         currentPage={currentPage}
         totalJob={totalJob}
         jobsPerPage={jobsPerPage}
@@ -129,7 +135,7 @@ function JobList({ jobList: passedJobList }) {
       />
 
       {/* company spotlight */}
-      <CompanySpotlight topCompanyList={topCompanyList} jobList={jobList} />
+      <CompanySpotlight className={cx('company-spotlight')} topCompanyList={topCompanyList} jobList={jobList} />
     </aside>
   );
 }

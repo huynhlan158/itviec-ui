@@ -7,7 +7,6 @@ import HeadSearch from './HeadSearch';
 import JobResult from '~/components/JobResult';
 import TopCompanies from './TopCompanies';
 import BlogEntries from './BlogEntries';
-import { filtersSlice, jobsSlice } from '~/redux/slices';
 import { useReduxSelector } from '~/redux/selectors';
 
 const cx = classNames.bind(styles);

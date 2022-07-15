@@ -36,7 +36,9 @@ function Jobs() {
   };
 
   const handleAddNewJobRobot = () => {
-    if (
+    if (keyWord.trim().length === 0) {
+      return;
+    } else if (
       currentUser.jobRobot?.some(
         (job) => job.keyWord.trim().toLowerCase() === keyWord.toLowerCase() && job.location === currentCity,
       )

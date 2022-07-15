@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState, useRef, useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
@@ -44,6 +44,7 @@ function SignIn() {
   const inputRef = useRef();
 
   const [skillsSetOverlay, setSkillsSetOverlay] = useState(false);
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [userSkillsSet, setUserSkillSet] = useState([]);
   const [searchSkill, setSearchSkill] = useState('');
@@ -60,7 +61,7 @@ function SignIn() {
     }
   };
 
-  const handleAddSkill = (item) => {
+  const handleAddSkill = useCallback((item) => {
     if (!userSkillsSet.includes(item) && userSkillsSet.length < 3) {
       setUserSkillSet((prev) => [...prev, item]);
       setSearchSkill('');
@@ -68,7 +69,7 @@ function SignIn() {
     } else if (userSkillsSet.length === 3) {
       alert('You can select maximum 3 skills');
     }
-  };
+  }, []);
 
   const handleSearchJobs = () => {
     dispatch(
@@ -179,12 +180,15 @@ function SignIn() {
             value={searchSkill}
             onChange={(e) => setSearchSkill(e.target.value)}
             ref={inputRef}
+            onFocus={() => setShowAutoComplete(true)}
+            onBlur={() => setTimeout(() => setShowAutoComplete(false), 200)}
           />
           <AutoComplete
-            className={cx('skills-suggestion')}
+            className={cx('skill-list')}
             search={searchSkill}
             items={skillsSet}
             handleAdd={(skill) => handleAddSkill(skill)}
+            isShow={showAutoComplete}
           />
         </div>
       </Modal>

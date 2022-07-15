@@ -34,7 +34,7 @@ function SavedJobs() {
           <>
             <h1 className={cx('title')}>You have 0 Saved Jobs</h1>
             <h3 className={cx('subtitle')}>Trời ơi! You haven't saved any jobs yet.</h3>
-            <Image src={images.none_jobs_saved} alt="apply-now_img" />
+            <Image src={images.none_jobs_saved} alt="apply-now_img" className={cx('saved-jobs_img')} />
             <h3 className={cx('subtitle')}>Click the heart to save jobs.</h3>
           </>
         )}

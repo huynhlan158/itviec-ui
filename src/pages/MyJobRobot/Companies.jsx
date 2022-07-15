@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
@@ -19,6 +19,8 @@ function Companies() {
   const { companyList, currentUser } = useReduxSelector();
   const [keyWord, setKeyWord] = useState('');
   const [selectedCompany, setSelectedCompany] = useState('');
+  const [showAutoComplete, setShowAutoComplete] = useState(false);
+  const inputRef = useRef();
 
   const companyNameList = companyList.map((company) => company.name);
 
@@ -33,10 +35,28 @@ function Companies() {
   };
 
   const handleFollowCompany = (companyName) => {
+    if (companyName.length === 0 || keyWord.length === 0) {
+      return;
+    }
+
     const companyId = companyList.find((company) => company.name === companyName).id;
+
+    if (currentUser.followedCompany?.some((id) => id === companyId)) {
+      alert('Opps! You have already subscribed for this company');
+      setKeyWord('');
+      setSelectedCompany('');
+      return;
+    } else if (currentUser.followedCompany?.length === 5) {
+      alert('Opps! You can only follow maximum 5 companies');
+      setKeyWord('');
+      setSelectedCompany('');
+      return;
+    }
+
     const newList = currentUser.followedCompany ? [...currentUser.followedCompany, companyId] : [companyId];
     handleUpdateFollowedCompany(newList);
     setKeyWord('');
+    setSelectedCompany('');
   };
 
   const handleUnfollowCompany = (companyId) => {
@@ -44,10 +64,10 @@ function Companies() {
     handleUpdateFollowedCompany(newList);
   };
 
-  const handleSelectCompany = (companyName) => {
+  const handleSelectCompany = useCallback((companyName) => {
     setSelectedCompany(companyName);
     setKeyWord(companyName);
-  };
+  }, []);
 
   return (
     <div className={cx('box')}>
@@ -91,19 +111,26 @@ function Companies() {
       <div className={cx('form')}>
         <div className={cx('form-input', 'company')}>
           <input
+            ref={inputRef}
             type="text"
             placeholder="Select Company"
             value={keyWord}
             onChange={(e) => setKeyWord(e.target.value)}
+            onBlur={() => setTimeout(() => setShowAutoComplete(false), 200)}
+            onFocus={() => setShowAutoComplete(true)}
           />
-          <i>
+          <i
+            onClick={() => {
+              inputRef.current.focus();
+            }}
+          >
             <FontAwesomeIcon icon={faChevronDown} />
           </i>
           <AutoComplete
-            className={cx('skills-suggestion')}
             search={keyWord}
             items={companyNameList}
             handleAdd={(companyName) => handleSelectCompany(companyName)}
+            isShow={showAutoComplete}
           />
         </div>
 

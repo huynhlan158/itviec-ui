@@ -3,11 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
-import Tippy from '@tippyjs/react/headless';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowRightFromBracket,
-  faBars,
   faCheckToSlot,
   faHeart,
   faRobot,
@@ -23,6 +21,7 @@ import Menu from '~/components/Popper/Menu';
 import Image from '~/components/Image';
 import NavItem from './components/NavItem';
 import Search from './components/Search';
+import MobileHeader from './components/MobileHeader';
 import { filtersSlice, headerSlice, usersSlice } from '~/redux/slices';
 import { useReduxSelector } from '~/redux/selectors';
 
@@ -152,24 +151,15 @@ function Header({ search = false }) {
             )}
 
             <div className={cx('language')}>
-              <button>EN</button>
+              <button className={cx('active')}>EN</button>
               <span className={cx('slash')}></span>
-              <button>VI</button>
+              <button onClick={() => alert('Sorry! This function has not been developed yet.')}>VI</button>
             </div>
           </div>
         </div>
 
-        <Tippy
-          render={(attrs) => <div className={cx('mobile-menu')} tabIndex="-1" {...attrs}></div>}
-          interactive
-          placement="bottom"
-          appendTo={document.body}
-          trigger="click"
-        >
-          <button className={cx('hambuger-btn')}>
-            <FontAwesomeIcon className={cx('hambuger-icon')} icon={faBars} />
-          </button>
-        </Tippy>
+        {/* menu on mobile and tablet */}
+        <MobileHeader />
       </div>
     </nav>
   );

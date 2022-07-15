@@ -17,3 +17,17 @@
     }
   }
 }
+
+// responsive
+@media screen and (max-width: 992px) {
+  .wrapper {
+    padding-left: 40px;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .wrapper {
+    display: none;
+  }
+}

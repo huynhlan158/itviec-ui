@@ -126,6 +126,7 @@
   border: 1px solid var(--light-grey);
   border-radius: 3px;
   position: relative;
+  flex-wrap: wrap;
 }
 
 .skill-item {
@@ -149,6 +150,38 @@
   flex: 1;
 }
 
-.skills-suggestion {
-  top: 44px;
+// responsive
+@media screen and (max-width: 992px) {
+  .container {
+    padding-top: 58px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user-authentication {
+    padding-bottom: 50px;
+  }
+
+  .signin-form {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .skills-set {
+    min-height: 100px;
+  }
+
+  .skill-list {
+    top: 100px;
+  }
+
+  .skill-item {
+    margin-bottom: 5px;
+  }
 }

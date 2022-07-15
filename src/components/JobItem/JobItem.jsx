@@ -1,3 +1,4 @@
+import { useCallback } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -25,7 +26,7 @@ function JobItem({ data = {}, selectJob = () => {} }) {
   const jobPostedMinute = Math.ceil((data.postedTime / 1000 / 60) % 60);
   const timeUnit = jobPostedDay > 0 ? 'd' : jobPostedHour > 0 ? 'h' : 'm';
 
-  const handleSearchJobs = (skill) => {
+  const handleSearchJobs = useCallback((skill) => {
     // reset searchTextError
     dispatch(filtersSlice.actions.searchTextErrorChange(false));
 
@@ -36,7 +37,7 @@ function JobItem({ data = {}, selectJob = () => {} }) {
     // navigate to job page
     dispatch(filtersSlice.actions.resetFilters());
     navigate(config.routes.jobs);
-  };
+  }, []);
 
   if (data && selectedJob) {
     return (
@@ -58,60 +59,62 @@ function JobItem({ data = {}, selectJob = () => {} }) {
           alt="company_img"
         />
 
-        <div className={cx('info')}>
-          <Link
-            to={config.routes.job.replace(
-              ':jobname',
-              data.title.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() + data.id.replace('_', '-').toLowerCase(),
+        <div className={cx('main-content')}>
+          <div className={cx('info')}>
+            <Link
+              to={config.routes.job.replace(
+                ':jobname',
+                data.title.replace(/[^a-zA-Z1-10000]/g, '-').toLowerCase() + data.id.replace('_', '-').toLowerCase(),
+              )}
+              className={cx('job-title')}
+            >
+              {data.title}
+            </Link>
+
+            <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
+              {data.salaryMin && typeof data.salaryMin === 'number'
+                ? `${data.salaryMin.toLocaleString('en-US')} - ${data.salaryMax.toLocaleString('en-US')} USD`
+                : data.salaryMin && typeof data.salaryMin === 'string'
+                ? data.salaryMin
+                : `Up to ${data.salaryMax.toLocaleString('en-US')} USD`}
+            </CharacteristicItem>
+
+            {data.highlightBenefits && (
+              <ul className={cx('benefits')}>
+                {data.highlightBenefits.map((benefit, index) => (
+                  <li key={index} className={cx('benefit-item')}>
+                    {benefit}
+                  </li>
+                ))}
+              </ul>
             )}
-            className={cx('job-title')}
-          >
-            {data.title}
-          </Link>
 
-          <CharacteristicItem className={cx('salary')} icon={<FontAwesomeIcon icon={faDollarSign} />}>
-            {data.salaryMin && typeof data.salaryMin === 'number'
-              ? `${data.salaryMin.toLocaleString('en-US')} - ${data.salaryMax.toLocaleString('en-US')} USD`
-              : data.salaryMin && typeof data.salaryMin === 'string'
-              ? data.salaryMin
-              : `Up to ${data.salaryMax.toLocaleString('en-US')} USD`}
-          </CharacteristicItem>
-
-          {data.highlightBenefits && (
-            <ul className={cx('benefits')}>
-              {data.highlightBenefits.map((benefit, index) => (
-                <li key={index} className={cx('benefit-item')}>
-                  {benefit}
-                </li>
+            <div className={cx('skills')}>
+              {data.skills.map((skill, index) => (
+                <Button
+                  className={cx({ active: selectedJob.id === data.id })}
+                  key={index}
+                  basic
+                  onClick={() => handleSearchJobs(skill)}
+                >
+                  {skill}
+                </Button>
               ))}
-            </ul>
-          )}
-
-          <div className={cx('skills')}>
-            {data.skills.map((skill, index) => (
-              <Button
-                className={cx({ active: selectedJob.id === data.id })}
-                key={index}
-                basic
-                onClick={() => handleSearchJobs(skill)}
-              >
-                {skill}
-              </Button>
-            ))}
+            </div>
           </div>
-        </div>
 
-        <div className={cx('hight-light')}>
-          {data.hotJob ? <span className={cx('hot-tag')}>Hot</span> : ''}
-          {!data.seen ? <span className={cx('new-tag')}>New For You</span> : ''}
-          <span>{data.location}</span>
-          <span className={cx({ newPost: !jobPostedDay })}>
-            {jobPostedDay > 0
-              ? `${jobPostedDay} ${timeUnit}`
-              : jobPostedHour > 0
-              ? `${jobPostedHour} ${timeUnit}`
-              : `${jobPostedMinute} ${timeUnit}`}
-          </span>
+          <div className={cx('hight-light')}>
+            {data.hotJob ? <span className={cx('hot-tag')}>Hot</span> : ''}
+            {!data.seen ? <span className={cx('new-tag')}>New For You</span> : ''}
+            <span>{data.location}</span>
+            <span className={cx({ newPost: !jobPostedDay })}>
+              {jobPostedDay > 0
+                ? `${jobPostedDay} ${timeUnit}`
+                : jobPostedHour > 0
+                ? `${jobPostedHour} ${timeUnit}`
+                : `${jobPostedMinute} ${timeUnit}`}
+            </span>
+          </div>
         </div>
       </div>
     );

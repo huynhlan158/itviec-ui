@@ -83,7 +83,7 @@ function Search({ className, big }) {
         <Tippy
           render={(attrs) => (
             <div className={cx('city-container')} tabIndex="-1" {...attrs}>
-              <PopperWrapper className={cx('city-option')} fixed>
+              <PopperWrapper className={cx('city-option')} stretch>
                 {CITIES.map((city, index) => (
                   <span key={index} className={cx('city-item')} onClick={() => setLocationDisplay(city)}>
                     {city}

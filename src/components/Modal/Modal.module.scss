@@ -1,9 +1,18 @@
 .wrapper {
-  position: relative;
-  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  opacity: 0;
+  transition: all 0.2s ease;
 
   &.active {
     display: block;
+    transform: scaleY(1);
+    opacity: 1;
   }
 }
 
@@ -66,9 +75,22 @@
   top: 0;
   left: 0;
   right: 0;
-  width: 100vw;
   height: 100vh;
   background-color: var(--dark);
   opacity: 0.45;
   z-index: 10;
+}
+
+// responsive
+@media screen and (max-width: 992px) {
+  .container {
+    width: 500px;
+    padding: 30px 20px 20px;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .container {
+    width: 300px;
+  }
 }

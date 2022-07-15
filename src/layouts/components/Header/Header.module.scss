@@ -80,6 +80,10 @@
     font-size: 1.5rem;
     cursor: pointer;
 
+    &.active {
+      color: var(--white);
+    }
+
     &:hover {
       color: var(--white);
     }
@@ -140,38 +144,14 @@
   }
 }
 
-// mobile navbar
-.hambuger-btn {
-  padding: 5px 12px;
-  font-size: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border: 1px solid var(--grey);
-  outline: 2px solid transparent;
-  border-radius: 6px;
-
-  display: none;
-
-  &:focus {
-    outline-color: var(--grey);
-  }
-}
-
-.hambuger-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  color: var(--text-overlay-header);
-}
-
 // responsive
 @media screen and (max-width: 992px) {
   .wrapper {
-    height: 42px;
+    height: 58px;
+
+    &.shrink {
+      height: 58px;
+    }
   }
 
   .container {
@@ -186,14 +166,14 @@
 
   .logo {
     a {
-      height: 42px;
+      height: 58px;
+    }
+
+    &.shrink {
+      img {
+        width: 108px;
+        height: 42px;
+      }
     }
   }
-
-  .hambuger-btn {
-    display: inline-block;
-  }
-}
-
-@media screen and (max-width: 450px) {
 }

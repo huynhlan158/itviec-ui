@@ -24,10 +24,12 @@ function App() {
   }, []);
 
   useEffect(() => {
-    if (window.location.pathname === config.routes.home && recommendedJobList.length > 0) {
+    if (window.screen.availWidth < 993) {
+      dispatch(jobsSlice.actions.selectJob({}));
+    } else if (window.location.pathname === config.routes.home && recommendedJobList.length > 0) {
       dispatch(jobsSlice.actions.selectJob(recommendedJobList[0]));
-    } else if (window.location.pathname === config.routes.home) {
-      dispatch(jobsSlice.actions.selectJob(jobList[0]));
+      // } else if (window.location.pathname === config.routes.home) {
+      //   dispatch(jobsSlice.actions.selectJob(jobList[0]));
     }
   }, [jobList]);
 

@@ -68,7 +68,7 @@ function Job() {
         </div>
 
         {/* company info */}
-        <div>
+        <div className={cx('company-info_container')}>
           <div className={cx('company-info', { shrink: headerShrink })}>
             <div className={cx('header')}>
               <Image className={cx('logo')} to={config.routes.companyProfile} src={currentCompany.logo} />

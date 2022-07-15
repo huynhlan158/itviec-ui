@@ -5,10 +5,6 @@
   position: sticky;
   z-index: 5;
   top: var(--header-height);
-
-  &.shrink {
-    top: var(--header-height-onsroll-down);
-  }
 }
 
 .title {
@@ -61,4 +57,38 @@
 .success-img {
   width: 200px;
   margin: 0 auto;
+}
+
+// responsive
+@media screen and (min-width: 993px) {
+  .wrapper {
+    &.shrink {
+      top: var(--header-height-onsroll-down);
+    }
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .wrapper {
+    top: 58px;
+  }
+
+  .title {
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .sub-title {
+    text-align: center;
+  }
+
+  .detail {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .apply {
+    padding-top: 10px;
+  }
 }

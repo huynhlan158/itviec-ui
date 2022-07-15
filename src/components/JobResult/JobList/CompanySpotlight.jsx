@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretRight } from '@fortawesome/free-solid-svg-icons';
+import PropTypes from 'prop-types';
 
 import styles from './JobList.module.scss';
 import CompanyImage from '~/components/CompanyImage';
@@ -10,7 +11,7 @@ import config from '~/config';
 
 const cx = classNames.bind(styles);
 
-function CompanySpotlight({ topCompanyList = [], jobList = [] }) {
+function CompanySpotlight({ className, topCompanyList = [], jobList = [] }) {
   // get 1 top company randomly in company top list
   const randomIndex = Math.floor(Math.random() * topCompanyList.length);
   const topCompany = topCompanyList[randomIndex];
@@ -23,7 +24,7 @@ function CompanySpotlight({ topCompanyList = [], jobList = [] }) {
 
   if (topCompany) {
     return (
-      <div className={cx('company-spotlight')}>
+      <div className={cx('company-spotlight', className)}>
         <h3 className={cx('company-title')}>Company Spotlight</h3>
         <div className={cx('company-images')}>
           <Link
@@ -95,5 +96,11 @@ function CompanySpotlight({ topCompanyList = [], jobList = [] }) {
     );
   }
 }
+
+CompanySpotlight.propTypes = {
+  className: PropTypes.string,
+  topCompanyList: PropTypes.array,
+  jobList: PropTypes.array,
+};
 
 export default CompanySpotlight;

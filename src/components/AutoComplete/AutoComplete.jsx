@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -6,16 +6,16 @@ import styles from './AutoComplete.module.scss';
 
 const cx = classNames.bind(styles);
 
-function AutoComplete({ className, search = '', items = [], handleAdd = () => {} }) {
+function AutoComplete({ className, search = '', items = [], handleAdd = () => {}, isShow = true }) {
   const [skillList, setSkillList] = useState([]);
 
   useEffect(() => {
     setSkillList(items.filter((item) => item.toLowerCase().includes(search.toLowerCase())));
   }, [search]);
 
-  if (search.length > 0) {
+  if (isShow || search.trim().length > 0) {
     return (
-      <div className={cx('wrapper', { className: className })}>
+      <div className={cx('wrapper', className)}>
         {skillList
           .filter((skill) => skill.toLowerCase().includes(search.toLowerCase()))
           .slice(0, 10)
@@ -35,6 +35,7 @@ AutoComplete.propTypes = {
   search: PropTypes.string,
   items: PropTypes.array,
   handleAdd: PropTypes.func,
+  isShow: PropTypes.bool,
 };
 
-export default AutoComplete;
+export default memo(AutoComplete);

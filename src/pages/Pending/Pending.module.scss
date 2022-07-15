@@ -1,5 +1,7 @@
 .wrapper {
   padding-top: 200px;
+  padding-left: 50px;
+  padding-right: 50px;
   text-align: center;
   height: 600px;
 
@@ -10,5 +12,13 @@
 
   p {
     font-size: 2rem;
+  }
+}
+
+// responsive
+
+@media screen and (max-width: 450px) {
+  .wrapper {
+    height: 450px;
   }
 }
