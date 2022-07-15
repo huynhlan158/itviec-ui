@@ -1,4 +1,4 @@
-import { forwardRef } from 'react';
+import { forwardRef, memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { Link } from 'react-router-dom';
@@ -28,4 +28,4 @@ NavItem.propTypes = {
   className: PropTypes.string,
 };
 
-export default NavItem;
+export default memo(NavItem);

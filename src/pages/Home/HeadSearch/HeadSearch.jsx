@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
@@ -62,4 +62,4 @@ function HeadSearch() {
   );
 }
 
-export default memo(HeadSearch);
+export default HeadSearch;

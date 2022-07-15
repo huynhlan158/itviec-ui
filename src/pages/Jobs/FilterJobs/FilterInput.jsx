@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import Tippy from '@tippyjs/react/headless';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -78,7 +79,9 @@ FilterInput.propTypes = {
   title: PropTypes.string,
   items: PropTypes.array,
   leftCharacter: PropTypes.node,
-  leftCharacter: PropTypes.node,
+  rightCharacter: PropTypes.node,
+  state: PropTypes.bool,
+  setState: PropTypes.func,
 };
 
-export default FilterInput;
+export default memo(FilterInput);

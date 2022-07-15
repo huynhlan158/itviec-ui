@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -49,4 +50,4 @@ TopCompany.propTypes = {
   data: PropTypes.object.isRequired,
 };
 
-export default TopCompany;
+export default memo(TopCompany);

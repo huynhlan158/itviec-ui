@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, memo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -126,4 +126,4 @@ JobItem.propTypes = {
   selectJob: PropTypes.func,
 };
 
-export default JobItem;
+export default memo(JobItem);

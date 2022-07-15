@@ -1,10 +1,10 @@
+import { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './MobileMenu.module.scss';
-import { useEffect } from 'react';
 
 const cx = classNames.bind(styles);
 
@@ -35,4 +35,4 @@ MobileMenu.propTypes = {
   setActive: PropTypes.func,
 };
 
-export default MobileMenu;
+export default memo(MobileMenu);

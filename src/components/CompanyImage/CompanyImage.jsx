@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -22,4 +23,4 @@ CompanyImage.propTypes = {
   alt: PropTypes.string,
 };
 
-export default CompanyImage;
+export default memo(CompanyImage);

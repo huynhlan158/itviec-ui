@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -35,7 +35,7 @@ function Jobs() {
     );
   };
 
-  const handleAddNewJobRobot = () => {
+  const handleAddNewJobRobot = useCallback(() => {
     if (keyWord.trim().length === 0) {
       return;
     } else if (
@@ -55,7 +55,7 @@ function Jobs() {
     setJobRobot(newJobRobot);
     handleUpdateJobRobot(newJobRobot);
     setKeyWord('');
-  };
+  }, []);
 
   const handleClearJobRobot = (keyWord, location) => {
     const newJobRobot = jobRobot.filter(

@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -58,4 +59,4 @@ Rate.propTypes = {
   background: PropTypes.bool,
 };
 
-export default Rate;
+export default memo(Rate);

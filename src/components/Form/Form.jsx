@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -158,4 +158,4 @@ Form.propTypes = {
   submitBtn: PropTypes.string,
 };
 
-export default Form;
+export default memo(Form);

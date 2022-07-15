@@ -51,6 +51,7 @@ COMMON:
 - how to reuse a function (ex: handleSearchJobs)?
 - window.location.reload(false)
 - transition for elements have display none (Modal)
+- apply useCallback for funcs have params
 
 
 Authentication: https://www.youtube.com/watch?v=6sLh_5iFnFc

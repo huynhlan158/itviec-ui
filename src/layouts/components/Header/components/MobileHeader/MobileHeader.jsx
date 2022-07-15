@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -100,13 +100,15 @@ function MobileHeader() {
     window.location.reload(false);
   };
 
+  const handleSetOverlayMenu = useCallback(() => setOverlayMenu, []);
+
   return (
     <div className={cx('mobile-menu')}>
       <button className={cx('hambuger-btn', { hidden: overlayMenu })} onClick={() => setOverlayMenu(true)}>
         <FontAwesomeIcon className={cx('hambuger-icon')} icon={faBars} />
       </button>
 
-      <MobileMenu active={overlayMenu} setActive={setOverlayMenu}>
+      <MobileMenu active={overlayMenu} setActive={handleSetOverlayMenu}>
         <div className={cx('mobile-menu_container')}>
           {!currentMenu.title &&
             (currentUser ? (

@@ -1,5 +1,4 @@
-import { memo, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './Home.module.scss';
@@ -12,7 +11,6 @@ import { useReduxSelector } from '~/redux/selectors';
 const cx = classNames.bind(styles);
 
 function Home() {
-  const dispatch = useDispatch();
   const { recommendedJobList, currentUser } = useReduxSelector();
 
   useEffect(() => {
@@ -31,4 +29,4 @@ function Home() {
   );
 }
 
-export default memo(Home);
+export default Home;

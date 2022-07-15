@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import classNames from 'classnames/bind';
@@ -51,7 +51,7 @@ function SignUp() {
   const [activeOverlay, setActiveOverlay] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  const handleSignUp = (newUser) => {
+  const handleSignUp = useCallback((newUser) => {
     if (userList.some((user) => user.email === newUser.email)) {
       setIsSuccess(false);
     } else {
@@ -60,7 +60,9 @@ function SignUp() {
     }
 
     setActiveOverlay(true);
-  };
+  }, []);
+
+  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
 
   return (
     <div className={cx('wrapper')}>
@@ -128,7 +130,7 @@ function SignUp() {
           isSuccess ? navigate(config.routes.signIn) : setActiveOverlay(false);
         }}
         active={activeOverlay}
-        setActive={setActiveOverlay}
+        setActive={handleSetActiveOverlay}
       />
     </div>
   );

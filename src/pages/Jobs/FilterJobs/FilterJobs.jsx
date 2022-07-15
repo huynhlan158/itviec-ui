@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faFilter } from '@fortawesome/free-solid-svg-icons';
@@ -119,6 +119,8 @@ function FilterJobs() {
     return state.includes(item);
   };
 
+  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
+
   return (
     <div className={cx('wrapper')}>
       {/* filters for desktop */}
@@ -163,7 +165,7 @@ function FilterJobs() {
           </span>
         </div>
 
-        <MobileMenu light active={activeOverlay} setActive={setActiveOverlay}>
+        <MobileMenu light active={activeOverlay} setActive={handleSetActiveOverlay}>
           <>
             <h3 className={cx('filter-title_mobile')}>Filter</h3>
             <div className={cx('filter-content_mobile')}>

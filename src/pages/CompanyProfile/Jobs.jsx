@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { memo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -21,7 +21,7 @@ function Jobs({ currentCompany = {}, setType }) {
 
   const currentJobList = jobList.filter((job) => job.companyId === currentCompany.id);
 
-  const handleSearchJobs = (skill) => {
+  const handleSearchJobs = useCallback((skill) => {
     // reset searchTextError
     dispatch(filtersSlice.actions.searchTextErrorChange(false));
 
@@ -31,7 +31,11 @@ function Jobs({ currentCompany = {}, setType }) {
 
     // navigate to job page
     navigate(config.routes.jobs);
-  };
+  }, []);
+
+  const handleDelay = useCallback(() => alert('Sorry! This function has not been developed.'), []);
+
+  const handleSetType = useCallback(() => setType('review'), []);
 
   return (
     <>
@@ -116,7 +120,7 @@ function Jobs({ currentCompany = {}, setType }) {
             <h3 className={cx('content-title')}>Let your voice be heard.</h3>
             <div>
               <p className={cx('review-title')}>Review {currentCompany.name} now</p>
-              <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
+              <Button primary xl onClick={handleDelay}>
                 Write review
               </Button>
             </div>
@@ -133,7 +137,7 @@ function Jobs({ currentCompany = {}, setType }) {
                 <p className={cx('review-comment')}>{review.comment}</p>
               </div>
             ))}
-            <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
+            <Button primary xl onClick={handleDelay}>
               Write review
             </Button>
           </div>
@@ -162,7 +166,7 @@ function Jobs({ currentCompany = {}, setType }) {
               ))}
             </div>
             <div>
-              <Button primary xl onClick={() => setType('review')}>
+              <Button primary xl onClick={handleSetType}>
                 See all ratings and reviews
               </Button>
             </div>
@@ -177,7 +181,7 @@ function Jobs({ currentCompany = {}, setType }) {
                 <p className={cx('review-comment')}>{review.comment}</p>
               </div>
             ))}
-            <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
+            <Button primary xl onClick={handleDelay}>
               Write review
             </Button>
           </div>
@@ -189,6 +193,7 @@ function Jobs({ currentCompany = {}, setType }) {
 
 Jobs.propTypes = {
   currentCompany: PropTypes.object.isRequired,
+  setType: PropTypes.func,
 };
 
-export default Jobs;
+export default memo(Jobs);

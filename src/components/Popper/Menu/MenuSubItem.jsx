@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -72,4 +73,4 @@ MenuSubItem.propTypes = {
   searchBy: PropTypes.string,
 };
 
-export default MenuSubItem;
+export default memo(MenuSubItem);

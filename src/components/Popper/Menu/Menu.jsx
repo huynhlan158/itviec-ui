@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import PropTypes from 'prop-types';
 import Tippy from '@tippyjs/react/headless';
 import classNames from 'classnames/bind';
@@ -13,9 +13,9 @@ const cx = classNames.bind(styles);
 function Menu({ children, className, items = [], search }) {
   const [subMenu, setSubMenu] = useState(items[0]);
 
-  const handleMenuHover = (item) => {
+  const handleMenuHover = useCallback((item) => {
     setSubMenu(item);
-  };
+  }, []);
 
   return (
     <Tippy
@@ -85,4 +85,4 @@ Menu.propTypes = {
   search: PropTypes.bool,
 };
 
-export default Menu;
+export default memo(Menu);

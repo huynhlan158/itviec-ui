@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -29,4 +30,4 @@ Path.propTypes = {
   children: PropTypes.object.isRequired,
 };
 
-export default Path;
+export default memo(Path);

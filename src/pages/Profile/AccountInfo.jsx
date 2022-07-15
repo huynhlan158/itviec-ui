@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import classNames from 'classnames/bind';
@@ -25,7 +25,7 @@ function AccountInfo() {
   const [coverLetter, setCoverLetter] = useState(currentUser.coverLetter ? currentUser.coverLetter : '');
   const [activeOverlay, setActiveOverlay] = useState(false);
 
-  const handleUserNameChange = () => {
+  const handleUserNameChange = useCallback(() => {
     dispatch(
       usersSliceActions.updateUser({
         id: currentUser.id,
@@ -33,9 +33,9 @@ function AccountInfo() {
         payload: fullname,
       }),
     );
-  };
+  }, []);
 
-  const handleUserCoverLetterChange = () => {
+  const handleUserCoverLetterChange = useCallback(() => {
     dispatch(
       usersSliceActions.updateUser({
         id: currentUser.id,
@@ -43,7 +43,17 @@ function AccountInfo() {
         payload: coverLetter,
       }),
     );
-  };
+  }, []);
+
+  const handleActiveOverlay = useCallback(() => setActiveOverlay(false), []);
+
+  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
+
+  const handleSetAccountToggle = useCallback(() => setIsAccountToggle(!isAccountToggle), []);
+
+  const handleSetIsHeaderToggle = useCallback(() => setIsLetterToggle(!isLetterToggle), []);
+
+  const handleSetIsInvitationToggle = useCallback(() => setIsInvitationToggle(!isInvitationToggle), []);
 
   useEffect(() => {
     if (!isInvitationToggle) {
@@ -81,7 +91,7 @@ function AccountInfo() {
         </div>
 
         <div className={cx('edit-btn')}>
-          <Button outline onClick={() => setIsAccountToggle(!isAccountToggle)}>
+          <Button outline onClick={handleSetAccountToggle}>
             Cancel
           </Button>
           <Button primary onClick={handleUserNameChange}>
@@ -108,7 +118,7 @@ function AccountInfo() {
         />
 
         <div className={cx('edit-btn')}>
-          <Button outline onClick={() => setIsLetterToggle(!isLetterToggle)}>
+          <Button outline onClick={handleSetIsHeaderToggle}>
             Cancel
           </Button>
           <Button primary onClick={handleUserCoverLetterChange}>
@@ -126,7 +136,7 @@ function AccountInfo() {
         </p>
         <div className={cx('profile-policy_toggle-btn')}>
           <span>Receive Job Invitation</span>
-          <ToggleSwitch state={isInvitationToggle} onToggle={() => setIsInvitationToggle(!isInvitationToggle)} />
+          <ToggleSwitch state={isInvitationToggle} onToggle={handleSetIsInvitationToggle} />
         </div>
       </div>
 
@@ -134,9 +144,9 @@ function AccountInfo() {
         title="Warning"
         message="By turning off this option, you will not receive invitation for high salary jobs and fit your skills. Are you sure you want to do this?"
         btn="Yes, stop following"
-        action={() => setActiveOverlay(false)}
+        action={handleActiveOverlay}
         active={activeOverlay}
-        setActive={setActiveOverlay}
+        setActive={handleSetActiveOverlay}
       >
         <img src={images.success} alt="unfollow_img" className={cx('success-img')} />
       </Modal>

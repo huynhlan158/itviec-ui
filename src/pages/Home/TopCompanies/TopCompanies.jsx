@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 
 import styles from './TopCompanies.module.scss';
@@ -44,4 +44,4 @@ function TopCompanies() {
   );
 }
 
-export default memo(TopCompanies);
+export default TopCompanies;

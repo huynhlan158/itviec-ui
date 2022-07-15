@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Flag from 'react-world-flags';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendarDays, faClock, faFlag, faGear, faUserGroup } from '@fortawesome/free-solid-svg-icons';
@@ -48,6 +47,12 @@ function Job() {
   useEffect(() => {
     setJobId(window.location.pathname.slice(-7).replace('-', '_'));
   }, [window.location.pathname]);
+
+  const handleDelay = useCallback(() => alert('Sorry! This function has not been developed.'), []);
+
+  const handleSelectJob = useCallback(() => {
+    jobId !== window.location.pathname.slice(-7).replace('-', '_') && window.location.reload(false);
+  }, []);
 
   return (
     <div className={cx('wrapper')}>
@@ -115,12 +120,7 @@ function Job() {
         {/* more jobs */}
         <div className={cx('more-jobs')}>
           <h3 className={cx('more-jobs_title')}>More Jobs for You</h3>
-          <Button
-            className={cx('subscribe-btn')}
-            outline
-            lg
-            onClick={() => alert('Sorry! This function has not been developed.')}
-          >
+          <Button className={cx('subscribe-btn')} outline lg onClick={handleDelay}>
             <i>
               <FontAwesomeIcon icon={faBell} />
             </i>
@@ -129,13 +129,7 @@ function Job() {
 
           <div className={cx('joblist')}>
             {recommendedJobList.map((job, index) => (
-              <JobItem
-                key={index}
-                data={job}
-                selectJob={() => {
-                  jobId !== window.location.pathname.slice(-7).replace('-', '_') && window.location.reload(false);
-                }}
-              />
+              <JobItem key={index} data={job} selectJob={handleSelectJob} />
             ))}
           </div>
         </div>
@@ -151,9 +145,5 @@ function Job() {
     </div>
   );
 }
-
-Job.propTypes = {
-  children: PropTypes.node,
-};
 
 export default Job;

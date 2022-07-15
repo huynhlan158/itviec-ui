@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -20,4 +21,4 @@ Path.propTypes = {
   items: PropTypes.array.isRequired,
 };
 
-export default Path;
+export default memo(Path);

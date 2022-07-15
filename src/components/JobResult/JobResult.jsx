@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -62,4 +62,4 @@ JobResult.propTypes = {
   jobList: PropTypes.array.isRequired,
 };
 
-export default JobResult;
+export default memo(JobResult);

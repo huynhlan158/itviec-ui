@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -103,4 +104,4 @@ CompanySpotlight.propTypes = {
   jobList: PropTypes.array,
 };
 
-export default CompanySpotlight;
+export default memo(CompanySpotlight);

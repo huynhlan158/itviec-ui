@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -16,4 +17,4 @@ PopperWrapper.propTypes = {
   stretch: PropTypes.bool,
 };
 
-export default PopperWrapper;
+export default memo(PopperWrapper);

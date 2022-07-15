@@ -1,3 +1,4 @@
+import { memo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -8,6 +9,8 @@ import Rate from '~/components/Rate';
 const cx = classNames.bind(styles);
 
 function Review({ currentCompany = {} }) {
+  const handleDelay = useCallback(() => alert('Sorry! This function has not been developed.'), []);
+
   return (
     <>
       {currentCompany.recommendation && (
@@ -44,7 +47,7 @@ function Review({ currentCompany = {} }) {
           <h3 className={cx('content-title')}>Let your voice be heard.</h3>
           <div>
             <p className={cx('review-title')}>Review {currentCompany.name} now</p>
-            <Button primary xl onClick={() => alert('Sorry! This function has not been developed.')}>
+            <Button primary xl onClick={handleDelay}>
               Write review
             </Button>
           </div>
@@ -58,4 +61,4 @@ Review.propTypes = {
   currentCompany: PropTypes.object.isRequired,
 };
 
-export default Review;
+export default memo(Review);

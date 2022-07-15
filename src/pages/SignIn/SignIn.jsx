@@ -49,7 +49,7 @@ function SignIn() {
   const [userSkillsSet, setUserSkillSet] = useState([]);
   const [searchSkill, setSearchSkill] = useState('');
 
-  const handleSignIn = (data) => {
+  const handleSignIn = useCallback((data) => {
     if (userList.some((user) => user.email === data.email && user.password === data.password)) {
       dispatch(usersSlice.actions.signIn(userList.find((user) => user.email === data.email).id));
       setIsSuccess(true);
@@ -59,7 +59,7 @@ function SignIn() {
         : alert('Email account does not exist');
       setIsSuccess(false);
     }
-  };
+  }, []);
 
   const handleAddSkill = useCallback((item) => {
     if (!userSkillsSet.includes(item) && userSkillsSet.length < 3) {
@@ -90,6 +90,8 @@ function SignIn() {
       navigate(config.routes.home);
     }
   }, [currentUser]);
+
+  const handleSetSkillsSetOverlay = useCallback(() => setSkillsSetOverlay, []);
 
   return (
     <div className={cx('wrapper')}>
@@ -160,7 +162,7 @@ function SignIn() {
         btn="Search for jobs"
         action={isSuccess ? handleSearchJobs : () => navigate(config.routes.home)}
         active={skillsSetOverlay}
-        setActive={setSkillsSetOverlay}
+        setActive={handleSetSkillsSetOverlay}
       >
         <div className={cx('skills-set')}>
           {userSkillsSet.map((skill, index) => (

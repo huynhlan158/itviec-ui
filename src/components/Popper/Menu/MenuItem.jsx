@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
@@ -44,4 +45,4 @@ MenuItem.propTypes = {
   to: PropTypes.string,
 };
 
-export default MenuItem;
+export default memo(MenuItem);

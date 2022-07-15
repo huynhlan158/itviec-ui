@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -35,4 +36,4 @@ MobileMenuItem.propTypes = {
   nextIcon: PropTypes.bool,
 };
 
-export default MobileMenuItem;
+export default memo(MobileMenuItem);

@@ -1,8 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import Flag from 'react-world-flags';
-import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -63,7 +62,7 @@ function CompanyProfile() {
     );
   };
 
-  const handleFollowCompany = () => {
+  const handleFollowCompany = useCallback(() => {
     if (currentUser) {
       const newList = currentUser.followedCompany
         ? [...currentUser.followedCompany, currentCompany.id]
@@ -72,12 +71,16 @@ function CompanyProfile() {
     } else {
       navigate(config.routes.signIn);
     }
-  };
+  }, []);
 
-  const handleUnfollowCompany = () => {
+  const handleUnfollowCompany = useCallback(() => {
     const newList = currentUser.followedCompany.filter((id) => id !== currentCompany.id);
     handleUpdateFollowedCompany(newList);
-  };
+  }, []);
+
+  const handleDelay = useCallback(() => alert('Sorry! This function has not been developed.'), []);
+
+  const handleSetType = useCallback(() => setType, []);
 
   if (currentCompany) {
     return (
@@ -119,12 +122,7 @@ function CompanyProfile() {
               </div>
 
               <div className={cx('actions')}>
-                <Button
-                  className={cx('actions-btn')}
-                  primary
-                  xl
-                  onClick={() => alert('Sorry! This function has not been developed.')}
-                >
+                <Button className={cx('actions-btn')} primary xl onClick={handleDelay}>
                   Write Review
                 </Button>
                 {currentUser && currentUser.followedCompany?.includes(currentCompany.id) ? (
@@ -165,7 +163,7 @@ function CompanyProfile() {
           {/* company detail info */}
           <div className={cx('content')}>
             {type === 'job' ? (
-              <Jobs currentCompany={currentCompany} setType={setType} />
+              <Jobs currentCompany={currentCompany} setType={handleSetType} />
             ) : type === 'review' ? (
               <Review currentCompany={currentCompany} />
             ) : (
@@ -179,9 +177,5 @@ function CompanyProfile() {
     );
   }
 }
-
-CompanyProfile.propTypes = {
-  children: PropTypes.node,
-};
 
 export default CompanyProfile;

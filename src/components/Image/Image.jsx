@@ -1,4 +1,4 @@
-import { forwardRef, useState } from 'react';
+import { forwardRef, memo, useState } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -32,4 +32,4 @@ Image.propTypes = {
   fallback: PropTypes.string,
 };
 
-export default Image;
+export default memo(Image);

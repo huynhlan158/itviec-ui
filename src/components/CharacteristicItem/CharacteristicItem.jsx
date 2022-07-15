@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -20,4 +21,4 @@ CharacteristicItem.propTypes = {
   icon: PropTypes.node,
 };
 
-export default CharacteristicItem;
+export default memo(CharacteristicItem);

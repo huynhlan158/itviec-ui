@@ -1,3 +1,4 @@
+import { useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -26,7 +27,7 @@ function JobOverview({ job = {} }) {
   const jobPostedMinute = Math.ceil((postedTime / 1000 / 60) % 60);
   const minuteUnit = jobPostedMinute > 1 ? 'minutes' : 'minute';
 
-  const handleSearchJobs = (skill) => {
+  const handleSearchJobs = useCallback((skill) => {
     // reset searchTextError
     dispatch(filtersSlice.actions.searchTextErrorChange(false));
 
@@ -36,7 +37,7 @@ function JobOverview({ job = {} }) {
 
     // navigate to job page and reset filters
     navigate(config.routes.jobs);
-  };
+  }, []);
 
   if (id) {
     return (
@@ -84,4 +85,4 @@ JobOverview.propTypes = {
   job: PropTypes.object,
 };
 
-export default JobOverview;
+export default memo(JobOverview);

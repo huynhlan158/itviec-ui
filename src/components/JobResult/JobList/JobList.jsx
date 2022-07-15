@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, memo } from 'react';
+import { useState, useEffect, useRef, memo, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
@@ -24,7 +24,6 @@ function JobList({ jobList: passedJobList }) {
     searchTextError,
     recommendedJobList,
     location,
-    selectedJob,
   } = useReduxSelector();
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,18 +106,23 @@ function JobList({ jobList: passedJobList }) {
     }
   }, [passedJobList]);
 
+  const handleSelectJob = useCallback((job) => {
+    dispatch(jobsSlice.actions.selectJob(job));
+  }, []);
+
+  const handlePaginate = useCallback((pageNumber) => {
+    setCurrentPage(pageNumber);
+    jobListRef.current.scrollTo(0, 0);
+  }, []);
+
+  console.log(currentUser);
+
   return (
     <aside className={cx('wrapper', { shrink: headerShrink })} ref={jobListRef}>
       <h1 className={cx('title')}>{title}</h1>
       <div className={cx('job-list')}>
         {currentJobList.map((job, index) => (
-          <JobItem
-            key={index}
-            data={job}
-            selectJob={(job) => {
-              dispatch(jobsSlice.actions.selectJob(job));
-            }}
-          />
+          <JobItem key={index} data={job} selectJob={handleSelectJob} />
         ))}
       </div>
 
@@ -128,10 +132,7 @@ function JobList({ jobList: passedJobList }) {
         totalJob={totalJob}
         jobsPerPage={jobsPerPage}
         showNavigateButtons={showNavigateButtons}
-        paginate={(pageNumber) => {
-          setCurrentPage(pageNumber);
-          jobListRef.current.scrollTo(0, 0);
-        }}
+        paginate={handlePaginate}
       />
 
       {/* company spotlight */}

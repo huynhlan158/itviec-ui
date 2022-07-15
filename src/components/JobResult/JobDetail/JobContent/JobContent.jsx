@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -65,4 +66,4 @@ JobContent.propTypes = {
   job: PropTypes.object,
 };
 
-export default JobContent;
+export default memo(JobContent);

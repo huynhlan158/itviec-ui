@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import classNames from 'classnames/bind';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -43,4 +44,4 @@ Modal.propTypes = {
   hiddenClose: PropTypes.bool,
 };
 
-export default Modal;
+export default memo(Modal);

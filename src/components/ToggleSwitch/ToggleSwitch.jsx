@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -17,7 +18,8 @@ function ToggleSwitch({ state, onToggle }) {
 }
 
 ToggleSwitch.propTypes = {
-  children: PropTypes.node,
+  state: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
-export default ToggleSwitch;
+export default memo(ToggleSwitch);

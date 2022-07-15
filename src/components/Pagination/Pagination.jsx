@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames/bind';
 
@@ -89,4 +90,4 @@ Pagination.propTypes = {
   paginate: PropTypes.func.isRequired,
 };
 
-export default Pagination;
+export default memo(Pagination);

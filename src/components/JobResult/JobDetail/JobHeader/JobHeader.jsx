@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -44,7 +44,7 @@ function JobHeader({ className, job = {}, company = {} }) {
     }
   };
 
-  const handleApplyJob = () => {
+  const handleApplyJob = useCallback(() => {
     if (currentUser) {
       let appliedJobList = currentUser.appliedJobs || [];
       appliedJobList = [...appliedJobList, job.id];
@@ -63,7 +63,9 @@ function JobHeader({ className, job = {}, company = {} }) {
     } else {
       navigate(config.routes.signIn);
     }
-  };
+  }, []);
+
+  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
 
   if (job && company) {
     return (
@@ -92,7 +94,7 @@ function JobHeader({ className, job = {}, company = {} }) {
         <Modal
           title="You have applied for this job successfully!"
           active={activeOverlay}
-          setActive={setActiveOverlay}
+          setActive={handleSetActiveOverlay}
           className={cx('applied-modal')}
         >
           <img src={images.success} alt="successful_img" className={cx('success-img')} />

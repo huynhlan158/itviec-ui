@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -66,4 +65,4 @@ function BlogEntries() {
   );
 }
 
-export default memo(BlogEntries);
+export default BlogEntries;
