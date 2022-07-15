@@ -33,7 +33,7 @@ function AccountInfo() {
         payload: fullname,
       }),
     );
-  }, []);
+  }, [fullname]);
 
   const handleUserCoverLetterChange = useCallback(() => {
     dispatch(
@@ -43,17 +43,20 @@ function AccountInfo() {
         payload: coverLetter,
       }),
     );
-  }, []);
+  }, [coverLetter]);
 
   const handleActiveOverlay = useCallback(() => setActiveOverlay(false), []);
 
-  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
+  const handleSetActiveOverlay = useCallback(setActiveOverlay, []);
 
-  const handleSetAccountToggle = useCallback(() => setIsAccountToggle(!isAccountToggle), []);
+  const handleSetAccountToggle = useCallback(() => setIsAccountToggle(!isAccountToggle), [isAccountToggle]);
 
-  const handleSetIsHeaderToggle = useCallback(() => setIsLetterToggle(!isLetterToggle), []);
+  const handleSetIsHeaderToggle = useCallback(() => setIsLetterToggle(!isLetterToggle), [isLetterToggle]);
 
-  const handleSetIsInvitationToggle = useCallback(() => setIsInvitationToggle(!isInvitationToggle), []);
+  const handleSetIsInvitationToggle = useCallback(
+    () => setIsInvitationToggle(!isInvitationToggle),
+    [isInvitationToggle],
+  );
 
   useEffect(() => {
     if (!isInvitationToggle) {

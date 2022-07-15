@@ -50,9 +50,9 @@ function Job() {
 
   const handleDelay = useCallback(() => alert('Sorry! This function has not been developed.'), []);
 
-  const handleSelectJob = useCallback(() => {
+  const handleSelectJob = () => {
     jobId !== window.location.pathname.slice(-7).replace('-', '_') && window.location.reload(false);
-  }, []);
+  };
 
   return (
     <div className={cx('wrapper')}>

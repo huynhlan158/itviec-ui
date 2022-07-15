@@ -91,7 +91,7 @@ function SignIn() {
     }
   }, [currentUser]);
 
-  const handleSetSkillsSetOverlay = useCallback(() => setSkillsSetOverlay, []);
+  const handleSetSkillsSetOverlay = useCallback(setSkillsSetOverlay, []);
 
   return (
     <div className={cx('wrapper')}>

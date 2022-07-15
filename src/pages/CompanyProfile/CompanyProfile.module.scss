@@ -161,7 +161,9 @@
 }
 
 .skill-list {
-  padding: 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
 }
 
 .list-item {
@@ -205,17 +207,23 @@
   border-radius: 3px;
 }
 
-.review-content {
-  border-bottom: 1px solid #d8d8d8;
-}
-
 .review-title {
   padding: 20px 0 10px;
   font-size: 2rem;
 }
 
 .review-comment {
-  margin-bottom: 20px;
+  border-bottom: 1px solid #d8d8d8;
+  padding: 15px 0;
+
+  span {
+    font-size: 1.6rem;
+  }
+}
+
+.comment-title {
+  font-size: 1.8rem;
+  font-weight: normal;
 }
 
 .overall-rating {
@@ -316,10 +324,110 @@
   }
 }
 
-.review-comment {
-  padding-top: 10px;
+.write-review {
+  width: 100%;
+  background-color: var(--white);
+  padding: 20px;
+  margin-bottom: 15px;
+  border: 1px solid #d8d8d8;
+  border-radius: 3px;
+}
 
-  span {
-    font-size: 1.6rem;
+// responsive
+@media screen and (max-width: 992px) {
+  .logo {
+    img {
+      width: 100px;
+      height: 100px;
+    }
+  }
+
+  .title {
+    text-align: center;
+    margin: 10px 0;
+  }
+
+  .navigation {
+    margin-top: 10px;
+  }
+
+  .rating-overall_left {
+    margin-bottom: 5px;
+  }
+
+  .characteristics {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .left-side {
+    width: 100%;
+  }
+
+  .content {
+    display: flex;
+    gap: 0;
+  }
+
+  .content-left {
+    width: 100%;
+  }
+
+  .content-left_item {
+    padding: 20px 30px;
+  }
+
+  .content-title {
+    text-align: center;
+  }
+
+  .content-right_item {
+    display: none;
+  }
+
+  .company-photos {
+    padding: 15px 0;
+
+    img {
+      width: 100%;
+    }
+  }
+
+  .list-item {
+    padding-left: 20px;
+    margin: 15px 0;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .wrapper {
+    padding-bottom: 0;
+  }
+
+  .header {
+    flex-direction: column;
+  }
+
+  .rating-overall_left {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+
+  .actions {
+    width: 100%;
+    flex: 0;
+    display: flex;
+    padding: 15px 20px;
+
+    .actions-btn {
+      &:last-child {
+        margin-top: 0;
+        margin-left: 10px;
+      }
+    }
+  }
+
+  .content-left_item {
+    padding: 10px;
   }
 }

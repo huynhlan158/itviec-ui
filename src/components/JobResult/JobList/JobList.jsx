@@ -74,6 +74,7 @@ function JobList({ jobList: passedJobList }) {
   // reset search text error
   useEffect(() => {
     dispatch(filtersSlice.actions.searchTextErrorChange(false));
+    dispatch(jobsSlice.actions.selectJob(currentJobList[0]));
   }, []);
 
   useEffect(() => {
@@ -93,7 +94,7 @@ function JobList({ jobList: passedJobList }) {
     }
   }, [currentPage]);
 
-  // reset currentpage, selected job when changing filtered job list
+  // reset currentpage, selected job, set scroll to top when changing filtered job list
   useEffect(() => {
     setCurrentPage(1);
 
@@ -104,18 +105,22 @@ function JobList({ jobList: passedJobList }) {
     ) {
       dispatch(jobsSlice.actions.selectJob(currentJobList[0]));
     }
+
+    jobListRef.current.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }, [passedJobList]);
 
-  const handleSelectJob = useCallback((job) => {
+  const handleSelectJob = (job) => {
     dispatch(jobsSlice.actions.selectJob(job));
-  }, []);
+  };
 
   const handlePaginate = useCallback((pageNumber) => {
     setCurrentPage(pageNumber);
     jobListRef.current.scrollTo(0, 0);
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
   }, []);
-
-  console.log(currentUser);
 
   return (
     <aside className={cx('wrapper', { shrink: headerShrink })} ref={jobListRef}>

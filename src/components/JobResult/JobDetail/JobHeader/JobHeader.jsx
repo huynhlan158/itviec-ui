@@ -57,15 +57,13 @@ function JobHeader({ className, job = {}, company = {} }) {
         }),
       );
 
-      console.log(appliedJobList);
-
       setActiveOverlay(true);
     } else {
       navigate(config.routes.signIn);
     }
-  }, []);
+  }, [job]);
 
-  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
+  const handleSetActiveOverlay = useCallback(setActiveOverlay, []);
 
   if (job && company) {
     return (

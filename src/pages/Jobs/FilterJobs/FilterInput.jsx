@@ -80,7 +80,7 @@ FilterInput.propTypes = {
   items: PropTypes.array,
   leftCharacter: PropTypes.node,
   rightCharacter: PropTypes.node,
-  state: PropTypes.bool,
+  state: PropTypes.array,
   setState: PropTypes.func,
 };
 

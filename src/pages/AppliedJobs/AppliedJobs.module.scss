@@ -36,12 +36,17 @@
 
 .applied-jobs_img {
   margin-bottom: 40px;
+  width: 300px;
 }
 
 // responsive
 @media screen and (max-width: 992px) {
   .wrapper {
     padding: 75px 0 20px;
+  }
+
+  .title {
+    margin-left: 20px;
   }
 }
 

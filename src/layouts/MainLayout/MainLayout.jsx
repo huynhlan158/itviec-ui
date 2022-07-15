@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 import Header from '~/layouts/components/Header';
 import Footer from '~/layouts/components/Footer';
+import ScrollToTop from '../components/ScrollToTop';
 
 function MainLayout({ children }) {
   return (
@@ -10,6 +11,8 @@ function MainLayout({ children }) {
       <Header />
       <div>{children}</div>
       <Footer />
+
+      <ScrollToTop />
     </div>
   );
 }

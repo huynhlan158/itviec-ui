@@ -62,7 +62,7 @@ function SignUp() {
     setActiveOverlay(true);
   }, []);
 
-  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
+  const handleSetActiveOverlay = useCallback(setActiveOverlay, []);
 
   return (
     <div className={cx('wrapper')}>

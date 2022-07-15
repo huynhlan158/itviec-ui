@@ -40,7 +40,7 @@ function Jobs({ currentCompany = {}, setType }) {
   return (
     <>
       {/* left side */}
-      <div>
+      <div className={cx('left-side')}>
         {/* company job list */}
         {currentJobList?.length > 0 && (
           <div className={cx('content-left_item')}>

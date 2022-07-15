@@ -51,7 +51,8 @@ function MobileHeader() {
       leftIcon: <FontAwesomeIcon icon={faArrowRightFromBracket} />,
       title: 'Sign Out',
       onClick: async () => {
-        await dispatch(usersSlice.actions.signOut());
+        dispatch(usersSlice.actions.signOut());
+        await navigate(config.routes.home);
         window.location.reload(false);
       },
     },
@@ -97,10 +98,10 @@ function MobileHeader() {
   const handleReload = () => {
     dispatch(filtersSlice.actions.searchFilterChange(''));
     dispatch(filtersSlice.actions.locationFilterChange('All Cities'));
-    window.location.reload(false);
+    window.location.pathname === config.routes.jobs && window.location.reload(false);
   };
 
-  const handleSetOverlayMenu = useCallback(() => setOverlayMenu, []);
+  const handleSetOverlayMenu = useCallback(setOverlayMenu, []);
 
   return (
     <div className={cx('mobile-menu')}>

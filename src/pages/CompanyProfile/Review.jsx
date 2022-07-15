@@ -13,7 +13,7 @@ function Review({ currentCompany = {} }) {
 
   return (
     <>
-      {currentCompany.recommendation && (
+      {currentCompany.recommendation ? (
         <div className={cx('content-left')}>
           <div className={cx('rating-overall_left')}>
             <div className={cx('rating-item_left')}>
@@ -33,16 +33,26 @@ function Review({ currentCompany = {} }) {
             {currentCompany.review &&
               currentCompany.review?.map((item, index) => (
                 <div className={cx('review-comment')} key={index}>
-                  <h3 className={cx('content-title')}>{item.title}</h3>
+                  <h3 className={cx('comment-title')}>{item.title}</h3>
                   <Rate small score={item.score} />
                   <span>{item.comment}</span>
                 </div>
               ))}
           </div>
         </div>
+      ) : (
+        <div className={cx('write-review')}>
+          <h3 className={cx('content-title')}>Let your voice be heard.</h3>
+          <div>
+            <p className={cx('review-title')}>Review {currentCompany.name} now</p>
+            <Button primary xl onClick={handleDelay}>
+              Write review
+            </Button>
+          </div>
+        </div>
       )}
 
-      <div className={cx('content-right')}>
+      {!!currentCompany.recommendation && (
         <div className={cx('content-right_item')}>
           <h3 className={cx('content-title')}>Let your voice be heard.</h3>
           <div>
@@ -52,7 +62,7 @@ function Review({ currentCompany = {} }) {
             </Button>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 }

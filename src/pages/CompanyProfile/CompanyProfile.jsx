@@ -62,16 +62,18 @@ function CompanyProfile() {
     );
   };
 
-  const handleFollowCompany = useCallback(() => {
-    if (currentUser) {
+  const handleFollowCompany = () => {
+    if ((currentUser && currentUser?.followedCompany?.length < 5) || !currentUser.followedCompany) {
       const newList = currentUser.followedCompany
         ? [...currentUser.followedCompany, currentCompany.id]
         : [currentCompany.id];
       handleUpdateFollowedCompany(newList);
+    } else if (currentUser && currentUser?.followedCompany?.length === 5) {
+      alert('Opps! You can only follow maximum 5 companies');
     } else {
       navigate(config.routes.signIn);
     }
-  }, []);
+  };
 
   const handleUnfollowCompany = useCallback(() => {
     const newList = currentUser.followedCompany.filter((id) => id !== currentCompany.id);

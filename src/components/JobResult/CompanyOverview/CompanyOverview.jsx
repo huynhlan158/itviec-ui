@@ -20,7 +20,7 @@ function CompanyOverview() {
     return (
       <div className={cx('wrapper')}>
         <div className={cx('header')}>
-          <CompanyImage to={config.routes.companyProfile} src={selectedCompany.logo} />
+          <CompanyImage src={selectedCompany.logo} />
 
           <div className={cx('name')}>
             <h3 className={cx('title')}>{selectedCompany.name}</h3>

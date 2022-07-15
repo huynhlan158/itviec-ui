@@ -20,7 +20,11 @@ function JobResult({ jobList }) {
 
   useEffect(() => {
     setActiveOverlay(true);
-  }, [selectedJob.id]);
+  }, [selectedJob]);
+
+  useEffect(() => {
+    setActiveOverlay(false);
+  }, [jobList]);
 
   return (
     <div className={cx('wrapper')}>

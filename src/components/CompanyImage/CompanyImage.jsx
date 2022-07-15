@@ -9,16 +9,21 @@ import Image from '~/components/Image';
 const cx = classNames.bind(styles);
 
 function CompanyImage({ className, to, src, alt }) {
+  let Wrap = 'div';
+  if (to) {
+    Wrap = Link;
+  }
+
   return (
-    <Link to={to} className={cx('wrapper', className)}>
+    <Wrap to={to} className={cx('wrapper', className)}>
       <Image src={src} alt={alt} />
-    </Link>
+    </Wrap>
   );
 }
 
 CompanyImage.propTypes = {
   className: PropTypes.string,
-  to: PropTypes.string.isRequired,
+  to: PropTypes.string,
   src: PropTypes.string,
   alt: PropTypes.string,
 };

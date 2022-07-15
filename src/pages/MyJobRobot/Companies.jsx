@@ -34,7 +34,7 @@ function Companies() {
     );
   };
 
-  const handleFollowCompany = useCallback((companyName) => {
+  const handleFollowCompany = (companyName) => {
     if (companyName.length === 0 || keyWord.length === 0) {
       return;
     }
@@ -57,7 +57,7 @@ function Companies() {
     handleUpdateFollowedCompany(newList);
     setKeyWord('');
     setSelectedCompany('');
-  }, []);
+  };
 
   const handleUnfollowCompany = (companyId) => {
     const newList = currentUser.followedCompany.filter((id) => id !== companyId);

@@ -119,7 +119,7 @@ function FilterJobs() {
     return state.includes(item);
   };
 
-  const handleSetActiveOverlay = useCallback(() => setActiveOverlay, []);
+  const handleSetActiveOverlay = useCallback(setActiveOverlay, []);
 
   return (
     <div className={cx('wrapper')}>
