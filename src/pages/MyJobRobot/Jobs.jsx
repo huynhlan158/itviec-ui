@@ -55,7 +55,7 @@ function Jobs() {
     setJobRobot(newJobRobot);
     handleUpdateJobRobot(newJobRobot);
     setKeyWord('');
-  }, [keyWord]);
+  }, [keyWord, currentCity]);
 
   const handleClearJobRobot = (keyWord, location) => {
     const newJobRobot = jobRobot.filter(
