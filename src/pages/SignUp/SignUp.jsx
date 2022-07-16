@@ -64,6 +64,8 @@ function SignUp() {
 
   const handleSetActiveOverlay = useCallback(setActiveOverlay, []);
 
+  const handleDelay = useCallback(() => alert('Sorry! This function has not been developed.'), []);
+
   if (currentUser) {
     navigate(config.routes.home);
   } else {
@@ -79,13 +81,7 @@ function SignUp() {
             <div className={cx('content')}>
               <div className={cx('signup-form')}>
                 <h2 className={cx('form-title')}>Sign Up</h2>
-                <Button
-                  className={cx('form-btn')}
-                  primary
-                  xl
-                  href="https://accounts.google.com/o/oauth2/auth/identifier?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fitviec.com%3Fid%3Dauth195748&response_type=permission%20id_token&scope=email%20profile%20openid&openid.realm&include_granted_scopes=true&client_id=854148892592-ojr6qf0k1bqbm0fm5ohgt7ep8bbiv1sn.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fitviec.com&fetch_basic_profile=true&gsiwebsdk=2&flowName=GeneralOAuthFlow"
-                  target="_blank"
-                >
+                <Button className={cx('form-btn')} primary xl onClick={handleDelay}>
                   <span className={cx('google-logo')}>
                     <Image src={images.google} alt="google-icon" />
                   </span>
