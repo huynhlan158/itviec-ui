@@ -93,109 +93,113 @@ function SignIn() {
 
   const handleSetSkillsSetOverlay = useCallback(setSkillsSetOverlay, []);
 
-  return (
-    <div className={cx('wrapper')}>
-      <div className={cx('container')}>
-        <div className={cx('user-authentication')}>
-          <h3 className={cx('header')}>
-            <span>Welcome to</span>
-            <Image src={images.logo_dark} alt="logo_img" />
-          </h3>
+  if (currentUser) {
+    navigate(config.routes.home);
+  } else {
+    return (
+      <div className={cx('wrapper')}>
+        <div className={cx('container')}>
+          <div className={cx('user-authentication')}>
+            <h3 className={cx('header')}>
+              <span>Welcome to</span>
+              <Image src={images.logo_dark} alt="logo_img" />
+            </h3>
 
-          <div className={cx('content')}>
-            <div className={cx('signin-form')}>
-              <Button
-                className={cx('form-btn')}
-                primary
-                xl
-                href="https://accounts.google.com/o/oauth2/auth/identifier?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fitviec.com%3Fid%3Dauth798522&response_type=permission%20id_token&scope=email%20profile%20openid&openid.realm&include_granted_scopes=true&client_id=854148892592-ojr6qf0k1bqbm0fm5ohgt7ep8bbiv1sn.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fitviec.com&fetch_basic_profile=true&gsiwebsdk=2&flowName=GeneralOAuthFlow"
-                target="_blank"
-              >
-                <span className={cx('google-logo')}>
-                  <Image src={images.google} alt="google-icon" />
-                </span>
-                <span>Sign in with Google</span>
-              </Button>
+            <div className={cx('content')}>
+              <div className={cx('signin-form')}>
+                <Button
+                  className={cx('form-btn')}
+                  primary
+                  xl
+                  href="https://accounts.google.com/o/oauth2/auth/identifier?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fitviec.com%3Fid%3Dauth798522&response_type=permission%20id_token&scope=email%20profile%20openid&openid.realm&include_granted_scopes=true&client_id=854148892592-ojr6qf0k1bqbm0fm5ohgt7ep8bbiv1sn.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fitviec.com&fetch_basic_profile=true&gsiwebsdk=2&flowName=GeneralOAuthFlow"
+                  target="_blank"
+                >
+                  <span className={cx('google-logo')}>
+                    <Image src={images.google} alt="google-icon" />
+                  </span>
+                  <span>Sign in with Google</span>
+                </Button>
 
-              <div className={cx('separator')}>
-                <span className={cx('separator-line')}></span>
-                <span className={cx('separator-text')}>OR</span>
-                <span className={cx('separator-line')}></span>
+                <div className={cx('separator')}>
+                  <span className={cx('separator-line')}></span>
+                  <span className={cx('separator-text')}>OR</span>
+                  <span className={cx('separator-line')}></span>
+                </div>
+
+                <Form items={inputItems} handleSubmit={(data) => handleSignIn(data)} submitBtn="Sign in with Email" />
+
+                <div className={cx('sign-up')}>
+                  <span>Do not have an account? </span>
+                  <Link to={config.routes.signUp}>Sign up now!</Link>
+                </div>
               </div>
 
-              <Form items={inputItems} handleSubmit={(data) => handleSignIn(data)} submitBtn="Sign in with Email" />
-
-              <div className={cx('sign-up')}>
-                <span>Do not have an account? </span>
-                <Link to={config.routes.signUp}>Sign up now!</Link>
+              <div className={cx('sign-in_message')}>
+                <h2>Sign in to get instant access to thousands of reviews and salary information</h2>
+                <ul>
+                  <li>
+                    <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
+                    <span>View salary to help you negotiate your offer or pay rise</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
+                    <span>Find out about benefits, interview, company culture via reviews</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
+                    <span>Easy apply with only 1 click</span>
+                  </li>
+                  <li>
+                    <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
+                    <span>Manage your own profile & privacy</span>
+                  </li>
+                </ul>
               </div>
-            </div>
-
-            <div className={cx('sign-in_message')}>
-              <h2>Sign in to get instant access to thousands of reviews and salary information</h2>
-              <ul>
-                <li>
-                  <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
-                  <span>View salary to help you negotiate your offer or pay rise</span>
-                </li>
-                <li>
-                  <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
-                  <span>Find out about benefits, interview, company culture via reviews</span>
-                </li>
-                <li>
-                  <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
-                  <span>Easy apply with only 1 click</span>
-                </li>
-                <li>
-                  <FontAwesomeIcon className={cx('list-icon')} icon={faCheck} />{' '}
-                  <span>Manage your own profile & privacy</span>
-                </li>
-              </ul>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* skills set modal */}
-      <Modal
-        title="Pick-up your skills (maximum 3)"
-        btn="Search for jobs"
-        action={isSuccess ? handleSearchJobs : () => navigate(config.routes.home)}
-        active={skillsSetOverlay}
-        setActive={handleSetSkillsSetOverlay}
-      >
-        <div className={cx('skills-set')}>
-          {userSkillsSet.map((skill, index) => (
-            <div key={index} className={cx('skill-item')}>
-              <span>{skill}</span>
-              <button
-                className={cx('clear-skill')}
-                onClick={() => setUserSkillSet((prev) => prev.filter((skillItem) => skillItem !== skill))}
-              >
-                <FontAwesomeIcon icon={faXmark} />
-              </button>
-            </div>
-          ))}
-          <input
-            className={cx('skill-input')}
-            type="text"
-            value={searchSkill}
-            onChange={(e) => setSearchSkill(e.target.value)}
-            ref={inputRef}
-            onFocus={() => setShowAutoComplete(true)}
-            onBlur={() => setTimeout(() => setShowAutoComplete(false), 200)}
-          />
-          <AutoComplete
-            className={cx('skill-list')}
-            search={searchSkill}
-            items={skillsSet}
-            handleAdd={(skill) => handleAddSkill(skill)}
-            isShow={showAutoComplete}
-          />
-        </div>
-      </Modal>
-    </div>
-  );
+        {/* skills set modal */}
+        <Modal
+          title="Pick-up your skills (maximum 3)"
+          btn="Search for jobs"
+          action={isSuccess ? handleSearchJobs : () => navigate(config.routes.home)}
+          active={skillsSetOverlay}
+          setActive={handleSetSkillsSetOverlay}
+        >
+          <div className={cx('skills-set')}>
+            {userSkillsSet.map((skill, index) => (
+              <div key={index} className={cx('skill-item')}>
+                <span>{skill}</span>
+                <button
+                  className={cx('clear-skill')}
+                  onClick={() => setUserSkillSet((prev) => prev.filter((skillItem) => skillItem !== skill))}
+                >
+                  <FontAwesomeIcon icon={faXmark} />
+                </button>
+              </div>
+            ))}
+            <input
+              className={cx('skill-input')}
+              type="text"
+              value={searchSkill}
+              onChange={(e) => setSearchSkill(e.target.value)}
+              ref={inputRef}
+              onFocus={() => setShowAutoComplete(true)}
+              onBlur={() => setTimeout(() => setShowAutoComplete(false), 200)}
+            />
+            <AutoComplete
+              className={cx('skill-list')}
+              search={searchSkill}
+              items={skillsSet}
+              handleAdd={(skill) => handleAddSkill(skill)}
+              isShow={showAutoComplete}
+            />
+          </div>
+        </Modal>
+      </div>
+    );
+  }
 }
 
 export default SignIn;

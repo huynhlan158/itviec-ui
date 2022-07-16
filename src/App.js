@@ -2,12 +2,13 @@ import { Fragment, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
+import config from './config';
 import { publicRoutes } from '~/routes';
 import MainLayout from '~/layouts/MainLayout';
-import { jobsSlice, jobsSliceActions, usersSliceActions, companiesSliceActions } from '~/redux/slices';
+import PageNotFound from '~/pages/PageNotFound';
 import { setupServer } from '~/utils/fakeApis';
-import config from './config';
 import { useReduxSelector } from '~/redux/selectors';
+import { jobsSlice, jobsSliceActions, usersSliceActions, companiesSliceActions } from '~/redux/slices';
 
 setupServer();
 
@@ -28,8 +29,6 @@ function App() {
       dispatch(jobsSlice.actions.selectJob({}));
     } else if (window.location.pathname === config.routes.home && recommendedJobList.length > 0) {
       dispatch(jobsSlice.actions.selectJob(recommendedJobList[0]));
-      // } else if (window.location.pathname === config.routes.home) {
-      //   dispatch(jobsSlice.actions.selectJob(jobList[0]));
     }
   }, [jobList]);
 
@@ -39,7 +38,6 @@ function App() {
         <Routes>
           {publicRoutes.map((route, index) => {
             const Page = route.component;
-
             const Layout = route.layout ? route.layout : route.layout === null ? Fragment : MainLayout;
 
             return (
@@ -55,6 +53,8 @@ function App() {
               ></Route>
             );
           })}
+
+          <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Router>
     </div>

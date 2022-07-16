@@ -46,7 +46,7 @@ const inputItems = [
 function SignUp() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { userList } = useReduxSelector();
+  const { userList, currentUser } = useReduxSelector();
 
   const [activeOverlay, setActiveOverlay] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
@@ -64,76 +64,82 @@ function SignUp() {
 
   const handleSetActiveOverlay = useCallback(setActiveOverlay, []);
 
-  return (
-    <div className={cx('wrapper')}>
-      <div className={cx('container')}>
-        <div className={cx('user-authentication')}>
-          <h3 className={cx('header')}>
-            <span>Welcome to</span>
-            <Image src={images.logo_dark} alt="logo_img" />
-          </h3>
+  if (currentUser) {
+    navigate(config.routes.home);
+  } else {
+    return (
+      <div className={cx('wrapper')}>
+        <div className={cx('container')}>
+          <div className={cx('user-authentication')}>
+            <h3 className={cx('header')}>
+              <span>Welcome to</span>
+              <Image src={images.logo_dark} alt="logo_img" />
+            </h3>
 
-          <div className={cx('content')}>
-            <div className={cx('signup-form')}>
-              <h2 className={cx('form-title')}>Sign Up</h2>
-              <Button
-                className={cx('form-btn')}
-                primary
-                xl
-                href="https://accounts.google.com/o/oauth2/auth/identifier?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fitviec.com%3Fid%3Dauth195748&response_type=permission%20id_token&scope=email%20profile%20openid&openid.realm&include_granted_scopes=true&client_id=854148892592-ojr6qf0k1bqbm0fm5ohgt7ep8bbiv1sn.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fitviec.com&fetch_basic_profile=true&gsiwebsdk=2&flowName=GeneralOAuthFlow"
-                target="_blank"
-              >
-                <span className={cx('google-logo')}>
-                  <Image src={images.google} alt="google-icon" />
-                </span>
-                <span>Sign up with Google</span>
-              </Button>
+            <div className={cx('content')}>
+              <div className={cx('signup-form')}>
+                <h2 className={cx('form-title')}>Sign Up</h2>
+                <Button
+                  className={cx('form-btn')}
+                  primary
+                  xl
+                  href="https://accounts.google.com/o/oauth2/auth/identifier?redirect_uri=storagerelay%3A%2F%2Fhttps%2Fitviec.com%3Fid%3Dauth195748&response_type=permission%20id_token&scope=email%20profile%20openid&openid.realm&include_granted_scopes=true&client_id=854148892592-ojr6qf0k1bqbm0fm5ohgt7ep8bbiv1sn.apps.googleusercontent.com&ss_domain=https%3A%2F%2Fitviec.com&fetch_basic_profile=true&gsiwebsdk=2&flowName=GeneralOAuthFlow"
+                  target="_blank"
+                >
+                  <span className={cx('google-logo')}>
+                    <Image src={images.google} alt="google-icon" />
+                  </span>
+                  <span>Sign up with Google</span>
+                </Button>
 
-              <div className={cx('separator')}>
-                <span className={cx('separator-line')}></span>
-                <span className={cx('separator-text')}>OR</span>
-                <span className={cx('separator-line')}></span>
+                <div className={cx('separator')}>
+                  <span className={cx('separator-line')}></span>
+                  <span className={cx('separator-text')}>OR</span>
+                  <span className={cx('separator-line')}></span>
+                </div>
+
+                <Form
+                  items={inputItems}
+                  handleSubmit={(data) => handleSignUp({ ...data, id: uuidv4() })}
+                  submitBtn="Sign up with Email"
+                />
+
+                <div className={cx('sign-in')}>
+                  <span>Already had an account? </span>
+                  <Link to={config.routes.signIn}>Sign in now!</Link>
+                </div>
+
+                <div className={cx('form-note')}>
+                  <span className={cx('note-title')}>Note:</span>
+                  <span className={cx('note-text')}>
+                    Password must contain at least 8 characters. Combination of symbols, numbers, uppercase letters,
+                    lowercase letters.
+                  </span>
+                </div>
               </div>
 
-              <Form
-                items={inputItems}
-                handleSubmit={(data) => handleSignUp({ ...data, id: uuidv4() })}
-                submitBtn="Sign up with Email"
-              />
-
-              <div className={cx('sign-in')}>
-                <span>Already had an account? </span>
-                <Link to={config.routes.signIn}>Sign in now!</Link>
+              <div className={cx('sign-up_image')}>
+                <Image src={images.success} alt="signup_img" />
               </div>
-
-              <div className={cx('form-note')}>
-                <span className={cx('note-title')}>Note:</span>
-                <span className={cx('note-text')}>
-                  Password must contain at least 8 characters. Combination of symbols, numbers, uppercase letters,
-                  lowercase letters.
-                </span>
-              </div>
-            </div>
-
-            <div className={cx('sign-up_image')}>
-              <Image src={images.success} alt="signup_img" />
             </div>
           </div>
         </div>
-      </div>
 
-      <Modal
-        title={isSuccess ? "Cool, you're almost done!" : 'Email account already existed!'}
-        message={isSuccess ? "Let's sign in to search and get your dream job." : 'Please use another email to sign up.'}
-        btn={isSuccess ? 'Sign in' : 'Sign up again'}
-        action={() => {
-          isSuccess ? navigate(config.routes.signIn) : setActiveOverlay(false);
-        }}
-        active={activeOverlay}
-        setActive={handleSetActiveOverlay}
-      />
-    </div>
-  );
+        <Modal
+          title={isSuccess ? "Cool, you're almost done!" : 'Email account already existed!'}
+          message={
+            isSuccess ? "Let's sign in to search and get your dream job." : 'Please use another email to sign up.'
+          }
+          btn={isSuccess ? 'Sign in' : 'Sign up again'}
+          action={() => {
+            isSuccess ? navigate(config.routes.signIn) : setActiveOverlay(false);
+          }}
+          active={activeOverlay}
+          setActive={handleSetActiveOverlay}
+        />
+      </div>
+    );
+  }
 }
 
 export default SignUp;
