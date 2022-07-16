@@ -82,7 +82,7 @@ function CompanyProfile() {
 
   const handleDelay = useCallback(() => alert('Sorry! This function has not been developed.'), []);
 
-  const handleSetType = useCallback(() => setType, []);
+  const handleSetType = useCallback(setType, []);
 
   if (currentCompany) {
     return (
@@ -92,7 +92,7 @@ function CompanyProfile() {
           {currentCompany.id && (
             <header className={cx('header')}>
               <div className={cx('logo')}>
-                <Image to={config.routes.companyProfile} src={currentCompany.logo} />
+                <Image src={currentCompany.logo} />
               </div>
 
               <div className={cx('info')}>

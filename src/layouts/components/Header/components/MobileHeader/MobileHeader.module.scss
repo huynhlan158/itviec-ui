@@ -54,6 +54,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .left-icon {
@@ -65,8 +66,9 @@
 }
 
 .menu-header {
-  height: 60px;
-  padding-left: 32px;
+  min-height: 60px;
+  padding-left: 15px;
+  padding-right: 50px;
   margin-bottom: 25px;
   color: var(--white);
   border-top: solid 1px #222021;
