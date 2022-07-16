@@ -70,14 +70,4 @@ a {
     --default-width: 100%;
     --default-width-small: 100%;
   }
-
-  html {
-    font-size: 60%;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  html {
-    font-size: 55%;
-  }
 }

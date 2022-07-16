@@ -63,7 +63,7 @@ function CompanyProfile() {
   };
 
   const handleFollowCompany = () => {
-    if ((currentUser && currentUser?.followedCompany?.length < 5) || !currentUser.followedCompany) {
+    if ((currentUser && currentUser?.followedCompany?.length < 5) || (currentUser && !currentUser.followedCompany)) {
       const newList = currentUser.followedCompany
         ? [...currentUser.followedCompany, currentCompany.id]
         : [currentCompany.id];
