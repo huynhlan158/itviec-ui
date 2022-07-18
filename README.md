@@ -1,70 +1,80 @@
-# Getting Started with Create React App
+<p align="center">
+  <img src="./screenshots/logo_dark.png">
+</p>
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# <p align="center">ITviec-ui ReactJS</p>
 
-## Available Scripts
+## _<p align="center">A cloning recruitment website based on [www.itviec.com](https://itviec.com/)_ </p>
 
-In the project directory, you can run:
+## Preview: [https://itviec-ui.vercel.app/](https://itviec-ui.vercel.app/)
 
-### `npm start`
+## Features:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Validate form
+- Sign up, sign in
+- View jobs, company profiles
+- Search jobs by
+  - _textsearch_
+  - _location_
+  - _skill_
+  - _job title_
+  - _company name_
+- Filter jobs by:
+  - _level_
+  - _salary range_
+  - _company type_
+- View and update profile
+- Recommend jobs _(base on user's skills)_
+- Apply jobs, save jobs, follow companies, ect.
+- Responsive _(desktop, tablet, mobile)_
 
-### `npm test`
+## Technologies:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+- ReactJS
+- Redux (+ Toolkit), Redux Thunk, Redux persist
+- MirageJS
+- SASS
+- classnames
+- Axios
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Screenshots:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Sign up, sign in:
 
-### `npm run eject`
+![Sign up + sign in](./screenshots/validate-form.gif)
+\_
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+### View job and company profile:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![View job and company](./screenshots/view-jobs-and-companies.gif)
+\_
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+### Search and filter jobs:
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+![Search and filter](./screenshots/search-and-filter.gif)
+\_
 
-## Learn More
+### Search by skill, job title, location, company name:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+![Search by skill, job title, location, company](./screenshots/filter-by-skill-title-location-company.gif)
+\_
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Update profile:
 
-### Code Splitting
+![Update profile](./screenshots/update-profile.gif)
+\_
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+### Subscribe for jobs and companies:
 
-### Analyzing the Bundle Size
+![Subscribe for jobs and companies](./screenshots/subscribe-for-jobs-and-companies.gif)
+\_
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+### Save and apply for a job:
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+![Save and apply for a job](./screenshots/save-and-apply.gif)
