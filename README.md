@@ -4,13 +4,13 @@
 
 # <p align="center">ITviec-ui ReactJS</p>
 
+---
+
 ## _<p align="center">A cloning recruitment website based on [www.itviec.com](https://itviec.com/)_ </p>
 
 ## Preview: [https://itviec-ui.vercel.app/](https://itviec-ui.vercel.app/)
 
 ## Features:
-
----
 
 - Validate form
 - Sign up, sign in
@@ -32,8 +32,6 @@
 
 ## Technologies:
 
----
-
 - ReactJS
 - Redux (+ Toolkit), Redux Thunk, Redux persist
 - MirageJS
@@ -43,37 +41,29 @@
 
 ## Screenshots:
 
----
-
 ### Sign up, sign in:
 
 ![Sign up + sign in](./screenshots/validate-form.gif)
-\_
 
 ### View job and company profile:
 
 ![View job and company](./screenshots/view-jobs-and-companies.gif)
-\_
 
 ### Search and filter jobs:
 
 ![Search and filter](./screenshots/search-and-filter.gif)
-\_
 
 ### Search by skill, job title, location, company name:
 
 ![Search by skill, job title, location, company](./screenshots/filter-by-skill-title-location-company.gif)
-\_
 
 ### Update profile:
 
 ![Update profile](./screenshots/update-profile.gif)
-\_
 
 ### Subscribe for jobs and companies:
 
 ![Subscribe for jobs and companies](./screenshots/subscribe-for-jobs-and-companies.gif)
-\_
 
 ### Save and apply for a job:
 
